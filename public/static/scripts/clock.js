@@ -9,7 +9,7 @@
 var twentyFour = true;
 var showTimer = false;
 var showMilli = false;
-var showClock =  false;
+var showClock =  true;
 var clockInterval = 1000;
 var timerInterval = 10;
 const timer = new Date();

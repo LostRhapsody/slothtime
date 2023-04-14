@@ -97,7 +97,7 @@ h1 {
    height: 30rem;
 }
 
-#information-modal .modal-body ul {
+#information-modal .modal-body .card {
    max-height: 25rem;
    overflow: auto;
 }
@@ -176,7 +176,7 @@ textarea::-webkit-resizer {
    background-color: var(--main-color);
    border-radius: 5rem;
 }
-.modal-body ul::-webkit-scrollbar-thumb {
+.modal-body .card::-webkit-scrollbar-thumb {
    background-color: var(--main-color);
    border-radius: 5rem;
 }

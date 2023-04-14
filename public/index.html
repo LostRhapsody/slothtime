@@ -218,22 +218,34 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                            <img src="static/images/dev_badge.svg" />
                         </div>
                      </div>
-                     <!-- List of updates, contact, etc -->
-                     <ul>
-                        <li>Contact: evanr@fdm4.com</li>
-                        <li>
-                           Shortcuts:
+                     <div class="card">
+                        <div class="card-header">Shortcuts</div>
+                        <div class="card-body">
                            <ul>
                               <li>
-                                 Ctrl + Shift + Space: Open a modal when in a
-                                 jira entry field to make reading and editing
-                                 larger entries easier.
+                                 Ctrl + Shift + Space:
+                                 <ul>
+                                    <li>
+                                       Open a modal when in a jira entry field
+                                       to make reading and editing larger
+                                       entries easier.
+                                    </li>
+                                 </ul>
                               </li>
-                              <li>Ctrl + Shift + >: Create a new row.</li>
+                              <li>
+                                 Ctrl + Shift + >:
+                                 <ul>
+                                    <li>Create a new row.</li>
+                                 </ul>
+                              </li>
                            </ul>
-                        </li>
-                        <li>
-                           Important things to note:
+                        </div>
+                        <div class="card-header">Important:</div>
+                        <div class="card-body">
+                           <p>
+                              Slothtime is a work in progress. This project is
+                              continually changing. Use at your own risk.
+                           </p>
                            <ul>
                               <li>
                                  There is no caching on this website. Once you
@@ -247,13 +259,26 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                  auto-filled in the export file if you enter
                                  your start and end times in a 0900 or 09:00
                                  format.
-                                 <strong>WIP.</strong>
+                                 <strong>Currently not accurate</strong>
                               </li>
                            </ul>
-                        </li>
-                        <li>
-                           Updates!
+                        </div>
+                        <div class="card-header">Updates:</div>
+                        <div class="card-body">
                            <ul>
+                              <li>
+                                 Information section got an update! Now includes
+                                 a server status badge (netlify), a badge that
+                                 links to the github repo, and a badge that
+                                 links to the developer email for contact. The
+                                 layout is also cleaner and easier to read.
+                              </li>
+                              <li>
+                                 Updated the control buttons to store in an
+                                 action tray that hides off screen when not in
+                                 use. Just click the arrow at the bottom of the
+                                 page to show the action tray.
+                              </li>
                               <li>
                                  Added themes! These are hot-swappable and don't
                                  require any page reloads. Just Atom Dark (a
@@ -272,7 +297,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                               </ul>
                               <li>Toggle to total hours.</li>
                               <li>
-                                 Removing the last row now remmebers multiple
+                                 Removing the last row now remembers multiple
                                  rows, allowing the undo button to work for
                                  unlimited number of rows instead of just the
                                  last one.
@@ -291,8 +316,8 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                  used for the copied to clipboard message
                               </li>
                            </ul>
-                        </li>
-                     </ul>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
@@ -594,11 +619,11 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         </button>
                         <div
                            id="flush-collapse-action"
-                           class="accordion-collapse collapse mb-5"
+                           class="accordion-collapse collapse"
                            aria-labelledby="flush-heading-action"
                            data-bs-parent="#action-accordian"
                         >
-                           <div class="accordion-body mt-3">
+                           <div class="accordion-body">
                               <div
                                  class="row flex-column flex-md-row mx-auto align-items-start"
                               >
