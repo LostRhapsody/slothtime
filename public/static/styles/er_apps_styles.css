@@ -1,0 +1,430 @@
+/**** Body / Global ****/
+:root {
+   --frosted-bg: rgba(255, 255, 255, 0.15);
+   --bg-color: #323437;
+   --main-color: rgb(226, 183, 20);
+   --main-color-half-alpha: rgba(226, 183, 20, 0.5);
+   --main-hover: #bb960f;
+   --sub-color: #646669;
+   --sub-alt-color: #2c2e31;
+   --text-color: #d1d0c5;
+   --error-color: #ca4754;
+   --bs-border-color: none;
+   --bs-form-control-bg: #ffffff00;
+}
+
+body {
+   background-color: var(--bg-color);
+   font-family: "Roboto", Roboto, monospace;
+   overflow-y: scroll;
+}
+h1 {
+   color: var(--text-color);
+}
+
+/* svg fallback */
+.no-svg .logo {
+   width: 200px;
+   height: 164px;
+   background-image: url(images/sloth-icon.svg);
+}
+
+/**** Table ****/
+/* Override bootstrap's table responsive behaviour */
+.table-responsive {
+   overflow-x: auto !important;
+}
+
+@media screen and (min-width: 756px) {
+   .table-responsive {
+      overflow-x: hidden !important;
+   }
+}
+
+/**** UI / Look and Feel ****/
+
+.sloth-icon {
+   width: 3rem;
+   height: 3rem;
+   color: var(--main-color);
+}
+
+.accordion-button {
+   width: var(--bs-accordion-btn-icon-width) !important;
+}
+
+
+/* used in Clocky, adds a frosted glass effect */
+.frosted {
+   background-color: var(--frosted-bg);
+   --bs-accordion-bg: var(--frosted-bg);
+   --bs-accordion-active-bg: var(--frosted-bg);
+   -webkit-backdrop-filter: blur(5px);
+   backdrop-filter: blur(5px);
+}
+
+/** Modal **/
+.modal-header,
+.modal-footer,
+.modal-body {
+   color: var(--text-color);
+   background-color: var(--sub-color);
+}
+
+.modal-header {
+   border-bottom-color: var(--sub-alt-color);
+}
+
+.modal-footer {
+   border-top-color: var(--sub-alt-color);
+}
+
+.modal-body textarea {
+   background-color: transparent !important;
+   color: var(--text-color) !important;
+   box-shadow: none !important;
+}
+
+/* stops the modal from hiding the scrollbar on open                    */
+/* when the scroll bar hides it forces the page to move which I dislike */
+.modal-open {
+   overflow: auto !important;
+   /* padding-right: 0px !important; */
+}
+
+#information-modal .modal-body {
+   max-height: 30rem;
+   height: 30rem;
+}
+
+#information-modal .modal-body ul {
+   max-height: 25rem;
+   overflow: auto;
+}
+
+
+/** Theme List Group **/
+/* override bootstrap's list-group-item */
+.list-group-item {
+   color: var(--text-color);
+   background-color: var(--frosted-bg);
+}
+
+/** Bootstrap Toast Messages **/
+.toast,
+.toast-header,
+.toast-body {
+   background-color: var(--frosted-bg);
+   color: var(--text-color);
+}
+
+/** inputs **/
+option {
+   background-color: var(--bg-color);
+   border: var(--bg-color);
+}
+
+option:focus {
+   background-color: var(--main-color);
+}
+
+.form-control {
+   box-shadow: rgba(81, 81, 81, 0.59) 0px 30px 60px -12px inset,
+      rgba(255, 255, 255, 0.3) 0px 18px 36px -18px inset;
+}
+
+.form-control:focus {
+   border-color: var(--main-color);
+   box-shadow: rgba(81, 81, 81, 0.59) 0px 30px 60px -12px inset,
+      rgba(255, 255, 255, 0.3) 0px 18px 36px -18px inset,
+      0 0 0 0.25rem var(--main-color-half-alpha);
+}
+
+/** scroll bars **/
+
+/* firefox scrollbar */
+body {
+   scrollbar-color: var(--main-color) var(--bg-color);
+}
+
+/* scrollbars for jira entries */
+textarea::-webkit-scrollbar {
+   width: 10px;
+}
+
+textarea::-webkit-scrollbar-track {
+   background-color: var(--sub-alt-color);
+   border-radius: 5rem;
+}
+
+textarea::-webkit-scrollbar-thumb {
+   background-color: var(--main-color);
+   border-radius: 5rem;
+}
+
+textarea::-webkit-scrollbar-corner,
+textarea::-webkit-resizer {
+   display: none;
+}
+
+/* Scrollbar for modals */
+.modal-body::-webkit-scrollbar-thumb {
+   background-color: var(--main-color);
+   border-radius: 5rem;
+}
+.modal-body ul::-webkit-scrollbar-thumb {
+   background-color: var(--main-color);
+   border-radius: 5rem;
+}
+
+/* scrollbar for body */
+::-webkit-scrollbar {
+   width: 10px;
+}
+
+::-webkit-scrollbar-track {
+   background-color: var(--sub-alt-color);
+   border-radius: 5rem;
+}
+
+::-webkit-scrollbar-thumb {
+   background-color: var(--sub-color);
+   border-radius: 5rem;
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-resizer {
+   display: none;
+}
+
+/** Buttons **/
+
+/* override bootstrap borders */
+.btn {
+   border: none !important;
+   color: var(--text-color) !important;
+}
+
+.btn:hover {
+   color: var(--sub-alt-color) !important;
+}
+
+/* Emphasis on important actions */
+.btn-important {
+   background-color: var(--main-color);
+   color: var(--sub-alt-color) !important;
+}
+
+/* Toggle class, used for action buttons (timer, 24hr, millisedonds) */
+button.toggle {
+   border-radius: 12%;
+   width: 9rem;
+   height: 5rem;
+   margin: auto;
+   box-shadow: inset 0px 0px 10px -4px black;
+   color: var(--text-color);
+}
+
+/* Active button events */
+button:active.btn {
+   box-shadow: inset 0px 0px 10px 2px var(--sub-color);
+   color: var(--main-color);
+}
+
+/* The action Tray Button (Caret) */
+.action-tray-button {
+   color: var(--main-color);
+}
+
+/* copy clipboard button */
+.btn-copy-to-clipboard:hover,
+.btn-copy-to-clipboard:focus {
+   color: var(--main-color) !important;
+}
+
+.btn-copy-to-clipboard:active {
+   box-shadow: none;
+}
+
+/**** Clock / Timer ****/
+.clock-back {
+   width: 100%;
+   height: 5rem;
+   justify-content: center;
+   align-items: center;
+   border-radius: 0.375rem;
+   box-shadow: inset 0px 0px 13px -4px;
+}
+.clock-face-focus {
+   font-size: calc(1.425rem + 2.1vw);
+   color: var(--text-color);
+}
+.clock-face-unfocus {
+   color: var(--sub-color) !important;
+}
+.timer-face-focus {
+   font-size: 2.5rem;
+   color: var(--main-color) !important;
+}
+.timer-face-unfocus {
+   font-size: 2.5rem;
+   color: var(--sub-color);
+}
+
+/**** Text ****/
+.credits {
+   color: var(--text-color);
+}
+li,
+select,
+option,
+::placeholder,
+th,
+td,
+input,
+textarea {
+   color: var(--text-color) !important;
+}
+
+/**** Floating Shelf ****/
+
+.floating-shelf {
+   width: 100%;
+   --_viewport-margin: 2.5vmin;
+   position: fixed;
+   z-index: 10;
+   display: flex;
+   place-items: center;
+   gap: var(--_viewport-margin);
+   inset-block: auto var(--_viewport-margin);
+   margin-bottom: var(--_viewport-margin);
+}
+.floating-shelf > .row {
+   width: 100%;
+}
+.floating-shelf > .row > .row {
+   width: 75%;
+}
+
+/**** FAB Buttons ****/
+
+/* Fabs DIV */
+.fabs {
+   --_viewport-margin: 2.5vmin;
+
+   position: fixed;
+   z-index: 11;
+
+   inset-block: auto var(--_viewport-margin);
+   inset-inline: auto var(--_viewport-margin);
+   display: flex;
+   flex-direction: column-reverse;
+   place-items: center;
+   gap: var(--_viewport-margin);
+}
+
+/* Fab buttons */
+.fab {
+   --_size: 2rem;
+
+   padding: calc(var(--_size) / 2);
+   border: none;
+   border-radius: 50%;
+   aspect-ratio: 1;
+   -webkit-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
+   -moz-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
+   box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
+
+   /* light button and button hover */
+   --_light-bg: var(--main-color);
+   --_light-bg-hover: var(--main-hover);
+
+   /* dark button and button hover */
+   --_dark-bg: var(--main-color);
+   --_dark-bg-hover: var(--main-hover);
+
+   /* adaptive variables set to light by default */
+   --_bg: var(--_light-bg);
+
+   /* static icon colors set to the adaptive foreground variable */
+   --_light-fg: white;
+   --_dark-fg: black;
+   --_fg: var(--_light-fg);
+
+   /* use the adaptive properties on some styles */
+   background: var(--_bg);
+   color: var(--_fg) !important;
+
+   /* if users prefers dark, set adaptive props to dark */
+   @media (prefers-color-scheme: dark) {
+      --_bg: var(--_dark-bg);
+      --_fg: var(--_dark-fg);
+   }
+
+   -webkit-tap-highlight-color: transparent;
+}
+
+/* fab button states */
+.fab:active,
+.fab:hover,
+.fab:focus-visible {
+   --_bg: var(--_light-bg-hover);
+
+   @media (prefers-color-scheme: dark) {
+      --_bg: var(--_dark-bg-hover);
+   }
+}
+
+/* fab button icons */
+.fab > svg {
+   --_size: 2rem;
+   inline-size: var(--_size);
+   block-size: var(--_size);
+   stroke-width: 3px;
+}
+
+/* fab overrides for smaller fab buttons */
+.mini-fab {
+   --_size: 1.5rem;
+   padding: calc(var(--_size) / 2);
+}
+
+.mini-fab > svg {
+   --_size: 1.5rem;
+   inline-size: var(--_size);
+   block-size: var(--_size);
+}
+
+/**** Animations ****/
+@keyframes spin-up {
+   from {
+      transform: rotate(180deg);
+   }
+   to {
+      transform: rotate(360deg);
+   }
+}
+.caret-spin-up {
+   animation-name: spin-up;
+   animation-duration: 0.5s;
+   animation-direction: normal;
+   animation-iteration-count: 1;
+   animation-fill-mode: forwards;
+   animation-play-state: running;
+}
+@keyframes spin-down {
+   from {
+      transform: rotate(0deg);
+   }
+   to {
+      transform: rotate(180deg);
+   }
+}
+.caret-spin-down {
+   animation-name: spin-down;
+   animation-duration: 0.5s;
+   animation-direction: normal;
+   animation-iteration-count: 1;
+   animation-fill-mode: forwards;
+   animation-play-state: running;
+}

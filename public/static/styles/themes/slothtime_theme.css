@@ -1,0 +1,10 @@
+:root {
+   --frosted-bg: rgba(255, 255, 255, 0.15);
+   --bg-color: #323437;
+   --main-color: #e2b714;
+   --main-hover: #bb960f;
+   --sub-color: #646669;
+   --sub-alt-color: #2c2e31;
+   --text-color: #d1d0c5;
+   --error-color: #ca4754;
+}

@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link
+         rel="icon"
+         type="image/x-icon"
+         href="static/images/sloth-icon.svg"
+      />
+      <title>slothtime</title>
+
+      <!-- Bootstrap v5.2 (CSS)   -->
+      <link
+         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+         rel="stylesheet"
+         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+         crossorigin="anonymous"
+      />
+      <!-- JQuery -->
+      <script
+         src="https://code.jquery.com/jquery-3.6.2.min.js"
+         integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
+         crossorigin="anonymous"
+      ></script>
+      <!-- Bootstrap Icons -->
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      />
+      <link rel="stylesheet" href="static/styles/er_apps_styles.css" />
+   </head>
+
+   <body>
+      <div class="container my-5">
+         <!-- Large Jira Entry Modal -->
+         <div
+            class="modal fade modal-lg"
+            id="expanded-jira-entry-modal"
+            tabindex="-1"
+            aria-labelledby="expanded-jira-entry-modal-label"
+            aria-hidden="true"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h1
+                        class="modal-title fs-5"
+                        id="expanded-jira-entry-modal-label"
+                     >
+                        No row selected
+                     </h1>
+                     <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                     ></button>
+                  </div>
+                  <div class="modal-body">
+                     <h2
+                        class="modal-title fs-6"
+                        id="expanded-jira-entry-modal-row-label"
+                     >
+                        0
+                     </h2>
+                     <h2
+                        class="modal-title fs-6"
+                        id="expanded-jira-entry-modal-sub-label"
+                     >
+                        slothtime
+                     </h2>
+                     <hr />
+                     <textarea
+                        rows="5"
+                        aria-label="Time Entry Input"
+                        class="form-control my-3"
+                        placeholder="Jira Entry"
+                        id="modal-jira-entry"
+                     >
+Start typing in a Jira Entry field and re-open this for easier reading and editing.
+                     </textarea>
+                  </div>
+                  <div class="modal-footer">
+                     <button
+                        type="button"
+                        class="btn btn-light frosted"
+                        data-bs-dismiss="modal"
+                     >
+                        Save &amp; Close
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Themes Menu Modal -->
+         <div
+            class="modal fade modal-md"
+            id="theme-modal"
+            tabindex="-1"
+            aria-labelledby="theme-modal-label"
+            aria-hidden="true"
+            data-bs-theme="dark"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h1 class="modal-title fs-5" id="themes-modal-label">
+                        Themes
+                     </h1>
+                     <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                     ></button>
+                  </div>
+                  <div class="modal-body">
+                     <ul class="list-group list-group-flush">
+                        <li
+                           id="default"
+                           aria-hidden="true"
+                           aria-label="Atom Theme Selection"
+                           class="trigger-change-theme list-group-item list-group-item-action"
+                           data-theme="slothtime_theme.css"
+                        >
+                           Default
+                        </li>
+                        <li
+                           id="atom_one_dark_theme"
+                           aria-hidden="true"
+                           aria-label="Atom Theme Selection"
+                           class="trigger-change-theme list-group-item list-group-item-action"
+                           data-theme="atom_one_dark_theme.css"
+                        >
+                           Atom One Dark
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Settings Menu Modal -->
+         <div
+            class="modal fade modal-md"
+            id="settings-modal"
+            tabindex="-1"
+            aria-labelledby="settings-modal-label"
+            aria-hidden="true"
+            data-bs-theme="dark"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h1 class="modal-title fs-5" id="settings-modal-label">
+                        Settings
+                     </h1>
+                     <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                     ></button>
+                  </div>
+                  <div class="modal-body">
+                     <button
+                        type="button"
+                        class="btn btn-light frosted w-100 mt-3"
+                        id="btn-hide-clock"
+                     >
+                        Hide Clock
+                     </button>
+                     <button
+                        type="button"
+                        class="btn btn-light frosted w-100 mt-3"
+                        id="btn-toggle-hours"
+                     >
+                        Start/End Time -> Total Hours
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- Help, Changelog, and Shortcuts Modal -->
+         <div
+            class="modal fade modal-lg"
+            id="information-modal"
+            tabindex="-1"
+            aria-labelledby="information-modal-label"
+            aria-hidden="true"
+            data-bs-theme="dark"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h1 class="modal-title fs-5" id="information-modal-label">
+                        Information
+                     </h1>
+                     <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                     ></button>
+                  </div>
+                  <div class="modal-body">
+                     <!-- List of updates, contact, etc -->
+                     <ul>
+                        <li>Contact: evanr@fdm4.com</li>
+                        <li>
+                           Shortcuts:
+                           <ul>
+                              <li>
+                                 Ctrl + Shift + Space: Open a modal when in a
+                                 jira entry field to make reading and editing
+                                 larger entries easier.
+                              </li>
+                              <li>Ctrl + Shift + >: Create a new row.</li>
+                           </ul>
+                        </li>
+                        <li>
+                           Important things to note:
+                           <ul>
+                              <li>
+                                 There is no caching on this website. Once you
+                                 refresh the page, your time entries will be
+                                 gone. Be sure to back them up with the export
+                                 tool.
+                              </li>
+                              <li>
+                                 The total task time (total number of
+                                 hours/minutes spent on a ticket) will be
+                                 auto-filled in the export file if you enter
+                                 your start and end times in a 0900 or 09:00
+                                 format.
+                                 <strong>WIP.</strong>
+                              </li>
+                           </ul>
+                        </li>
+                        <li>
+                           Updates!
+                           <ul>
+                              <li>
+                                 Added themes! These are hot-swappable and don't
+                                 require any page reloads. Just Atom Dark (a
+                                 poor version) and default at the moment.
+                              </li>
+                              <li>Added floating action buttons!</li>
+                              <ul>
+                                 <li>
+                                    Settings menu button, stores a few settings
+                                    that were taken from buttons normally on the
+                                    bottom of the page
+                                 </li>
+                                 <li>
+                                    Themes button, displays a list of themes!
+                                 </li>
+                              </ul>
+                              <li>Toggle to total hours.</li>
+                              <li>
+                                 Removing the last row now remmebers multiple
+                                 rows, allowing the undo button to work for
+                                 unlimited number of rows instead of just the
+                                 last one.
+                              </li>
+                              <li>
+                                 Added copy to clipboard button next to each
+                                 Jira Entry input. Can be clicked or activated
+                                 with the space bar when focsued.
+                              </li>
+                              <li>
+                                 Updated export to a comma delimited list
+                                 instead of unformatted json. Try it in a .csv!
+                              </li>
+                              <li>
+                                 Added Toast Message support from Bootstrap,
+                                 used for the copied to clipboard message
+                              </li>
+                           </ul>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <!-- FAB buttons -->
+         <div class="fabs" role="group" aria-label="Floating action buttons">
+            <!-- FAB Menu Button -->
+            <button
+               data-icon="bi-three-dots-vertical"
+               class="fab btn"
+               aria-label="Expand Menu"
+               aria-hidden="true"
+               title="Expand menu"
+               id="fab_menu_btn"
+            >
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-three-dots-vertical"
+                  viewBox="0 0 16 16"
+               >
+                  <path
+                     d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                  />
+               </svg>
+            </button>
+            <!-- Themes Button -->
+            <button
+               data-icon="bi-three-dots-vertical"
+               class="fab mini-fab btn"
+               aria-label="Open Theme List"
+               aria-hidden="true"
+               title="Open Theme List"
+               data-bs-toggle="modal"
+               data-bs-target="#theme-modal"
+            >
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-palette"
+                  viewBox="0 0 16 16"
+               >
+                  <path
+                     d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
+                  />
+                  <path
+                     d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"
+                  />
+               </svg>
+            </button>
+            <!-- Settings Menu button -->
+            <button
+               data-icon="bi-gear"
+               class="fab mini-fab btn"
+               aria-label="Settings Menu"
+               aria-hidden="true"
+               title="Settings menu"
+               data-bs-toggle="modal"
+               data-bs-target="#settings-modal"
+            >
+               <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-gear"
+                  viewBox="0 0 16 16"
+               >
+                  <path
+                     d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
+                  />
+                  <path
+                     d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
+                  />
+               </svg>
+            </button>
+         </div>
+
+         <!-- Toast Messages -->
+         <div class="position-fixed bottom-0 start-0 p-3" style="z-index: 11">
+            <div
+               id="copied_toast"
+               data-bs-delay="2000"
+               class="toast hide"
+               role="alert"
+               aria-live="assertive"
+               aria-atomic="true"
+            >
+               <div class="toast-header">
+                  <img
+                     src="static/images/sloth-icon.svg"
+                     class="rounded me-2"
+                     width="16px"
+                     alt="Slothtime Icon"
+                  />
+                  <strong class="me-auto">Slothtime</strong>
+                  <button
+                     type="button"
+                     class="btn-close"
+                     data-bs-dismiss="toast"
+                     aria-label="Close"
+                  ></button>
+               </div>
+               <div class="toast-body">Copied to clipboard!</div>
+            </div>
+         </div>
+
+         <!-- Title and Clock -->
+         <div class="row flex-column flex-md-row text-start">
+            <div class="col col-12 col-md-7 align-items-center d-flex flex-row">
+               <svg
+                  fill="currentColor"
+                  height="800px"
+                  width="800px"
+                  class="sloth-icon me-3"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 460 460"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  enable-background="new 0 0 460 460"
+               >
+                  <g>
+                     <path
+                        d="m157.015,428.383c4.185,0 7.577-3.392 7.577-7.577v-176.505c30.38-1.581 65.837,1.515 77.272,20.268 22.734,37.285 36.991,155.934 37.132,157.128 0.452,3.813 3.685,6.686 7.524,6.686h41.041c2.826,0 5.418-1.574 6.722-4.082 1.359-2.613 31.256-61.15 58.404-194.928 2.983-2.356 6.002-4.798 9.029-7.323 11.264-9.399 20.075-19.304 28.914-27.196 0,0 29.37-29.469 29.37-57.286 0-50.934-53.248-101.154-118.7-101.154-16.56,0-32.337,2.909-46.669,8.152-16.669-4.195-56.057-12.722-101.541-12.945-34.947-0.158-66.228,4.668-92.883,14.384-33.808,12.323-60.247,32.516-78.581,60.019-18.47,27.704-25.157,62.04-19.876,102.054 4.137,31.334 15.614,66.242 34.115,103.752 31.27,63.4 71.295,111.794 72.984,113.823 1.439,1.73 3.573,2.73 5.824,2.73h42.342zm272.542-281.127c2.593,4.85 2.989,9.554 1.118,13.247-4.116,8.122-18.275,9.569-30.923,3.161-9.061-4.592-17.448-10.03-23.009-14.919-5.65-4.968-8.436-9.484-7.27-11.785 3.652-7.206 31.442-10.366 45.466-3.262 6.519,3.304 11.71,8.119 14.618,13.558zm-69.095-14.862c-3.603,7.109-0.369,15.163 9.611,23.938 8.765,7.707 20.483,13.998 25.113,16.344 6.904,3.498 14.011,5.181 20.544,5.181 5.09,0 9.823-1.032 13.846-3.013-12.628,17.723-50.207,25.814-87.517,25.814-37.308,0-74.887-8.091-87.515-25.813 4.022,1.98 8.755,3.012 13.846,3.012 6.532,0 13.642-1.683 20.544-5.181 4.631-2.346 16.348-8.637 25.113-16.344 9.98-8.775 13.214-16.828 9.611-23.938-6.718-13.258-38.654-16.219-56.6-8.811 0.855-0.764 1.747-1.519 2.686-2.264 15.883-12.588 40.889-19.241 72.315-19.241 32.375,0 56.863,6.466 72.783,19.217 1.078,0.863 2.093,1.744 3.058,2.636-17.77-7.853-50.613-5.002-57.438,8.463zm-105.9,14.862c2.908-5.44 8.099-10.255 14.619-13.559 5.508-2.791 13.14-3.998 20.599-3.998 11.531,0 22.649,2.885 24.867,7.26 1.166,2.301-1.62,6.816-7.27,11.785-5.561,4.889-13.948,10.327-23.009,14.919-12.646,6.409-26.808,4.961-30.923-3.161-1.872-3.691-1.475-8.396 1.117-13.246zm87.497,68.555c17.841,0 34.719-1.729 49.397-4.963-18.273,15.253-37.321,28.387-50.158,36.399-12.974-8.093-32.293-21.413-50.743-36.871 15.158,3.541 32.807,5.435 51.504,5.435zm102.785-78.42c-4.107-10.78-11.046-20.328-20.528-27.923-18.676-14.958-46.352-22.543-82.257-22.543-64.321,0-94.92,25.473-104.064,54.342-0.148-1.247-0.243-2.482-0.243-3.699 0-47.421 46.451-86.001 103.547-86.001 57.025,2.13163e-14 103.429,38.484 103.545,85.824zm-295.405,269.386l-16.94-159.047c4.905-0.807 10.665-1.597 16.94-2.246v161.293zm28.388-177.956c-28.452,0.121-54.042,5.069-55.094,5.28-3.841,0.769-6.463,4.337-6.048,8.232l18.203,170.897h-16.599c-8.86-11.107-42.592-54.822-68.953-108.344-27.538-55.912-52.513-134.34-15.102-190.457 29.933-44.901 82.749-67.659 157.006-67.659 0.475-7.10543e-15 0.956,0.001 1.431,0.002 31.368,0.123 60.179,4.485 79.835,8.406-30.188,18.358-49.907,46.899-49.907,82.389 0,16.816 14.902,42.272 24.922,52.291 9.554,9.554 19.933,20.985 33.362,32.191 27.908,23.288 55.355,39.882 56.509,40.577 1.203,0.724 2.555,1.085 3.908,1.085 1.353,0 2.705-0.362 3.908-1.085 0.76-0.457 12.915-7.807 29.093-19.418-21.838,101.364-44.787,155.443-51.509,170.021h-6.801l22.681-135.641c0.69-4.127-2.096-8.032-6.223-8.722-4.129-0.688-8.033,2.096-8.723,6.224l-23.098,138.14h-7.42c-3.423-26.346-16.98-121.413-38.405-156.55-11.276-18.489-37.524-27.859-76.976-27.859z"
+                     />
+                     <path
+                        d="m292.283,156.083c2.001,0 3.95-0.808 5.365-2.212 1.404-1.415 2.212-3.374 2.212-5.364 0-1.99-0.808-3.94-2.212-5.354-1.415-1.414-3.364-2.222-5.365-2.222-1.99,0-3.939,0.808-5.354,2.222-1.414,1.415-2.223,3.364-2.223,5.354 0,2 0.809,3.95 2.223,5.364 1.415,1.404 3.365,2.212 5.354,2.212z"
+                     />
+                     <path
+                        d="m391.83,140.93c-1.99,0-3.95,0.808-5.354,2.222-1.415,1.404-2.223,3.364-2.223,5.354 0,1.99 0.808,3.95 2.223,5.354 1.404,1.414 3.364,2.223 5.354,2.223 1.991,0 3.95-0.808 5.354-2.223 1.415-1.404 2.223-3.364 2.223-5.354 0-1.99-0.808-3.95-2.223-5.354-1.404-1.414-3.363-2.222-5.354-2.222z"
+                     />
+                     <path
+                        d="m321.595,156.72c0,3.71 2.498,6.925 6.573,9.134h-3.527c-2.79,0-5.051,2.262-5.051,5.051 0,2.789 2.261,5.051 5.051,5.051h34.84c2.79,0 5.051-2.262 5.051-5.051 0-2.789-2.261-5.051-5.051-5.051h-3.527c4.075-2.209 6.573-5.424 6.573-9.134 0-6.986-8.798-12.253-20.466-12.253-11.669,2.84217e-14-20.466,5.268-20.466,12.253z"
+                     />
+                  </g>
+               </svg>
+               <h1 class="display-6 w-50 mb-0">slothtime</h1>
+            </div>
+            <div class="col col-12 col-md-5">
+               <div
+                  id="clock"
+                  class="row frosted clock-back mx-auto text-center"
+               >
+                  <h1 id="time" class="clock-face-focus"></h1>
+                  <h1 id="timer" class="timer-face-unfocus d-none"></h1>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="container-lg">
+         <!-- Row Template -->
+         <table class="d-none">
+            <tbody>
+               <tr id="templateRow">
+                  <th scope="row">1</th>
+                  <td>
+                     <input
+                        type="text"
+                        class="form-control my-3"
+                        placeholder="Task #"
+                        aria-label="Task Number Input"
+                        aria-describedby="inputGroup-timeentry-tasknum"
+                     />
+                  </td>
+                  <td>
+                     <select
+                        name="workCode"
+                        class="form-control mt-3 workCode"
+                        aria-label="Work Code Input"
+                        aria-describedby="inputGroup-timeentry-workcode"
+                     >
+                        <option value="Work Code">Work Code</option>
+                        <option value="Analysis">Analysis</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Deployment">Deployment</option>
+                     </select>
+                  </td>
+                  <td class="d-flex">
+                     <textarea
+                        rows="1"
+                        aria-label="Time Entry Input"
+                        class="form-control my-3 jira-entry-field"
+                        placeholder="Jira Entry"
+                        aria-describedby="inputGroup-timeentry-jiraentry"
+                     ></textarea>
+                     <button
+                        type="button"
+                        class="btn btn-copy-to-clipboard position-relative"
+                        title="Copy to clipboard"
+                        aria-hidden="true"
+                        aria-label="Copy to clipboard"
+                        aria-describedby="inputGroup-timeentry-copytoclipboard"
+                        id="copied_toast_btn"
+                     >
+                        <svg
+                           xmlns="http://www.w3.org/2000/svg"
+                           width="16"
+                           height="16"
+                           fill="currentColor"
+                           class="bi bi-clipboard clipboard-icon"
+                           viewBox="0 0 16 16"
+                        >
+                           <path
+                              d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
+                           />
+                           <path
+                              d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
+                           />
+                        </svg>
+                     </button>
+                  </td>
+                  <td class="start_time">
+                     <input
+                        type="text"
+                        class="form-control start_time my-3"
+                        placeholder="Start Time"
+                        aria-label="Time Entry Input"
+                        aria-describedby="inputGroup-timeentry-tasknum"
+                     />
+                  </td>
+                  <td class="end_time">
+                     <input
+                        type="text"
+                        class="form-control end_time my-3"
+                        placeholder="End Time"
+                        aria-label="Time Entry Input"
+                        aria-describedby="inputGroup-timeentry-tasknum"
+                     />
+                  </td>
+                  <td colspan="2" class="task_time">
+                     <input
+                        type="text"
+                        class="form-control task_time my-3"
+                        placeholder="Total hours"
+                        aria-label="Time Entry Input"
+                        aria-describedby="inputGroup-timeentry-tasknum"
+                     />
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+
+         <!-- Time Entry Table -->
+         <form id="time-tracking-form">
+            <div class="table-responsive">
+               <table
+                  id="time-tracking-table"
+                  class="table table-dark table-striped table-hover"
+               >
+                  <thead>
+                     <tr id="time-tracking-headers">
+                        <th scope="col">#</th>
+                        <th scope="col">Task Number</th>
+                        <th scope="col">Work Code</th>
+                        <th scope="col">Jira Entry</th>
+                        <th class="start_time" scope="col">Start Time</th>
+                        <th class="end_time" scope="col">End Time</th>
+                        <th class="task_time" scope="col">Task Time</th>
+                     </tr>
+                  </thead>
+                  <tbody id="time-tracking-table-body"></tbody>
+               </table>
+            </div>
+         </form>
+      </div>
+
+      <div
+         class="floating-shelf"
+         role="group"
+         aria-label="Floating action buttons"
+      >
+         <!-- Controls -->
+         <div class="row flex-column">
+            <div class="row flex mx-auto align-items-center">
+               <div class="accordian accordian-flush" id="action-accordian">
+                  <div class="accordian-item">
+                     <div class="row justify-content-center">
+                        <button
+                           id="flush-heading-action"
+                           class="accordion-button collapsed"
+                           type="button"
+                           data-bs-toggle="collapse"
+                           data-bs-target="#flush-collapse-action"
+                           aria-expanded="false"
+                           aria-controls="flush-collapse-action"
+                           aria-hidden="true"
+                        >
+                           <i
+                              class="bi bi-caret-down mx-auto w-100 text-center fs-1 action-tray-button"
+                              id="action-tray-button"
+                           ></i>
+                        </button>
+                        <div
+                           id="flush-collapse-action"
+                           class="accordion-collapse collapse mb-5"
+                           aria-labelledby="flush-heading-action"
+                           data-bs-parent="#action-accordian"
+                        >
+                           <div class="accordion-body mt-3">
+                              <div
+                                 class="row flex-column flex-md-row mx-auto align-items-start"
+                              >
+                                 <div
+                                    class="col d-flex align-items-center flex-column"
+                                 >
+                                    <button
+                                       type="button"
+                                       class="btn btn-light btn-important frosted w-100 mt-3"
+                                       id="btn-new-row"
+                                    >
+                                       New Row
+                                    </button>
+                                    <button
+                                       type="button"
+                                       class="btn btn-light frosted w-100 mt-3"
+                                       id="btn-export-text"
+                                    >
+                                       Export to text file
+                                    </button>
+                                 </div>
+                                 <div
+                                    class="col d-flex align-items-center flex-column"
+                                 >
+                                    <button
+                                       type="button"
+                                       class="btn btn-light btn-important w-100 mt-3"
+                                       id="btn-remove-row"
+                                    >
+                                       Remove Last Row
+                                    </button>
+                                    <button
+                                       type="button"
+                                       class="btn btn-light frosted w-100 mt-3"
+                                       id="btn-show-expanded-jira-entry-modal"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#expanded-jira-entry-modal"
+                                    >
+                                       Large Jira Entry
+                                    </button>
+                                 </div>
+                                 <div
+                                    class="col d-flex align-items-center flex-column"
+                                 >
+                                    <button
+                                       type="button"
+                                       class="btn btn-light btn-important w-100 mt-3"
+                                       id="btn-undo-remove"
+                                    >
+                                       Undo Last Remove
+                                    </button>
+                                    <button
+                                       type="button"
+                                       class="btn btn-light frosted w-100 mt-3"
+                                       id="btn-show-information-modal"
+                                       data-bs-toggle="modal"
+                                       data-bs-target="#information-modal"
+                                    >
+                                       Information
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <!-- Bootstrap JS -->
+      <script
+         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+         crossorigin="anonymous"
+      ></script>
+      <!-- animations -->
+      <script src="static/scripts/er_app_anim.js"></script>
+      <!-- slothtime general js -->
+      <script src="static/scripts/slothtime.js"></script>
+      <!-- clock controller -->
+      <script src="static/scripts/clock.js"></script>
+   </body>
+</html>
