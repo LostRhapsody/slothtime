@@ -11,6 +11,13 @@ var isFabMenuOpen; /* tracks if the FAB button menu is open */
 var isFabsHovered; /* tracks if the fabs div is being hovered */
 var switchingTheme; /* tracks if the theme is currently being changed */
 
+/* Check and retrieve any stored data in the cache */
+var cacheTracking = JSON.parse(localStorage.getItem("Time_Tracking"));
+
+trackingArray = cacheTracking;
+
+updateTimeTrackingTableDisplay();
+
 /**** Initializing Components *****/
 
 /* initialize Bootstrap modals */
@@ -313,6 +320,9 @@ function updateTrackingArray(e) {
 
    //store in tracking array, -1 to offset the row counter
    trackingArray[rowNumber - 1] = trackingObject;
+
+   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
+
 }
 
 /* updates the tracking array and the        */
@@ -476,7 +486,7 @@ function setupModal(event) {
    $(
       "#expanded-jira-entry-modal .modal-body #expanded-jira-entry-modal-row-label"
    )[0].textContent =
-      textArea.parentElement.parentElement.children[0].firstChild.textContent;
+      "Row " + textArea.parentElement.parentElement.children[0].firstChild.textContent;
 
    /* set the modal's content */
    $("#expanded-jira-entry-modal .modal-body #modal-jira-entry")[0].value =
@@ -549,4 +559,24 @@ function previewTheme(theme, mode) {
 function showFabMenu() {
    isFabMenuOpen ? (isFabMenuOpen = false) : (isFabMenuOpen = true);
    isFabMenuOpen ? $(".mini-fab").show() : $(".mini-fab").hide();
+}
+
+function updateTimeTrackingTableDisplay() {
+
+   trackingArray.forEach(entry => {
+      populateNewRow(entry);
+   });
+
+}
+
+function populateNewRow(row_data) {
+   let new_row;
+   newRow();
+   new_row = findRowElement(row_data.row);
+   new_row.children[1].firstElementChild.value = row_data.taskNumber;
+   new_row.children[2].firstElementChild.value = row_data.workCode;
+   new_row.children[3].firstElementChild.value = row_data.jiraEntry;
+   new_row.children[4].firstElementChild.value = row_data.startTime;
+   new_row.children[5].firstElementChild.value = row_data.endTime;
+   new_row.children[6].firstElementChild.value = row_data.taskTime;
 }
