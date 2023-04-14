@@ -118,6 +118,10 @@ h1 {
    color: var(--text-color);
 }
 
+.toast {
+   z-index: 11;
+}
+
 /** inputs **/
 option {
    background-color: var(--bg-color);
@@ -287,6 +291,13 @@ textarea {
 }
 
 /**** Floating Shelf ****/
+
+/* add space below table so floating shelf  */
+/* doesn't overlap and cover the bottom row */
+.hr-space {
+   height: 15rem;
+   color: var(--sub-color);
+}
 
 .floating-shelf {
    width: 100%;
