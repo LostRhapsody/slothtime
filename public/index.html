@@ -10,7 +10,6 @@
          href="static/images/sloth-icon.svg"
       />
       <title>slothtime</title>
-
       <!-- Bootstrap v5.2 (CSS)   -->
       <link
          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -205,6 +204,20 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                      ></button>
                   </div>
                   <div class="modal-body">
+                     <div class="row align-items-start">
+                        <div class="col-2">
+                           <md-block>
+                              [![Netlify
+                              Status](https://api.netlify.com/api/v1/badges/56830fd5-ff33-438e-a0fd-2d68868cb2e6/deploy-status)](https://app.netlify.com/sites/astounding-narwhal-949e89/deploys)
+                           </md-block>
+                        </div>
+                        <div class="col-2">
+                           <img src="static/images/github_badge.svg" />
+                        </div>
+                        <div class="col-2">
+                           <img src="static/images/dev_badge.svg" />
+                        </div>
+                     </div>
                      <!-- List of updates, contact, etc -->
                      <ul>
                         <li>Contact: evanr@fdm4.com</li>
@@ -548,7 +561,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </thead>
                   <tbody id="time-tracking-table-body"></tbody>
                </table>
-               <hr class="hr-space"/>
+               <hr class="hr-space" />
             </div>
          </form>
       </div>
@@ -669,5 +682,10 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
       <script src="static/scripts/slothtime.js"></script>
       <!-- clock controller -->
       <script src="static/scripts/clock.js"></script>
+      <!-- Markdown block lib -->
+      <script
+         type="module"
+         src="https://md-block.verou.me/md-block.js"
+      ></script>
    </body>
 </html>
