@@ -594,16 +594,7 @@ function copyToClipboard(event, source) {
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
 function changeTheme(theme) {
-   $(
-      '[href="static/styles/themes/' + currentTheme + '"]'
-   ).remove();
-   $("head").append(
-      '<link id="' +
-         theme +
-         '" rel="stylesheet" type="text/css" href="static/styles/themes/' +
-         theme +
-         '">'
-   );
+   $("#currentTheme")[0].href = "static/styles/themes/" + theme;
    currentTheme = theme;
 }
 
@@ -612,17 +603,10 @@ function changeTheme(theme) {
 /* only for previews */
 function previewTheme(theme, mode) {
    if (mode == "show") {
-      $("head").append(
-         '<link id="' +
-            theme +
-            '" rel="stylesheet" type="text/css" href="static/styles/themes/' +
-            theme +
-            '">'
-      );
-   } else {
-      $(
-         '[href="static/styles/themes/' + theme + '"]:first'
-      ).remove();
+      $("#currentTheme")[0].href = "static/styles/themes/" + theme;
+   } 
+   else {
+      $("#currentTheme")[0].href = "static/styles/themes/" + currentTheme;
    }
 }
 
