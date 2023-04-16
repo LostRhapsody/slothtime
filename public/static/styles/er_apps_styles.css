@@ -87,8 +87,9 @@ h1 {
 /* stops the modal from hiding the scrollbar on open                    */
 /* when the scroll bar hides it forces the page to move which I dislike */
 .modal-open {
-   overflow: auto !important;
-   /* padding-right: 0px !important; */
+   overflow-y: scroll !important;
+    overflow-x: auto !important;
+    padding-right: 0px !important;
 }
 
 #information-modal .modal-body .card {

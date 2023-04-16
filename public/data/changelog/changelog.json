@@ -1,6 +1,14 @@
 
 [
    {
+      "update":"010013",
+      "commitMessage":[
+         {
+            "message":"Bugs: Fixed the modal causing scroll bars to appear/dissapear and adjusting the position of elements."
+         }
+      ]
+   },
+   {
       "update": "010012",
       "commitMessage": [
          {
