@@ -713,7 +713,7 @@ function sendErrorLogs() {
 function showChangelog() {
    informationModal.toggle();
    let myChangelogString =
-      "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/changelog.json";
+      "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/data/changelog/changelog.json";
 
    fetch(myChangelogString)
       .then((response) => response.json())
@@ -724,19 +724,21 @@ function showChangelog() {
 
 function updateChangelog(data) {
    console.log(data);
-   data.forEach(versionNote => {
+   data.forEach((versionNote) => {
       $("#changelog-body").append(
-         '<h3>' + versionNote.update + 
-         '</h3><ul id=' + versionNote.update + '>'   
-      );      
-      versionNote.commitMessage.forEach(bullet => {
+         "<h3>" +
+            versionNote.update +
+            "</h3><ul id=" +
+            versionNote.update +
+            ">"
+      );
+      versionNote.commitMessage.forEach((bullet) => {
          console.log(bullet);
-         console.log($('#0.01.01'));
-         $('#' + versionNote.update).append(
-            '<li>' + bullet.message + '</li>'
+         console.log($("#0.01.01"));
+         $("#" + versionNote.update).append(
+            "<li>" + bullet.message + "</li>"
          );
       });
    });
-   console.log($('#0.01.01'));
-
+   console.log($("#0.01.01"));
 }
