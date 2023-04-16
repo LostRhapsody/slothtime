@@ -1,6 +1,10 @@
-[{
-"update": "010000",
-"commitMessage": [
-  {"message":"just working out the kinks"}
-  ]
-}]
+[
+  {
+    "update": "010000",
+     "commitMessage": [     
+       {       
+         "message":"just working out the kinks"     
+       }
+     ]
+  }
+]
