@@ -1,5 +1,6 @@
 /***** Globals *****/
-var rowBuffer = []; /* store an array of deleted rows as a history buffer */
+var rowBuffer =
+   []; /* store an array of deleted rows as a history buffer */
 var rowCounter; /* stores the number of rows   */
 rowCounter = 0;
 var hoursToggle = true; /* toggle between start/end time and total hours */
@@ -10,12 +11,18 @@ var currentTheme; /* stores the current theme applied */
 var isFabMenuOpen; /* tracks if the FAB button menu is open */
 var isFabsHovered; /* tracks if the fabs div is being hovered */
 var switchingTheme; /* tracks if the theme is currently being changed */
+var exportType =
+   "comma"; /* the format the table will be exported in */
+let errorMessage; /* stores error messages. Empty after each error is logged */
+let errorTarget; /* stores targets from errors. Empty after each error is logged */
+let errorAction; /* stores actions from errors. Empty after each error is logged */
 
 /* Check and retrieve any stored data in the cache */
-var cacheTracking = JSON.parse(localStorage.getItem("Time_Tracking"));
+var cacheTracking = JSON.parse(
+   localStorage.getItem("Time_Tracking")
+);
 
-trackingArray = cacheTracking;
-
+if (cacheTracking != null) trackingArray = cacheTracking;
 updateTimeTrackingTableDisplay();
 
 /**** Initializing Components *****/
@@ -26,7 +33,9 @@ var largeEntryModal = new bootstrap.Modal(
    document.getElementById("expanded-jira-entry-modal")
 );
 /* Theme list modal */
-var themeModal = new bootstrap.Modal(document.getElementById("theme-modal"));
+var themeModal = new bootstrap.Modal(
+   document.getElementById("theme-modal")
+);
 /* Settings menu modal */
 var settingsModal = new bootstrap.Modal(
    document.getElementById("settings-modal")
@@ -35,9 +44,19 @@ var settingsModal = new bootstrap.Modal(
 var informationModal = new bootstrap.Modal(
    document.getElementById("information-modal")
 );
+/* Delete table modal */
+var deleteTableModal = new bootstrap.Modal(
+   document.getElementById("delete-table-modal")
+);
+/* Changelog modal */
+var changelogModal = new bootstrap.Modal(
+   document.getElementById("changelog-modal")
+);
 
 /* Initialize Bootstrap's Toast Utility */
-var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+var toastElList = [].slice.call(
+   document.querySelectorAll(".toast")
+);
 var toastList = toastElList.map(function (toastEl) {
    return new bootstrap.Toast(toastEl);
 });
@@ -84,11 +103,19 @@ document.onkeyup = function (event) {
    } else if (key.key == " ") {
       /* else if space is pressed */
       /* listener for copy the clipboard */
-      if (event.target.classList.contains("btn-copy-to-clipboard")) {
+      if (
+         event.target.classList.contains(
+            "btn-copy-to-clipboard"
+         )
+      ) {
          copyToClipboard(event, "space");
       }
       /* new row shortcut */
-   } else if (key.ctrlKey && key.shiftKey && key.key == ">") {
+   } else if (
+      key.ctrlKey &&
+      key.shiftKey &&
+      key.key == ">"
+   ) {
       newRow();
    }
 };
@@ -97,17 +124,23 @@ document.onkeyup = function (event) {
 /* when any field is changed on the table */
 /* update the trackingArray's object      */
 /* and populate the modal's fields        */
-$("#time-tracking-table").on("change", "tr .form-control", function (e) {
-   updateTrackingArray(e);
-   setupModal(e);
-});
+$("#time-tracking-table").on(
+   "change",
+   "tr .form-control",
+   function (e) {
+      updateTrackingArray(e);
+      setupModal(e);
+   }
+);
 
 /* whenever the table is clicked, check the event   */
 /* if the target is the copy to clipboard btn, copy */
 /* that row's jira entry to the clipboard           */
 $("#time-tracking-table").click(function (e) {
    if (
-      e.target.parentElement.classList.contains("btn-copy-to-clipboard") ||
+      e.target.parentElement.classList.contains(
+         "btn-copy-to-clipboard"
+      ) ||
       e.target.classList.contains("btn-copy-to-clipboard")
    ) {
       copyToClipboard(e, "click");
@@ -116,12 +149,11 @@ $("#time-tracking-table").click(function (e) {
 
 /* when a modal is opened, update      */
 /* the respective row's tracking array */
-$("#expanded-jira-entry-modal .modal-body #modal-jira-entry").on(
-   "change",
-   function (e) {
-      updateTrackingFromModal(e);
-   }
-);
+$(
+   "#expanded-jira-entry-modal .modal-body #modal-jira-entry"
+).on("change", function (e) {
+   updateTrackingFromModal(e);
+});
 
 /* when jira entry  modal is opened, focus */
 /* on the textarea                         */
@@ -139,8 +171,8 @@ document
    .getElementById("expanded-jira-entry-modal")
    .addEventListener("hidden.bs.modal", (e) => {
       let rowNumber =
-         e.target.firstElementChild.firstElementChild.children[1]
-            .firstElementChild.textContent;
+         e.target.firstElementChild.firstElementChild
+            .children[1].firstElementChild.textContent;
 
       let updateRow = findRowElement(rowNumber);
 
@@ -154,6 +186,7 @@ document
    .addEventListener("hidden.bs.modal", (e) => {
       switchingTheme = false;
    });
+
 /* when an end_time cell is */
 /* changed, start a new row */
 $("#time-tracking-table").on(
@@ -162,48 +195,13 @@ $("#time-tracking-table").on(
    function (event) {
       /* only call new row if you are editing the last row */
       if (
-         event.target.parentElement.parentElement.attributes[0] ==
+         event.target.parentElement.parentElement
+            .attributes[0] ==
          $("tr").last()[0].attributes[0]
       )
          newRow();
    }
 );
-
-/* when new row button is   */
-/* clicked, start a new row */
-$("#btn-new-row").click(function () {
-   newRow();
-});
-
-/* when new row button is focused, */
-/* focus the last row's task field */
-$("#btn-new-row").on("focus", function (e) {
-   //$("tr").last()[0].children[1].firstElementChild.focus();
-});
-
-/* when new row button is   */
-/* clicked, start a new row */
-$("#btn-remove-row").click(function () {
-   removeRow();
-});
-
-/* when remove row button is */
-/* clicked, remove last row  */
-$("#btn-undo-remove").click(function () {
-   undoRemoveRow();
-});
-
-/* Exports the table to a */
-/* text file              */
-$("#btn-export-text").click(function () {
-   exportTable("comma");
-});
-
-/* Exports the table to a */
-/* text file              */
-$("#btn-toggle-hours").click(function () {
-   toggleHoursColumns();
-});
 
 /* changes the theme. Currently */
 /* just toggles to AtomOne Dark */
@@ -230,14 +228,41 @@ $(".trigger-change-theme").click(function (e) {
 
 /* When textarea is focused  */
 /* expand it for readability */
-$("#time-tracking-table").on("focus", "textarea", function () {
-   $(this).attr("rows", 5);
-});
+$("#time-tracking-table").on(
+   "focus",
+   "textarea",
+   function () {
+      $(this).attr("rows", 5);
+   }
+);
 
 /* When textarea is unfocused  */
 /* shrink it back to 1 row     */
-$("#time-tracking-table").on("focusout", "textarea", function () {
-   $(this).attr("rows", 1);
+$("#time-tracking-table").on(
+   "focusout",
+   "textarea",
+   function () {
+      $(this).attr("rows", 1);
+   }
+);
+
+/*------------------------------------------------
+universal confirm event listener. When a confirm 
+button is clicked triggers this listener, which 
+triggers a function based on the event's data
+------------------------------------------------*/
+$("body").on("click", "[data-st-action]", function (event) {
+   /* get the action to be performed from the action attr */
+   let action = $(this).attr("data-st-action");
+   /* check if function exists */
+   if (typeof action === "function")
+      /* call the function */
+      window[action]();
+   /* sometimes above fails, last ditch attempt */ else if (
+      typeof action !== "undefined"
+   )
+      window[action]();
+   else logDeveloperError("badFunction", event);
 });
 
 /* FAB Buttons */
@@ -286,12 +311,17 @@ function updateTrackingArray(e) {
    //populate the object from the table row input fields
    let trackingObject = {
       row: rowNumber,
-      taskNumber: tableRow.children[1].firstElementChild.value,
-      workCode: tableRow.children[2].firstElementChild.value,
-      jiraEntry: tableRow.children[3].firstElementChild.value,
-      startTime: tableRow.children[4].firstElementChild.value,
+      taskNumber:
+         tableRow.children[1].firstElementChild.value,
+      workCode:
+         tableRow.children[2].firstElementChild.value,
+      jiraEntry:
+         tableRow.children[3].firstElementChild.value,
+      startTime:
+         tableRow.children[4].firstElementChild.value,
       endTime: tableRow.children[5].firstElementChild.value,
-      taskTime: tableRow.children[6].firstElementChild.value,
+      taskTime:
+         tableRow.children[6].firstElementChild.value,
    };
 
    if (trackingObject.taskTime == "") {
@@ -310,19 +340,24 @@ function updateTrackingArray(e) {
             trackingObject.endTime.substring(0, 2),
             trackingObject.endTime.substring(3)
          );
-         let taskHours = endDate.getHours() - startDate.getHours();
-         let taskMinutes = endDate.getMinutes() - startDate.getMinutes();
+         let taskHours =
+            endDate.getHours() - startDate.getHours();
+         let taskMinutes =
+            endDate.getMinutes() - startDate.getMinutes();
          if (taskHours < 0) taskHours *= -1;
          if (taskMinutes < 0) taskMinutes *= -1;
-         trackingObject.taskTime = taskHours + ":" + taskMinutes;
+         trackingObject.taskTime =
+            taskHours + ":" + taskMinutes;
       }
    }
 
    //store in tracking array, -1 to offset the row counter
    trackingArray[rowNumber - 1] = trackingObject;
 
-   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
-
+   localStorage.setItem(
+      "Time_Tracking",
+      JSON.stringify(trackingArray)
+   );
 }
 
 /* updates the tracking array and the        */
@@ -330,11 +365,14 @@ function updateTrackingArray(e) {
 function updateTrackingFromModal(e) {
    let textArea = e.target;
    let modalBody = textArea.parentElement;
-   let modalRowNum = parseInt(modalBody.children[0].textContent);
+   let modalRowNum = parseInt(
+      modalBody.children[0].textContent
+   );
    let modalSubLabel = modalBody.children[1];
    let tableRow = findRowElement(modalRowNum);
 
-   trackingArray[modalRowNum - 1].jiraEntry = textArea.value;
+   trackingArray[modalRowNum - 1].jiraEntry =
+      textArea.value;
 
    tableRow.children[3].firstElementChild.value =
       trackingArray[modalRowNum - 1].jiraEntry;
@@ -348,7 +386,8 @@ function newRow() {
       .removeAttr("id")
       .attr("row", rowCounter);
 
-   rowTemplate[0].firstElementChild.textContent = rowCounter;
+   rowTemplate[0].firstElementChild.textContent =
+      rowCounter;
 
    rowTemplate.appendTo($("#time-tracking-table-body"));
 
@@ -362,8 +401,12 @@ function actionVerification(action) {}
 function removeRow() {
    rowBuffer.push($("tr").last());
 
-   $("tr").last().remove();
-   rowCounter -= 1;
+   /* if the row has a row arribute     */
+   /* prevents from deleting the header */
+   if ($("tr").last().attr("row")) {
+      $("tr").last().remove();
+      rowCounter -= 1;
+   }
 }
 
 /* undos the last remove */
@@ -381,13 +424,15 @@ function undoRemoveRow() {
 }
 
 /* Export the table to a downloadable file */
-function exportTable(mode) {
+function exportTable() {
    let currentDate = new Date();
    let exportData = "";
 
    /* set the file name, based on date */
    const fileName =
-      currentDate.toLocaleString("default", { month: "long" }) +
+      currentDate.toLocaleString("default", {
+         month: "long",
+      }) +
       "_" +
       currentDate.getDate() +
       "_" +
@@ -395,10 +440,10 @@ function exportTable(mode) {
       "_" +
       "slothtime";
 
-   /* Modes downloading in different formats */
+   /* exportType downloads in different formats */
    /* json: Stringifies the tracking array, no additional formatting required */
    /* comma: prints them out in comma delimited rows */
-   switch (mode) {
+   switch (exportType) {
       case "json":
          exportData = JSON.stringify(trackingArray);
          break;
@@ -444,9 +489,15 @@ function findRowElement(rowNumber) {
 
    /* loop through list (skipping non-indexed properties) */
    /* until correct row is found via the row index        */
-   for (looper = 0; looper < prevObjectArray.length; looper++) {
+   for (
+      looper = 0;
+      looper < prevObjectArray.length;
+      looper++
+   ) {
       if (prevObjectArray[looper] != "undefined") {
-         if (prevObjectArray[looper].rowIndex == rowNumber) {
+         if (
+            prevObjectArray[looper].rowIndex == rowNumber
+         ) {
             correctRow = prevObjectArray[looper];
          }
       }
@@ -458,11 +509,15 @@ function findRowElement(rowNumber) {
 /* Toggles the display of the Total Time column and */
 /* the start/end time columns                       */
 function toggleHoursColumns() {
-   hoursToggle ? (hoursToggle = false) : (hoursToggle = true);
+   hoursToggle
+      ? (hoursToggle = false)
+      : (hoursToggle = true);
    hoursToggle
       ? $(".end_time, .start_time").show()
       : $(".end_time, .start_time").hide();
-   hoursToggle ? $(".task_time").hide() : $(".task_time").show();
+   hoursToggle
+      ? $(".task_time").hide()
+      : $(".task_time").show();
 }
 
 /* Populates the fields in the large jira entry modal */
@@ -470,10 +525,14 @@ function setupModal(event) {
    let textArea = event.target;
 
    /* get the curent row the user is focused on */
-   let currentRow = textArea.parentElement.parentElement.attributes.row.value;
+   let currentRow =
+      textArea.parentElement.parentElement.attributes.row
+         .value;
 
    /* set the modal's title */
-   $("#expanded-jira-entry-modal .modal-header h1")[0].textContent =
+   $(
+      "#expanded-jira-entry-modal .modal-header h1"
+   )[0].textContent =
       textArea.parentElement.parentElement.children[1].firstElementChild.value;
 
    /* set the modals subtitle */
@@ -486,11 +545,14 @@ function setupModal(event) {
    $(
       "#expanded-jira-entry-modal .modal-body #expanded-jira-entry-modal-row-label"
    )[0].textContent =
-      "Row " + textArea.parentElement.parentElement.children[0].firstChild.textContent;
+      "Row " +
+      textArea.parentElement.parentElement.children[0]
+         .firstChild.textContent;
 
    /* set the modal's content */
-   $("#expanded-jira-entry-modal .modal-body #modal-jira-entry")[0].value =
-      trackingArray[currentRow - 1].jiraEntry;
+   $(
+      "#expanded-jira-entry-modal .modal-body #modal-jira-entry"
+   )[0].value = trackingArray[currentRow - 1].jiraEntry;
 }
 
 /* Copies the content of the selected row to the clipboard */
@@ -503,11 +565,15 @@ function copyToClipboard(event, source) {
 
    /* if the event is from the SVG level, need to go up 2 levels */
    if (!textArea.classList.contains("jira-entry-field"))
-      textArea = event.target.parentElement.parentElement.children[0];
+      textArea =
+         event.target.parentElement.parentElement
+            .children[0];
 
    /* if textArea still wasn't found, log error and leave */
    if (!textArea.classList.contains("jira-entry-field")) {
-      console.error("Can't find text field for copy function!");
+      console.error(
+         "Can't find text field for copy function!"
+      );
       return;
    }
 
@@ -528,7 +594,9 @@ function copyToClipboard(event, source) {
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
 function changeTheme(theme) {
-   $('[href="static/styles/themes/' + currentTheme + '"]').remove();
+   $(
+      '[href="static/styles/themes/' + currentTheme + '"]'
+   ).remove();
    $("head").append(
       '<link id="' +
          theme +
@@ -552,31 +620,123 @@ function previewTheme(theme, mode) {
             '">'
       );
    } else {
-      $('[href="static/styles/themes/' + theme + '"]:first').remove();
+      $(
+         '[href="static/styles/themes/' + theme + '"]:first'
+      ).remove();
    }
 }
 
 function showFabMenu() {
-   isFabMenuOpen ? (isFabMenuOpen = false) : (isFabMenuOpen = true);
-   isFabMenuOpen ? $(".mini-fab").show() : $(".mini-fab").hide();
+   isFabMenuOpen
+      ? (isFabMenuOpen = false)
+      : (isFabMenuOpen = true);
+   isFabMenuOpen
+      ? $(".mini-fab").show()
+      : $(".mini-fab").hide();
 }
 
 function updateTimeTrackingTableDisplay() {
-
-   trackingArray.forEach(entry => {
-      populateNewRow(entry);
+   trackingArray.forEach((entry) => {
+      /* if element is null, (empty row), remove from array */
+      if (entry == null) {
+         trackingArray.splice(trackingArray.indexOf(entry));
+      } else populateNewRow(entry);
    });
-
 }
 
 function populateNewRow(row_data) {
    let new_row;
    newRow();
    new_row = findRowElement(row_data.row);
-   new_row.children[1].firstElementChild.value = row_data.taskNumber;
-   new_row.children[2].firstElementChild.value = row_data.workCode;
-   new_row.children[3].firstElementChild.value = row_data.jiraEntry;
-   new_row.children[4].firstElementChild.value = row_data.startTime;
-   new_row.children[5].firstElementChild.value = row_data.endTime;
-   new_row.children[6].firstElementChild.value = row_data.taskTime;
+   new_row.children[1].firstElementChild.value =
+      row_data.taskNumber;
+   new_row.children[2].firstElementChild.value =
+      row_data.workCode;
+   new_row.children[3].firstElementChild.value =
+      row_data.jiraEntry;
+   new_row.children[4].firstElementChild.value =
+      row_data.startTime;
+   new_row.children[5].firstElementChild.value =
+      row_data.endTime;
+   new_row.children[6].firstElementChild.value =
+      row_data.taskTime;
+}
+
+function clearTrackingTable() {
+   /* clear trackingArray */
+   trackingArray.length = 0;
+   /* update cache with new empty array */
+   localStorage.setItem(
+      "Time_Tracking",
+      JSON.stringify(trackingArray)
+   );
+   $("[row]").remove();
+   newRow();
+}
+
+function logDeveloperError(errorType, event) {
+   if (event.target.id.toString() == "") {
+      errorTarget = "Unknown";
+      errorAction = "Unknown";
+   } else {
+      errorTarget = event.target.id.toString();
+      errorAction = $(
+         "#" + event.target.id.toString()
+      ).attr("data-st-action");
+   }
+   switch (errorType) {
+      case "badFunction":
+         errorMessage =
+            "Bad function call. Action does not exist.\n" +
+            "Target: " +
+            errorTarget +
+            "\n" +
+            "Action: " +
+            errorAction;
+         break;
+   }
+   console.error(errorMessage);
+   console.error("Event:");
+   console.error(event);
+}
+
+function sendErrorLogs() {
+   /* set the value of the form */
+   $("#errorLog").value = errorMessage;
+   /* submit the form */
+   $("#sendErrorLog").click();
+   /* clear the error message and form */
+   errorMessage = "";
+   $("#errorLog").value = errorMessage;
+}
+
+function showChangelog() {
+   informationModal.toggle();
+   let myChangelogString =
+      "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/changelog.json";
+
+   fetch(myChangelogString)
+      .then((response) => response.json())
+      .then((json) => updateChangelog(json));
+
+   changelogModal.toggle();
+}
+
+function updateChangelog(data) {
+   console.log(data);
+   data.forEach(versionNote => {
+      $("#changelog-body").append(
+         '<h3>' + versionNote.update + 
+         '</h3><ul id=' + versionNote.update + '>'   
+      );      
+      versionNote.commitMessage.forEach(bullet => {
+         console.log(bullet);
+         console.log($('#0.01.01'));
+         $('#' + versionNote.update).append(
+            '<li>' + bullet.message + '</li>'
+         );
+      });
+   });
+   console.log($('#0.01.01'));
+
 }

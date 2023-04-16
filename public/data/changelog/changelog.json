@@ -1,0 +1,242 @@
+
+[
+   {
+      "update": "010012",
+      "commitMessage": [
+         {
+            "message": "New modals, delete table confirm, developer error, and changelog"
+         },
+         {
+            "message": "Replaced individual button listeners with a universal button listener for every tag with a data-st-action attribute. The action fires the corresponding function."
+         },
+         {
+            "message": "New delete table button in action tray. Also updates the users cache with the newly emptied array."
+         },
+         {
+            "message": "Added caching. The array used to store the time tracking data is stored in browser storage. Future updated will limit the lifetime of the storage of this data to 48 hrs."
+         },
+         {
+            "message": "Added changelog and version number to info modal."
+         },
+         {
+            "message": "Added git svg. Added developer error logging functions."
+         },
+         {
+            "message": "Added IDs to all buttons and svgs for logging."
+         },
+         {
+            "message": "Added hidden netlify form to aid in reporting errors."
+         },
+         {
+            "message": "Added prompt to confirm if a user wants to share error logs with the developer."
+         },
+         {
+            "message": "Updated information modal styles to use viewport units (vh) instead of rem."
+         },
+         {
+            "message": "Added links to badges."
+         },
+         {
+            "message": "Added a JSON file that contains all the version notes (this)."
+         },      
+         {
+            "message": "Fixed bugs: delete the header row, row counter decreases past 0"
+         }
+      ]
+   },
+   {
+      "update": "010011",
+      "commitMessage": [
+         {
+            "message": "Updated information modal to use card layout."
+         },
+         {
+            "message": "Added more info and updates to info modal. Adjusted clock to showClick=true on init."
+         },
+         {
+            "message": "Adusted styles for sizing the info modal card."
+         },
+         {
+            "message": "Removed margins on action tray."
+         }
+      ]
+   },
+   {
+      "update": "010010",
+      "commitMessage": [
+         {
+            "message": "Moved from gitlabs to github."
+         },
+         {
+            "message": "Added space below table so action tray doesn't overlap."
+         },
+         {
+            "message": "Added dev_badge.svg, github_badge.svg."
+         },
+         {
+            "message": "Added netlify status badge to information page. Added dev and github badges to information page."
+         },
+         {
+            "message": "Added link to mb-block library for markdown."
+         }
+      ]
+   },
+   {
+      "update": "010009",
+      "commitMessage": [
+         {
+            "message": "Added mini fab button to fab div, along with mini fab classes. Updated FAB menu to show/hide mini fab button"
+         },
+         {
+            "message": "Updated toggleHoursColumns to use hide and show functions"
+         },
+         {
+            "message": "Added palette svg file and used on mini fab button for themes. Trigger theme modal with mini fab button"
+         },
+         {
+            "message": "Change theme on hover on list items from the list of themes. Updated change theme triggers to dynamically grab te theme file name"
+         },
+         {
+            "message": "Added previewTheme function to add/remove stylesheets on hover. Updated changeTheme."
+         },
+         {
+            "message": "Added gear SVG file. Added default theme stylesheet. Added mini fab button for settings menu. Added event listener for settings menu."
+         },
+         {
+            "message": "Updated automatic new row event listener to fire for task time as well."
+         },
+         {
+            "message": "Moved toast message to left so it doesn't overlap with FAB buttons."
+         }
+      ]
+   },
+   {
+      "update": "010008",
+      "commitMessage": [
+         {
+            "message": "Made copy event fire when any part of button is clicked, not just SVG, also finds the text to copy more efficently"
+         },
+         {
+            "message": "Updated sloth SVG to use currently color to fill, allows easier color changing. And removed object tag, placed full SVG there instead"
+         },
+         {
+            "message": "Turned on FAB button, completed styling"
+         },
+         {
+            "message": "Added download and three dots svg, changed FAB button to three dots"
+         }
+      ]
+   },
+   {
+      "update": "010007",
+      "commitMessage": [
+         {
+            "message": "Fixed clipboard copy, had swapped DOM element structure"
+         }
+      ]
+   },
+   {
+      "update": "010006",
+      "commitMessage": [
+         {
+            "message": "Added toast messages for copied to clipboard"
+         },
+         {
+            "message": "Removed copied pop-up badge"
+         },
+         {
+            "message": "Added Atom theme button for testing, added change theme function"
+         },
+         {
+            "message": "Added toast init code and changed theme button to event listener"
+         }
+      ]
+   },
+   {
+      "update": "010005",
+      "commitMessage": [
+         {
+            "message": "New branch in keyboard event listener for copy button"
+         },
+         {
+            "message": "Updated to copyToClipboard function, case switch for event source"
+         }
+      ]
+   },
+   {
+      "update": "010004",
+      "commitMessage": [
+         {
+            "message": "Removed console log and bad function call"
+         }
+      ]
+   },
+   {
+      "update": "010003",
+      "commitMessage": [
+         {
+            "message": "Added copy to clipboard function, button, svg, and badge for the notification"
+         },
+         {
+            "message": "Updated export to an additional format, comma delimited rows"
+         },
+         {
+            "message": "New event listener for all clicks ont het atble to fire copy function"
+         },
+         {
+            "message": "Additional classes and styles for copy to clipboard button"
+         },
+         {
+            "message": "Start FAB buttons, currenly hidden"
+         }
+      ]
+   },
+   {
+      "update": "010002",
+      "commitMessage": [
+         {
+            "message": "Updated controls area to align to top"
+         },
+         {
+            "message": "Updated styles to remove scroll bar on table for desktop"
+         },
+         {
+            "message": "Moved modal setup to it's own function"
+         },
+         {
+            "message": "Modal shortcut no calls setupModal"
+         },
+         {
+            "message": "Fixed large jira entry button, opens on last edited row"
+         }
+      ]
+   },
+   {
+      "update": "010001",
+      "commitMessage": [
+         {
+            "message": "Updated export to inlcude total hours"
+         },
+         {
+            "message": "updated export to calcluate total hours"
+         },
+         {
+            "message": "Added start and end time to total hours toggle"
+         },
+         {
+            "message": "Added total hours column to table"
+         },
+         {
+            "message": "Added toggle function to hide/show total hours/start/end time columns"
+         }
+      ]
+   },
+   {
+      "update": "010000",
+      "commitMessage": [
+         {
+            "message": "Initial merge from private repo"
+         }
+      ]
+   }
+]
