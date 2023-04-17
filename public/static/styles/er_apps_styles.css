@@ -15,7 +15,7 @@
 
    /* Bootstrap ovverrides */
    --bs-border-color: none;
-   --bs-form-control-bg: #ffffff00;   
+   --bs-form-control-bg: #ffffff00;
    --frosted-bg: rgba(255, 255, 255, 0.15);
 }
 
@@ -60,8 +60,9 @@ h3 {
    border-collapse: collapse;
 }
 
-.st-table th, .st-table td {
-   padding: .5rem;
+.st-table th,
+.st-table td {
+   padding: 0.5rem;
    background-color: var(--bg-color);
    border-bottom-width: 1px;
    box-shadow: inset 0 0 0 9999px var(--bg-color);
@@ -131,12 +132,15 @@ h3 {
    --bs-card-bg: var(--bg-color);
 }
 
-
 /**** Badges ****/
 .netlify-badge img,
 .shield {
    height: 1.3rem;
    width: auto;
+}
+
+#btn-changelog {
+   cursor: pointer;
 }
 
 /** Theme List Group **/
@@ -146,7 +150,8 @@ h3 {
    background-color: var(--main-color);
 }
 
-.list-group-item-action:focus, .list-group-item-action:hover {
+.list-group-item-action:focus,
+.list-group-item-action:hover {
    --bs-list-group-action-hover-bg: var(--sub-alt-color);
 }
 
@@ -242,39 +247,26 @@ textarea::-webkit-resizer {
 
 /* override bootstrap borders */
 .btn {
-   border: none !important;
-   color: var(--text-color) !important;
+   border: none;
+   color: var(--text-color);
+   background-color: var(--sub-alt-color);
 }
 
 .btn:hover {
-   color: var(--main-color) !important;
+   color: var(--bg-color);
+   background-color: var(--text-color);
+}
+
+.btn:active {
+   /* doesn't override bs for some reason, needs !important */
+   color: var(--bg-color) !important;
+   background-color: var(--sub-color) !important;
 }
 
 /* Emphasis on important actions */
 .btn-important {
    background-color: var(--main-color);
-   color: var(--bg-color) !important;
-}
-
-/* Emphasis on important actions */
-.btn-important:hover {
-   color: var(--main-color) !important;
-}
-
-/* Toggle class, used for action buttons (timer, 24hr, millisedonds) */
-button.toggle {
-   border-radius: 12%;
-   width: 9rem;
-   height: 5rem;
-   margin: auto;
-   box-shadow: inset 0px 0px 10px -4px black;
-   color: var(--text-color);
-}
-
-/* Active button events */
-button:active.btn {
-   box-shadow: inset 0px 0px 10px 2px var(--sub-color);
-   color: var(--main-color);
+   color: var(--bg-color);
 }
 
 /* The action Tray Button (Caret) */
@@ -283,13 +275,18 @@ button:active.btn {
 }
 
 /* copy clipboard button */
+.btn-copy-to-clipboard {
+   background-color: transparent;
+}
 .btn-copy-to-clipboard:hover,
 .btn-copy-to-clipboard:focus {
    color: var(--main-color) !important;
+   background-color: transparent;
 }
 
 .btn-copy-to-clipboard:active {
-   box-shadow: none;
+   box-shadow: none !important;
+   background-color: transparent !important;
 }
 
 /**** Clock / Timer ****/
@@ -384,8 +381,7 @@ textarea {
    border: none;
    border-radius: 50%;
    aspect-ratio: 1;
-   -webkit-box-shadow: 10px 10px 38px 0px
-      rgba(0, 0, 0, 0.75);
+   -webkit-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
    -moz-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
    box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
 
