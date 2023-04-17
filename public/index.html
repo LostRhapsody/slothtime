@@ -60,7 +60,7 @@
                   <div class="modal-header pb-0">
                      <h1
                         class="modal-title fs-5"
-                        id="expanded-jira-entry-modal-label"
+                        id="expanded-jira-entry-modal-label"                        
                      >
                         No row selected
                      </h1>
@@ -81,6 +81,7 @@
                      <h2
                         class="modal-title fs-6"
                         id="expanded-jira-entry-modal-row-label"
+                        row=""
                      >
                         Row 0
                      </h2>
@@ -698,6 +699,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   <th scope="row">1</th>
                   <td>
                      <input
+                        name="task_number" 
                         type="text"
                         class="form-control my-3"
                         placeholder="Task #"
@@ -707,7 +709,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </td>
                   <td>
                      <select
-                        name="workCode"
+                        name="work_code"
                         class="form-control workCode"
                         aria-label="Work Code Input"
                         aria-describedby="inputGroup-timeentry-workcode"
@@ -729,6 +731,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   <td>
                      <div class="d-flex">
                         <textarea
+                           name="jira_entry"
                            rows="1"
                            aria-label="Time Entry Input"
                            class="form-control my-3 jira-entry-field"
@@ -765,6 +768,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </td>
                   <td class="start_time">
                      <input
+                        name="start_time"
                         type="text"
                         class="form-control start_time my-3"
                         placeholder="Start Time"
@@ -774,6 +778,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </td>
                   <td class="end_time">
                      <input
+                        name="end_time"
                         type="text"
                         class="form-control end_time my-3"
                         placeholder="End Time"
@@ -783,6 +788,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </td>
                   <td colspan="2" class="task_time">
                      <input
+                        name="task_time"
                         type="text"
                         class="form-control task_time my-3"
                         placeholder="Total hours"
