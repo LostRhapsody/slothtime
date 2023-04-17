@@ -120,10 +120,16 @@ h1 {
 }
 
 .modal-body .card,
-.modal-body ul {
+.modal-body #theme-list {
    max-height: 50vh;
    overflow: auto;
 }
+
+/**** Cards ****/
+.card {
+   --bs-card-bg: var(--bg-color);
+}
+
 
 /**** Badges ****/
 .netlify-badge img,
@@ -380,31 +386,9 @@ textarea {
    -moz-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
    box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
 
-   /* light button and button hover */
-   --_light-bg: var(--main-color);
-   --_light-bg-hover: var(--main-color);
-
-   /* dark button and button hover */
-   --_dark-bg: var(--main-color);
-   --_dark-bg-hover: var(--main-color);
-
-   /* adaptive variables set to light by default */
-   --_bg: var(--_light-bg);
-
-   /* static icon colors set to the adaptive foreground variable */
-   --_light-fg: white;
-   --_dark-fg: black;
-   --_fg: var(--_light-fg);
-
    /* use the adaptive properties on some styles */
-   background: var(--_bg);
-   color: var(--_fg) !important;
-
-   /* if users prefers dark, set adaptive props to dark */
-   @media (prefers-color-scheme: dark) {
-      --_bg: var(--_dark-bg);
-      --_fg: var(--_dark-fg);
-   }
+   background: var(--main-color);
+   color: var(--sub-alt-color) !important;
 
    -webkit-tap-highlight-color: transparent;
 }

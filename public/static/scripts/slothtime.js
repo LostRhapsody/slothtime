@@ -1,4 +1,5 @@
 /***** Globals *****/
+/* TODO - remove all these globals. Yikes */
 var rowBuffer =
    []; /* store an array of deleted rows as a history buffer */
 var rowCounter; /* stores the number of rows   */
@@ -15,8 +16,7 @@ var exportType =
 let errorMessage; /* stores error messages. Empty after each error is logged */
 let errorTarget; /* stores targets from errors. Empty after each error is logged */
 let errorAction; /* stores actions from errors. Empty after each error is logged */
-
-$('document').ready(function(){
+let showChangelogModal = false; /* toggles whether to show the modal or not */
 
 /* Check and retrieve any stored data in the cache */
 var cacheTracking = JSON.parse(
@@ -26,8 +26,11 @@ var cacheTracking = JSON.parse(
 if (cacheTracking != null) trackingArray = cacheTracking;
 updateTimeTrackingTableDisplay();
 
-var currentTheme = localStorage.getItem("current_theme"); /* stores the current theme applied */
-if(currentTheme == null) currentTheme = "slothtime.css";
+var currentTheme =
+   localStorage.getItem(
+      "current_theme"
+   ); /* stores the current theme applied */
+if (currentTheme == null) currentTheme = "slothtime.css";
 changeTheme(currentTheme);
 /**** Initializing Components *****/
 
@@ -184,12 +187,20 @@ document
       updateRow.children[3].firstElementChild.focus();
    });
 
-/* when theme modal is closed, focus */
-/* on the origin row's textarea      */
+/* when theme modal is closed, set */
+/* switching theme to false        */
 document
    .getElementById("theme-modal")
    .addEventListener("hidden.bs.modal", (e) => {
       switchingTheme = false;
+   });
+
+/* when information modal is closed */
+document
+   .getElementById("information-modal")
+   .addEventListener("hidden.bs.modal", (e) => {
+      if (showChangelogModal) changelogModal.toggle();
+      showChangelogModal = false;
    });
 
 /* when an end_time cell is */
@@ -206,19 +217,25 @@ $("#time-tracking-table").on(
       )
          newRow();
    }
-);   
+);
 
 /* changes the theme. Currently */
 /* just toggles to AtomOne Dark */
 /* exits if switching theme     */
 $(".trigger-change-theme").hover(
-   function (e) {      
+   function (e) {
       if (switchingTheme) return;
-      previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"show");
+      previewTheme(
+         $("#" + e.target.id.toString()).attr("data-theme"),
+         "show"
+      );
    },
    function (e) {
       if (switchingTheme) return;
-      previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"hide");
+      previewTheme(
+         $("#" + e.target.id.toString()).attr("data-theme"),
+         "hide"
+      );
    }
 );
 
@@ -243,33 +260,41 @@ $("#time-tracking-table").on(
 );
 
 /*------------------------------------------------
-universal confirm event listener. When a confirm 
-button is clicked triggers this listener, which 
-triggers a function based on the event's data
-------------------------------------------------*/
+   universal confirm event listener. When a confirm 
+   button is clicked triggers this listener, which 
+   triggers a function based on the event's data
+   ------------------------------------------------*/
 $("body").on("click", "[data-st-action]", function (event) {
    /* get the action to be performed from the action attr */
-   let action = $(this).attr("data-st-action");
+   let action = $(this).attr("data-st-action").toString();
    /* check if function exists */
    if (typeof action === "function")
       /* call the function */
-      window[action]();
+      try {
+         window[action]();
+      } catch (e) {
+         logDeveloperError("badFunction", e);
+      }
    /* sometimes above fails, last ditch attempt */ else if (
       typeof action !== "undefined"
    )
-      window[action]();
+      try {
+         window[action]();
+      } catch (e) {
+         logDeveloperError("badFunction", e);
+      }
    else logDeveloperError("badFunction", event);
 });
 
 /* FAB Buttons */
 
 /* ---------------------------------------------------------
-Fab event explainer:
-When fab menu is opened with hover, clicking is disabled.
-This makes clicking on desktop essentially impossible, which
-is fine, we can't really notice the difference.
-We have to keep the click listener though for mobile.
- ---------------------------------------------------------*/
+   Fab event explainer:
+   When fab menu is opened with hover, clicking is disabled.
+   This makes clicking on desktop essentially impossible, which
+   is fine, we can't really notice the difference.
+   We have to keep the click listener though for mobile.
+   ---------------------------------------------------------*/
 
 /* show fab menu when hovered */
 $(".fabs").hover(
@@ -591,7 +616,7 @@ function copyToClipboard(event, source) {
 function getThemeList() {
    let myThemeListString =
       "https://raw.githubusercontent.com/LostRhapsody/slothtime/develop/public/static/styles/themes/_list.json";
-   
+
    fetch(myThemeListString)
       .then((response) => response.json())
       .then((json) => loadThemeList(json));
@@ -599,32 +624,47 @@ function getThemeList() {
 
 /* loads the list of themes from _list.json */
 function loadThemeList(themes) {
-   themes.forEach(theme => {
-      const liElement = 
-      '<li' +
-      ' id=' + theme.name +
-      ' aria-hidden="true"' +
-      ' aria-label="' + theme.name + ' Selection"' +
-      ' class="trigger-change-theme list-group-item list-group-item-action"' +
-      ' data-theme="' + theme.name + '.css"' +
-      '>' +
-      theme.name +
-      '</li>';
+   themes.forEach((theme) => {
+      const liElement =
+         "<li" +
+         " id=" +
+         theme.name +
+         ' aria-hidden="true"' +
+         ' aria-label="' +
+         theme.name +
+         ' Selection"' +
+         ' class="trigger-change-theme list-group-item list-group-item-action"' +
+         ' data-theme="' +
+         theme.name +
+         '.css"' +
+         ">" +
+         theme.name +
+         "</li>";
       $("#theme-list").append(liElement);
    });
    const themeElements = $(".trigger-change-theme");
-   themeElements.each(function() {
-      let themeID = '#' + this.id.toString();
+   themeElements.each(function () {
+      let themeID = "#" + this.id.toString();
       /* when theme li is hovered, displays the theme but      */
       /* does not change the current theme, then switches back */
       $(themeID).hover(
-         function (e) {      
+         function (e) {
             if (switchingTheme) return;
-            previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"show");
+            previewTheme(
+               $("#" + e.target.id.toString()).attr(
+                  "data-theme"
+               ),
+               "show"
+            );
          },
          function (e) {
             if (switchingTheme) return;
-            previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"hide");
+            previewTheme(
+               $("#" + e.target.id.toString()).attr(
+                  "data-theme"
+               ),
+               "hide"
+            );
          }
       );
       /* when theme li is clicked, changes current theme */
@@ -643,10 +683,7 @@ function changeTheme(theme) {
    $("#currentTheme")[0].href =
       "static/styles/themes/" + theme;
    currentTheme = theme;
-   localStorage.setItem(
-      "current_theme",
-      currentTheme
-   );
+   localStorage.setItem("current_theme", currentTheme);
 }
 
 /* load the themes stylesheet */
@@ -711,7 +748,7 @@ function clearTrackingTable() {
 }
 
 function logDeveloperError(errorType, event) {
-   if (event.target.id.toString() == "") {
+   if (typeof event.target == "undefined") {
       errorTarget = "Unknown";
       errorAction = "Unknown";
    } else {
@@ -748,33 +785,35 @@ function sendErrorLogs() {
 
 function showChangelog() {
    informationModal.toggle();
-   let myChangelogString =
+   showChangelogModal = true;
+   const myChangelogString =
       "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/data/changelog/changelog.json";
-
-   fetch(myChangelogString)
-      .then((response) => response.json())
-      .then((json) => updateChangelog(json));
-
-   changelogModal.toggle();
+   /* check if log has already been loaded */
+   if (
+      typeof $("#changelog-body").attr("data-st-loaded") ==
+      "undefined"
+   )
+      fetch(myChangelogString)
+         .then((response) => response.json())
+         .then((json) => updateChangelog(json));
 }
 
 function updateChangelog(data) {
    data.forEach((versionNote) => {
       $("#changelog-body").append(
          "<h3>" +
-            versionNote.update +
-            "</h3><ul id=" +
+            versionNote.update.substr(0,2) + "." + versionNote.update.substr(2,2) + "." + versionNote.update.substr(4,2) +
+            "</h3>" +
+            "<ul id=" +
             versionNote.update +
             ">"
       );
       versionNote.commitMessage.forEach((bullet) => {
-         console.log(bullet);
-         console.log($("#0.01.01"));
          $("#" + versionNote.update).append(
             "<li>" + bullet.message + "</li>"
          );
       });
    });
-   console.log($("#0.01.01"));
+   /* set loaded to true so we only fetch once */
+   $("#changelog-body").attr("data-st-loaded", "true");
 }
-});
