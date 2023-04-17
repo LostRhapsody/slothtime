@@ -154,7 +154,7 @@ document
 document
    .getElementById("expanded-jira-entry-modal")
    .addEventListener("hidden.bs.modal", (e) => {
-      const rowNumber = $(e.target).find("[row]");   
+      const rowNumber = $(e.target).find("[row]").attr('row');   
       if (typeof rowNumber == "undefined") {
          logDeveloperError("badRowFind", e);
          return;
