@@ -4,12 +4,11 @@
 // });
 // $(".collapse.in").removeClass('collapse in');
 
-
 /* Time Stuff */
 var twentyFour = true;
 var showTimer = false;
 var showMilli = false;
-var showClock =  true;
+var showClock = true;
 var clockInterval = 1000;
 var timerInterval = 10;
 const timer = new Date();
@@ -49,10 +48,6 @@ $("#milliToggle").click(function () {
    showMilli ? (showMilli = false) : (showMilli = true);
    showMilli ? updateInterval(true) : updateInterval(false);
    updateClock();
-});
-
-$("#btn-hide-clock").click(function(){
-   hideClock();
 });
 
 function updateClock() {
@@ -114,12 +109,12 @@ function updateInterval(showMilliseconds) {
 function updateTimerInterval() {
    clearInterval(timerIntervalID);
    timerInterval = 10;
-   timerIntervalID = window.setInterval(updateTimer,timerInterval);
+   timerIntervalID = window.setInterval(updateTimer, timerInterval);
 }
 
 function updateTimer() {
-   if (timerSetup){
-      [timerhour, timerminutes, timerseconds, timermseconds] = [0,0,0,0];
+   if (timerSetup) {
+      [timerhour, timerminutes, timerseconds, timermseconds] = [0, 0, 0, 0];
       timerSetup = false;
    }
    timermseconds += timerInterval;
@@ -139,9 +134,9 @@ function updateTimer() {
    if (showTimer) {
       // timermseconds = timermseconds.toString();
       // timermseconds = timermseconds.substring(0,2);
-      let s_hours    = timerhour.toString();
-      let s_minutes  = timerminutes.toString();
-      let s_seconds  = timerseconds.toString();
+      let s_hours = timerhour.toString();
+      let s_minutes = timerminutes.toString();
+      let s_seconds = timerseconds.toString();
       let s_mseconds = timermseconds.toString();
       if (s_hours.length < 2) {
          s_hours = "0" + s_hours;
@@ -155,12 +150,20 @@ function updateTimer() {
       if (s_mseconds.length < 2) {
          s_mseconds = "0" + s_mseconds;
       }
-      $("#timer").html(s_hours + ":" + s_minutes + ":" + s_seconds + ":" + s_mseconds.substring(0,2));
+      $("#timer").html(
+         s_hours +
+            ":" +
+            s_minutes +
+            ":" +
+            s_seconds +
+            ":" +
+            s_mseconds.substring(0, 2)
+      );
    }
 }
 
-function hideClock(){
-   if(showClock){
+function hideClock() {
+   if (showClock) {
       showClock = false;
       $("#clock").hide();
    } else {

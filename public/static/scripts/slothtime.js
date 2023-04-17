@@ -154,23 +154,15 @@ document
 document
    .getElementById("expanded-jira-entry-modal")
    .addEventListener("hidden.bs.modal", (e) => {
-      const rowNumber = $(e.target).parents("[row]");
-      const tableRow = $(e.target).parents("[row]");
-      if (typeof tableRow == "undefined") {
+      const rowNumber = $(e.target).find("[row]");   
+      if (typeof rowNumber == "undefined") {
          logDeveloperError("badRowFind", e);
          return;
       }
-      const taskField = tableRow.find('input[name="task_number"]');
-      const workCode = tableRow.find('select[name="work_code"]');
-      const inputField = tableRow.find('textarea[name="jira_entry"]');
-      const startTime = tableRow.find('input[name="start_time"]');
-      const endTime = tableRow.find('input[name="end_time"]');
-      const taskTime = tableRow.find('input[name="task_time"]');
-      //get the row number
 
-      // let updateRow = findRowElement(rowNumber);
+      const updateRow = findRowElement(rowNumber);
 
-      inputField.focus();
+      $(updateRow).find('textarea[name="jira_entry"]').focus();
    });
 
 /* when theme modal is closed, set */
@@ -359,13 +351,16 @@ function updateTrackingArray(e) {
 function updateTrackingFromModal(e) {
    let textArea = e.target;
    let modalBody = textArea.parentElement;
-   let modalRowNum = parseInt(modalBody.children[0].textContent);
+   let modalRowNum = $(
+      "#expanded-jira-entry-modal .modal-body #expanded-jira-entry-modal-row-label"
+   )[0].attributes.row.value;
    let modalSubLabel = modalBody.children[1];
    let tableRow = findRowElement(modalRowNum);
 
    trackingArray[modalRowNum - 1].jiraEntry = textArea.value;
+   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
 
-   tableRow.children[3].firstElementChild.value =
+   $(tableRow).find('textarea[name="jira_entry"]')[0].value =
       trackingArray[modalRowNum - 1].jiraEntry;
 }
 
