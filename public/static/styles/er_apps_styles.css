@@ -1,16 +1,24 @@
 /**** Body / Global ****/
 :root {
-   --frosted-bg: rgba(255, 255, 255, 0.15);
+   /* theme colors */
    --bg-color: #323437;
    --main-color: rgb(226, 183, 20);
-   --main-color-half-alpha: rgba(226, 183, 20, 0.5);
-   --main-hover: #bb960f;
    --sub-color: #646669;
    --sub-alt-color: #2c2e31;
    --text-color: #d1d0c5;
    --error-color: #ca4754;
+   --colorful-error-extra-color: #fffb85;
+   --caret-color: #99d6ea;
+   --error-extra-color: #fffb85;
+   --colorful-error-color: #fffb85;
+   --colorful-error-extra-color: #fffb85;
+   /* theme colors */
+
+   /* Bootstrap ovverrides */
    --bs-border-color: none;
    --bs-form-control-bg: #ffffff00;
+   --frosted-bg: rgba(255, 255, 255, 0.15);
+   --bs-table-bg: 
 }
 
 body {
@@ -141,7 +149,7 @@ option:focus {
    border-color: var(--main-color);
    box-shadow: rgba(81, 81, 81, 0.59) 0px 30px 60px -12px inset,
       rgba(255, 255, 255, 0.3) 0px 18px 36px -18px inset,
-      0 0 0 0.25rem var(--main-color-half-alpha);
+      0 0 0 0.1rem var(--main-color);
 }
 
 /** scroll bars **/
@@ -348,11 +356,11 @@ textarea {
 
    /* light button and button hover */
    --_light-bg: var(--main-color);
-   --_light-bg-hover: var(--main-hover);
+   --_light-bg-hover: var(--main-color);
 
    /* dark button and button hover */
    --_dark-bg: var(--main-color);
-   --_dark-bg-hover: var(--main-hover);
+   --_dark-bg-hover: var(--main-color);
 
    /* adaptive variables set to light by default */
    --_bg: var(--_light-bg);
@@ -379,10 +387,11 @@ textarea {
 .fab:active,
 .fab:hover,
 .fab:focus-visible {
-   --_bg: var(--_light-bg-hover);
+   filter: brightness(76%);
+   /* --_bg: var(--_light-bg-hover); */
 
    @media (prefers-color-scheme: dark) {
-      --_bg: var(--_dark-bg-hover);
+      /* --_bg: var(--_dark-bg-hover); */
    }
 }
 

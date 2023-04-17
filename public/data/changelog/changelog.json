@@ -4,7 +4,10 @@
       "update":"010013",
       "commitMessage":[
          {
-            "message":"Bugs: Fixed the modal causing scroll bars to appear/dissapear and adjusting the position of elements."
+            "message":"Added themes from monkeytype.com (3 GPL License)."
+         },
+         {
+            "message":"Bugs: Fixed the modal causing scroll bars to appear/dissapear and adjusting the position of elements. Fixed the stylesheet loading bug for switching themes."
          }
       ]
    },
