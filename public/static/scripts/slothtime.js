@@ -87,9 +87,7 @@ document.onkeyup = function (event) {
    if (key.ctrlKey && key.shiftKey && key.key == " ") {
       /* if the target is a text area inside a td tag          */
       /* prevents non-table row textareas from triggering this */
-      if (
-         textArea.name == "jira_entry"
-      ) {
+      if (textArea.name == "jira_entry") {
          /* update the tracking array so we have the newest content */
          updateTrackingArray(event);
          setupModal(event);
@@ -154,7 +152,7 @@ document
 document
    .getElementById("expanded-jira-entry-modal")
    .addEventListener("hidden.bs.modal", (e) => {
-      const rowNumber = $(e.target).find("[row]").attr('row');   
+      const rowNumber = $(e.target).find("[row]").attr("row");
       if (typeof rowNumber == "undefined") {
          logDeveloperError("badRowFind", e);
          return;
@@ -300,10 +298,10 @@ function updateTrackingArray(e) {
    let endDate = new Date();
 
    /* if values not set yet, just use placedholders */
-   if (typeof taskField == 'undefined') taskField[0].value = 'Task #';
-   if (typeof inputField == 'undefined') inputField[0].value = 'Jira Entry';
-   if (typeof startTime == 'undefined') startTime[0].value = 'Start Time';
-   if (typeof endTime == 'undefined') endTime[0].value = 'End Time';
+   if (typeof taskField == "undefined") taskField[0].value = "Task #";
+   if (typeof inputField == "undefined") inputField[0].value = "Jira Entry";
+   if (typeof startTime == "undefined") startTime[0].value = "Start Time";
+   if (typeof endTime == "undefined") endTime[0].value = "End Time";
 
    //populate the object from the table row input fields
    let trackingObject = {

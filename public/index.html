@@ -2,14 +2,8 @@
 <html lang="en">
    <head>
       <meta charset="UTF-8" />
-      <meta
-         http-equiv="X-UA-Compatible"
-         content="IE=edge"
-      />
-      <meta
-         name="viewport"
-         content="width=device-width, initial-scale=1.0"
-      />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link
          rel="icon"
          type="image/x-icon"
@@ -23,21 +17,18 @@
          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
          crossorigin="anonymous"
       />
+      <!-- Bootstrap Icons -->
+      <link
+         rel="stylesheet"
+         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
+      />
       <!-- JQuery -->
       <script
          src="https://code.jquery.com/jquery-3.6.2.min.js"
          integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
          crossorigin="anonymous"
       ></script>
-      <!-- Bootstrap Icons -->
-      <link
-         rel="stylesheet"
-         href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
-      />
-      <link
-         rel="stylesheet"
-         href="static/styles/er_apps_styles.css"
-      />
+      <link rel="stylesheet" href="static/styles/er_apps_styles.css" />
       <link
          rel="stylesheet"
          href="static/styles/themes/slothtime.css"
@@ -60,7 +51,7 @@
                   <div class="modal-header pb-0">
                      <h1
                         class="modal-title fs-5"
-                        id="expanded-jira-entry-modal-label"                        
+                        id="expanded-jira-entry-modal-label"
                      >
                         No row selected
                      </h1>
@@ -99,7 +90,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   <div class="modal-footer">
                      <button
                         type="button"
-                        class="btn btn-light frosted"
+                        class="btn"
                         data-bs-dismiss="modal"
                      >
                         Save &amp; Close
@@ -120,10 +111,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h1
-                        class="modal-title fs-5"
-                        id="themes-modal-label"
-                     >
+                     <h1 class="modal-title fs-5" id="themes-modal-label">
                         Themes
                      </h1>
                      <button
@@ -134,10 +122,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                      ></button>
                   </div>
                   <div class="modal-body">
-                     <ul
-                        class="list-group list-group-flush"
-                        id="theme-list"
-                     >
+                     <ul class="list-group list-group-flush" id="theme-list">
                         <li
                            id="slothtime"
                            aria-hidden="true"
@@ -164,10 +149,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h1
-                        class="modal-title fs-5"
-                        id="settings-modal-label"
-                     >
+                     <h1 class="modal-title fs-5" id="settings-modal-label">
                         Settings
                      </h1>
                      <button
@@ -180,7 +162,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   <div class="modal-body">
                      <button
                         type="button"
-                        class="btn btn-light frosted w-100 mt-3"
+                        class="btn w-100 mt-3"
                         id="btn-hide-clock"
                         data-st-action="hideClock"
                      >
@@ -188,7 +170,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                      </button>
                      <button
                         type="button"
-                        class="btn btn-light frosted w-100 mt-3"
+                        class="btn w-100 mt-3"
                         id="btn-toggle-hours"
                         data-st-action="toggleHoursColumns"
                      >
@@ -210,10 +192,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h1
-                        class="modal-title fs-5"
-                        id="information-modal-label"
-                     >
+                     <h1 class="modal-title fs-5" id="information-modal-label">
                         Information
                      </h1>
                      <button
@@ -225,45 +204,30 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </div>
                   <div class="modal-body">
                      <div class="row align-items-start">
-                        <div
-                           class="col d-flex justify-content-center"
-                        >
+                        <div class="col d-flex justify-content-center">
                            <md-block class="netlify-badge">
                               [![Netlify
                               Status](https://api.netlify.com/api/v1/badges/56830fd5-ff33-438e-a0fd-2d68868cb2e6/deploy-status)](https://app.netlify.com/sites/astounding-narwhal-949e89/deploys)
                            </md-block>
                         </div>
-                        <div
-                           class="col d-flex justify-content-center"
-                        >
-                           <a
-                              href="https://github.com/LostRhapsody/slothtime"
-                           >
+                        <div class="col d-flex justify-content-center">
+                           <a href="https://github.com/LostRhapsody/slothtime">
                               <img
                                  class="shield"
                                  src="static/images/github_badge.svg"
                               />
                            </a>
                         </div>
-                        <div
-                           class="col d-flex justify-content-center"
-                        >
-                           <a
-                              href="https://evanrobertson.dev"
-                           >
+                        <div class="col d-flex justify-content-center">
+                           <a href="https://evanrobertson.dev">
                               <img
                                  class="shield"
                                  src="static/images/dev_badge.svg"
                               />
                            </a>
                         </div>
-                        <div
-                           class="col d-flex justify-content-center"
-                        >
-                           <a
-                              id="btn-changelog"
-                              data-st-action="showChangelog"
-                           >
+                        <div class="col d-flex justify-content-center">
+                           <a id="btn-changelog" data-st-action="showChangelog">
                               <img
                                  class="shield"
                                  src="static/images/git_badge.svg"
@@ -272,19 +236,15 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         </div>
                      </div>
                      <div class="card">
-                        <div class="card-header">
-                           Shortcuts
-                        </div>
+                        <div class="card-header">Shortcuts</div>
                         <div class="card-body">
                            <ul>
                               <li>
                                  Ctrl + Shift + Space:
                                  <ul>
                                     <li>
-                                       Open a modal when in
-                                       a jira entry field to
-                                       make reading and
-                                       editing larger
+                                       Open a modal when in a jira entry field
+                                       to make reading and editing larger
                                        entries easier.
                                     </li>
                                  </ul>
@@ -292,46 +252,32 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                               <li>
                                  Ctrl + Shift + .:
                                  <ul>
-                                    <li>
-                                       Create a new row.
-                                    </li>
+                                    <li>Create a new row.</li>
                                  </ul>
                               </li>
                            </ul>
                         </div>
-                        <div class="card-header">
-                           Important:
-                        </div>
+                        <div class="card-header">Important:</div>
                         <div class="card-body">
                            <p>
-                              Slothtime is a work in
-                              progress. This project is
-                              continually changing. Use at
-                              your own risk.
+                              Slothtime is a work in progress. This project is
+                              continually changing. Use at your own risk.
                            </p>
                            <ul>
                               <li>
-                                 This project was inspired
-                                 by my hatred of boring
-                                 corporate time keeping
-                                 software and
-                                 monkeytype.com, the worlds
-                                 best and most customizable
-                                 typing test website.
-                                 &#10084; You guys.
+                                 This project was inspired by my hatred of
+                                 boring corporate time keeping software and
+                                 monkeytype.com, the worlds best and most
+                                 customizable typing test website. &#10084; You
+                                 guys.
                               </li>
                               <li>
-                                 The total task time (total
-                                 number of hours/minutes
-                                 spent on a ticket) will be
-                                 auto-filled in the export
-                                 file if you enter your
-                                 start and end times in a
-                                 0900 or 09:00 format.
-                                 <strong
-                                    >Currently not
-                                    accurate</strong
-                                 >
+                                 The total task time (total number of
+                                 hours/minutes spent on a ticket) will be
+                                 auto-filled in the export file if you enter
+                                 your start and end times in a 0900 or 09:00
+                                 format.
+                                 <strong>Currently not accurate</strong>
                               </li>
                            </ul>
                         </div>
@@ -352,9 +298,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h1 class="modal-title fs-5">
-                        Clear Table?
-                     </h1>
+                     <h1 class="modal-title fs-5">Clear Table?</h1>
                      <button
                         type="button"
                         class="btn-close"
@@ -363,20 +307,15 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                      ></button>
                   </div>
                   <div class="modal-body">
-                     <h2
-                        class="modal-title fs-6 text-danger"
-                     >
-                        Danger Zone.
-                     </h2>
+                     <h2 class="modal-title fs-6 text-danger">Danger Zone.</h2>
                      <h2 class="modal-title fs-6">
-                        This will empty every row in the
-                        table.
+                        This will empty every row in the table.
                      </h2>
                      <div class="row">
                         <div class="col-6">
                            <button
                               type="button"
-                              class="btn btn-light btn-important frosted w-100 mt-3"
+                              class="btn btn-important w-100 mt-3"
                               id="btn-cancel"
                               data-bs-dismiss="modal"
                               aria-label="Close"
@@ -387,7 +326,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         <div class="col-6">
                            <button
                               type="button"
-                              class="btn btn-light frosted w-100 mt-3"
+                              class="btn w-100 mt-3"
                               id="btn-confirm"
                               data-st-action="clearTrackingTable"
                               data-bs-dismiss="modal"
@@ -412,9 +351,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h1 class="modal-title fs-5">
-                        An Error Has Occurred
-                     </h1>
+                     <h1 class="modal-title fs-5">An Error Has Occurred</h1>
                      <button
                         type="button"
                         class="btn-close"
@@ -424,20 +361,17 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </div>
                   <div class="modal-body">
                      <p>
-                        A developer error has occurred. To
-                        help solve this issue, you can
-                        choose to report this error and send
-                        an alert to the developer. If you
-                        don't want information regarding
-                        your session sent to the developer,
-                        choose
+                        A developer error has occurred. To help solve this
+                        issue, you can choose to report this error and send an
+                        alert to the developer. If you don't want information
+                        regarding your session sent to the developer, choose
                         <em>do not share my info</em>.
                      </p>
                      <div class="row">
                         <div class="col-6">
                            <button
                               type="button"
-                              class="btn btn-light btn-important frosted w-100 mt-3"
+                              class="btn btn-important w-100 mt-3"
                               id="btn-cancel"
                               data-bs-dismiss="modal"
                               aria-label="Close"
@@ -448,7 +382,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         <div class="col-6">
                            <button
                               type="button"
-                              class="btn btn-light frosted w-100 mt-3"
+                              class="btn w-100 mt-3"
                               id="btn-confirm"
                               data-st-action="sendErrorLogs"
                               data-bs-dismiss="modal"
@@ -457,8 +391,8 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                            </button>
                         </div>
                         <p>
-                           Check your browsers console logs
-                           to see the full error.
+                           Check your browsers console logs to see the full
+                           error.
                         </p>
                      </div>
                   </div>
@@ -477,9 +411,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
             <div class="modal-dialog">
                <div class="modal-content">
                   <div class="modal-header">
-                     <h1 class="modal-title fs-5">
-                        Changelog
-                     </h1>
+                     <h1 class="modal-title fs-5">Changelog</h1>
                      <button
                         type="button"
                         class="btn-close"
@@ -489,10 +421,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   </div>
                   <div class="modal-body">
                      <div class="card">
-                        <div
-                           class="card-body"
-                           id="changelog-body"
-                        ></div>
+                        <div class="card-body" id="changelog-body"></div>
                      </div>
                   </div>
                </div>
@@ -500,32 +429,13 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
          </div>
 
          <!--Netlify Error subtmit form-->
-         <form
-            name="submitDeveloperError"
-            method="POST"
-            data-netlify="true"
-         >
-            <input
-               id="errorLog"
-               type="text"
-               name="errorLog"
-               class="d-none"
-            />
-            <button
-               id="sendErrorLog"
-               type="submit"
-               class="d-none"
-            >
-               Send
-            </button>
+         <form name="submitDeveloperError" method="POST" data-netlify="true">
+            <input id="errorLog" type="text" name="errorLog" class="d-none" />
+            <button id="sendErrorLog" type="submit" class="d-none">Send</button>
          </form>
 
          <!-- FAB buttons -->
-         <div
-            class="fabs"
-            role="group"
-            aria-label="Floating action buttons"
-         >
+         <div class="fabs" role="group" aria-label="Floating action buttons">
             <!-- FAB Menu Button -->
             <button
                data-icon="bi-three-dots-vertical"
@@ -630,19 +540,13 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                      aria-label="Close"
                   ></button>
                </div>
-               <div class="toast-body">
-                  Copied to clipboard!
-               </div>
+               <div class="toast-body">Copied to clipboard!</div>
             </div>
          </div>
 
          <!-- Title and Clock -->
-         <div
-            class="row flex-column flex-md-row text-start"
-         >
-            <div
-               class="col col-12 col-md-7 align-items-center d-flex flex-row"
-            >
+         <div class="row flex-column flex-md-row text-start">
+            <div class="col col-12 col-md-7 align-items-center d-flex flex-row">
                <svg
                   fill="currentColor"
                   height="800px"
@@ -669,23 +573,15 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                      />
                   </g>
                </svg>
-               <h1 class="display-6 w-50 mb-0">
-                  slothtime
-               </h1>
+               <h1 class="display-6 w-50 mb-0">slothtime</h1>
             </div>
             <div class="col col-12 col-md-5">
                <div
                   id="clock"
                   class="row frosted clock-back mx-auto text-center"
                >
-                  <h1
-                     id="time"
-                     class="clock-face-focus"
-                  ></h1>
-                  <h1
-                     id="timer"
-                     class="timer-face-unfocus d-none"
-                  ></h1>
+                  <h1 id="time" class="clock-face-focus"></h1>
+                  <h1 id="timer" class="timer-face-unfocus d-none"></h1>
                </div>
             </div>
          </div>
@@ -699,7 +595,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   <th scope="row">1</th>
                   <td>
                      <input
-                        name="task_number" 
+                        name="task_number"
                         type="text"
                         class="form-control my-3"
                         placeholder="Task #"
@@ -714,18 +610,10 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         aria-label="Work Code Input"
                         aria-describedby="inputGroup-timeentry-workcode"
                      >
-                        <option value="Work Code">
-                           Work Code
-                        </option>
-                        <option value="Analysis">
-                           Analysis
-                        </option>
-                        <option value="Programming">
-                           Programming
-                        </option>
-                        <option value="Deployment">
-                           Deployment
-                        </option>
+                        <option value="Work Code">Work Code</option>
+                        <option value="Analysis">Analysis</option>
+                        <option value="Programming">Programming</option>
+                        <option value="Deployment">Deployment</option>
                      </select>
                   </td>
                   <td>
@@ -803,30 +691,19 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
          <!-- Time Entry Table -->
          <form id="time-tracking-form">
             <div class="table-responsive">
-               <table
-                  id="time-tracking-table"
-                  class="st-table"
-               >
+               <table id="time-tracking-table" class="st-table">
                   <thead>
                      <tr id="time-tracking-headers">
                         <th scope="col">#</th>
                         <th scope="col">Task Number</th>
                         <th scope="col">Work Code</th>
                         <th scope="col">Jira Entry</th>
-                        <th class="start_time" scope="col">
-                           Start Time
-                        </th>
-                        <th class="end_time" scope="col">
-                           End Time
-                        </th>
-                        <th class="task_time" scope="col">
-                           Task Time
-                        </th>
+                        <th class="start_time" scope="col">Start Time</th>
+                        <th class="end_time" scope="col">End Time</th>
+                        <th class="task_time" scope="col">Task Time</th>
                      </tr>
                   </thead>
-                  <tbody
-                     id="time-tracking-table-body"
-                  ></tbody>
+                  <tbody id="time-tracking-table-body"></tbody>
                </table>
                <hr class="hr-space" />
             </div>
@@ -840,17 +717,10 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
       >
          <!-- Controls -->
          <div class="row flex-column">
-            <div
-               class="row flex mx-auto align-items-center"
-            >
-               <div
-                  class="accordian accordian-flush"
-                  id="action-accordian"
-               >
+            <div class="row flex mx-auto align-items-center">
+               <div class="accordian accordian-flush" id="action-accordian">
                   <div class="accordian-item">
-                     <div
-                        class="row justify-content-center"
-                     >
+                     <div class="row justify-content-center">
                         <button
                            id="flush-heading-action"
                            class="accordion-button collapsed"
@@ -881,7 +751,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                  >
                                     <button
                                        type="button"
-                                       class="btn btn-light btn-important frosted w-100 mt-3"
+                                       class="btn btn-important w-100 mt-3"
                                        id="btn-new-row"
                                        data-st-action="newRow"
                                     >
@@ -889,7 +759,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                     </button>
                                     <button
                                        type="button"
-                                       class="btn btn-light frosted w-100 mt-3"
+                                       class="btn w-100 mt-3"
                                        id="btn-export-text"
                                        data-st-action="exportTable"
                                     >
@@ -897,7 +767,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                     </button>
                                     <button
                                        type="button"
-                                       class="btn btn-danger w-100 mt-3"
+                                       class="btn w-100 mt-3"
                                        id="btn-export-text"
                                        data-bs-toggle="modal"
                                        data-bs-target="#delete-table-modal"
@@ -910,7 +780,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                  >
                                     <button
                                        type="button"
-                                       class="btn btn-light btn-important w-100 mt-3"
+                                       class="btn btn-important w-100 mt-3"
                                        id="btn-remove-row"
                                        data-st-action="removeRow"
                                     >
@@ -918,7 +788,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                     </button>
                                     <button
                                        type="button"
-                                       class="btn btn-light frosted w-100 mt-3"
+                                       class="btn w-100 mt-3"
                                        id="btn-show-expanded-jira-entry-modal"
                                        data-bs-toggle="modal"
                                        data-bs-target="#expanded-jira-entry-modal"
@@ -931,7 +801,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                  >
                                     <button
                                        type="button"
-                                       class="btn btn-light btn-important w-100 mt-3"
+                                       class="btn btn-important w-100 mt-3"
                                        id="btn-undo-remove"
                                        data-st-action="undoRemoveRow"
                                     >
@@ -939,7 +809,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                                     </button>
                                     <button
                                        type="button"
-                                       class="btn btn-light frosted w-100 mt-3"
+                                       class="btn w-100 mt-3"
                                        id="btn-show-information-modal"
                                        data-bs-toggle="modal"
                                        data-bs-target="#information-modal"
