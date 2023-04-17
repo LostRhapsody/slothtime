@@ -24,7 +24,9 @@ body {
    font-family: "Roboto", Roboto, monospace;
    overflow-y: scroll;
 }
-h1 {
+h1,
+h2,
+h3 {
    color: var(--text-color);
 }
 
@@ -63,12 +65,11 @@ h1 {
    background-color: var(--bg-color);
    border-bottom-width: 1px;
    box-shadow: inset 0 0 0 9999px var(--bg-color);
-   filter:brightness(85%);
 }
 
 .st-table thead th {
-   box-shadow: inset 0 0 0 9999px var(--bg-color);
-   filter:brightness(65%);
+   box-shadow: inset 0 0 0 9999px var(--main-color);
+   color: var(--bg-color) !important;
 }
 /**** UI / Look and Feel ****/
 
@@ -96,7 +97,7 @@ h1 {
 .modal-footer,
 .modal-body {
    color: var(--text-color);
-   background-color: var(--sub-color);
+   background-color: var(--bg-color);
 }
 
 .modal-header {
@@ -105,12 +106,6 @@ h1 {
 
 .modal-footer {
    border-top-color: var(--sub-alt-color);
-}
-
-.modal-body textarea {
-   background-color: transparent !important;
-   color: var(--text-color) !important;
-   box-shadow: none !important;
 }
 
 /* stops the modal from hiding the scrollbar on open                    */
@@ -143,12 +138,12 @@ h1 {
 /** Theme List Group **/
 /* override bootstrap's list-group-item */
 .list-group-item {
-   color: var(--text-color);
-   background-color: var(--frosted-bg);
+   color: var(--bg-color);
+   background-color: var(--main-color);
 }
 
 .list-group-item-action:focus, .list-group-item-action:hover {
-   --bs-list-group-action-hover-bg: var(--bg-color);
+   --bs-list-group-action-hover-bg: var(--sub-alt-color);
 }
 
 /** Bootstrap Toast Messages **/
@@ -174,14 +169,12 @@ option:focus {
 }
 
 .form-control {
-   box-shadow: rgba(81, 81, 81, 0.59) 0px 30px 60px -12px inset,
-      rgba(255, 255, 255, 0.3) 0px 18px 36px -18px inset;
+   box-shadow:rgb(133 133 133 / 25%) -8px -8px 3px 1px inset;
 }
 
 .form-control:focus {
    border-color: var(--main-color);
-   box-shadow: rgba(81, 81, 81, 0.59) 0px 30px 60px -12px inset,
-      rgba(255, 255, 255, 0.3) 0px 18px 36px -18px inset,
+   box-shadow: rgb(133 133 133 / 25%) -8px -8px 3px 1px inset,
       0 0 0 0.1rem var(--main-color);
 }
 
@@ -214,7 +207,7 @@ textarea::-webkit-resizer {
 
 /* Scrollbar for modals */
 .modal-body::-webkit-scrollbar-thumb {
-   background-color: var(--main-color);
+   background-color: var(--sub-alt-color);
    border-radius: 5rem;
 }
 .modal-body .card::-webkit-scrollbar-thumb {
@@ -251,13 +244,18 @@ textarea::-webkit-resizer {
 }
 
 .btn:hover {
-   color: var(--sub-alt-color) !important;
+   color: var(--main-color) !important;
 }
 
 /* Emphasis on important actions */
 .btn-important {
    background-color: var(--main-color);
-   color: var(--sub-alt-color) !important;
+   color: var(--bg-color) !important;
+}
+
+/* Emphasis on important actions */
+.btn-important:hover {
+   color: var(--main-color) !important;
 }
 
 /* Toggle class, used for action buttons (timer, 24hr, millisedonds) */
@@ -320,7 +318,7 @@ button:active.btn {
 .credits {
    color: var(--text-color);
 }
-li,
+
 select,
 option,
 ::placeholder,
