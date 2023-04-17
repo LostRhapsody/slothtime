@@ -38,6 +38,11 @@
          rel="stylesheet"
          href="static/styles/er_apps_styles.css"
       />
+      <link
+         rel="stylesheet"
+         href="static/styles/themes/slothtime.css"
+         id="currentTheme"
+      />
    </head>
 
    <body>
@@ -136,18 +141,9 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                            aria-hidden="true"
                            aria-label="Atom Theme Selection"
                            class="trigger-change-theme list-group-item list-group-item-action"
-                           data-theme="slothtime_theme.css"
+                           data-theme="slothtime.css"
                         >
-                           Default
-                        </li>
-                        <li
-                           id="atom_one_dark_theme"
-                           aria-hidden="true"
-                           aria-label="Atom Theme Selection"
-                           class="trigger-change-theme list-group-item list-group-item-action"
-                           data-theme="atom_one_dark_theme.css"
-                        >
-                           Atom One Dark
+                           Slothtime
                         </li>
                      </ul>
                   </div>
@@ -250,7 +246,9 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         <div
                            class="col d-flex justify-content-center"
                         >
-                           <a href="https://evanrobertson.dev">
+                           <a
+                              href="https://evanrobertson.dev"
+                           >
                               <img
                                  class="shield"
                                  src="static/images/dev_badge.svg"
@@ -567,7 +565,10 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         aria-label="Close"
                      ></button>
                   </div>
-                  <div class="modal-body" id="changelog-body">
+                  <div
+                     class="modal-body"
+                     id="changelog-body"
+                  >
                      <!-- <md-block id="changelog-md">
 
                      </md-block> -->
@@ -786,7 +787,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                   <td>
                      <select
                         name="workCode"
-                        class="form-control mt-3 workCode"
+                        class="form-control workCode"
                         aria-label="Work Code Input"
                         aria-describedby="inputGroup-timeentry-workcode"
                      >
@@ -804,40 +805,42 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
                         </option>
                      </select>
                   </td>
-                  <td class="d-flex">
-                     <textarea
-                        rows="1"
-                        aria-label="Time Entry Input"
-                        class="form-control my-3 jira-entry-field"
-                        placeholder="Jira Entry"
-                        aria-describedby="inputGroup-timeentry-jiraentry"
-                     ></textarea>
-                     <button
-                        type="button"
-                        class="btn btn-copy-to-clipboard position-relative"
-                        title="Copy to clipboard"
-                        aria-hidden="true"
-                        aria-label="Copy to clipboard"
-                        aria-describedby="inputGroup-timeentry-copytoclipboard"
-                        id="copied_toast_btn"
-                     >
-                        <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           width="16"
-                           height="16"
-                           fill="currentColor"
-                           class="bi bi-clipboard clipboard-icon"
-                           viewBox="0 0 16 16"
-                           id="svg-copyToast"
+                  <td>
+                     <div class="d-flex">
+                        <textarea
+                           rows="1"
+                           aria-label="Time Entry Input"
+                           class="form-control my-3 jira-entry-field"
+                           placeholder="Jira Entry"
+                           aria-describedby="inputGroup-timeentry-jiraentry"
+                        ></textarea>
+                        <button
+                           type="button"
+                           class="btn btn-copy-to-clipboard position-relative"
+                           title="Copy to clipboard"
+                           aria-hidden="true"
+                           aria-label="Copy to clipboard"
+                           aria-describedby="inputGroup-timeentry-copytoclipboard"
+                           id="copied_toast_btn"
                         >
-                           <path
-                              d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
-                           />
-                           <path
-                              d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
-                           />
-                        </svg>
-                     </button>
+                           <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-clipboard clipboard-icon"
+                              viewBox="0 0 16 16"
+                              id="svg-copyToast"
+                           >
+                              <path
+                                 d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"
+                              />
+                              <path
+                                 d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"
+                              />
+                           </svg>
+                        </button>
+                     </div>
                   </td>
                   <td class="start_time">
                      <input
@@ -875,7 +878,7 @@ Start typing in a Jira Entry field and re-open this for easier reading and editi
             <div class="table-responsive">
                <table
                   id="time-tracking-table"
-                  class="table table-dark table-striped table-hover"
+                  class="st-table"
                >
                   <thead>
                      <tr id="time-tracking-headers">

@@ -591,19 +591,27 @@ function copyToClipboard(event, source) {
    $("#copied_toast").toast("show");
 }
 
+/* Loads the list of themes from _list.json */
+function loadThemeList() {
+   
+}
+
+/* list item element to build for each theme
+<li
+id="default"
+aria-hidden="true"
+aria-label="Atom Theme Selection"
+class="trigger-change-theme list-group-item list-group-item-action"
+data-theme="slothtime.css"
+>
+Slothtime
+</li>
+*/
+
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
 function changeTheme(theme) {
-   $(
-      '[href="static/styles/themes/' + currentTheme + '"]'
-   ).remove();
-   $("head").append(
-      '<link id="' +
-         theme +
-         '" rel="stylesheet" type="text/css" href="static/styles/themes/' +
-         theme +
-         '">'
-   );
+   $("#currentTheme")[0].href = "static/styles/themes/" + theme;
    currentTheme = theme;
 }
 
@@ -612,17 +620,10 @@ function changeTheme(theme) {
 /* only for previews */
 function previewTheme(theme, mode) {
    if (mode == "show") {
-      $("head").append(
-         '<link id="' +
-            theme +
-            '" rel="stylesheet" type="text/css" href="static/styles/themes/' +
-            theme +
-            '">'
-      );
-   } else {
-      $(
-         '[href="static/styles/themes/' + theme + '"]:first'
-      ).remove();
+      $("#currentTheme")[0].href = "static/styles/themes/" + theme;
+   } 
+   else {
+      $("#currentTheme")[0].href = "static/styles/themes/" + currentTheme;
    }
 }
 

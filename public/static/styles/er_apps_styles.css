@@ -1,16 +1,22 @@
 /**** Body / Global ****/
 :root {
-   --frosted-bg: rgba(255, 255, 255, 0.15);
+   /* theme colors */
    --bg-color: #323437;
    --main-color: rgb(226, 183, 20);
-   --main-color-half-alpha: rgba(226, 183, 20, 0.5);
-   --main-hover: #bb960f;
-   --sub-color: #646669;
+   --sub-color: #222325;
    --sub-alt-color: #2c2e31;
    --text-color: #d1d0c5;
    --error-color: #ca4754;
+   --caret-color: #99d6ea;
+   --error-extra-color: #fffb85;
+   --colorful-error-color: #fffb85;
+   --colorful-error-extra-color: #fffb85;
+   /* theme colors */
+
+   /* Bootstrap ovverrides */
    --bs-border-color: none;
    --bs-form-control-bg: #ffffff00;
+   --frosted-bg: rgba(255, 255, 255, 0.15);
 }
 
 body {
@@ -41,6 +47,27 @@ h1 {
    }
 }
 
+/* Only take the desired traits of BS table */
+.st-table {
+   width: 100%;
+   margin-bottom: 1rem;
+   color: var(--text-color);
+   vertical-align: top;
+   border-color: var(--sub-color);
+   caption-side: bottom;
+   border-collapse: collapse;
+}
+
+.st-table th, .st-table td {
+   padding: .5rem;
+   background-color: var(--sub-color);
+   border-bottom-width: 1px;
+   box-shadow: inset 0 0 0 9999px var(--sub-alt-color);
+}
+
+.st-table thead th {
+   box-shadow: inset 0 0 0 9999px var(--sub-color);
+}
 /**** UI / Look and Feel ****/
 
 .sloth-icon {
@@ -87,8 +114,9 @@ h1 {
 /* stops the modal from hiding the scrollbar on open                    */
 /* when the scroll bar hides it forces the page to move which I dislike */
 .modal-open {
-   overflow: auto !important;
-   /* padding-right: 0px !important; */
+   overflow-y: scroll !important;
+   overflow-x: auto !important;
+   padding-right: 0px !important;
 }
 
 #information-modal .modal-body .card {
@@ -97,7 +125,8 @@ h1 {
 }
 
 /**** Badges ****/
-.netlify-badge img, .shield {
+.netlify-badge img,
+.shield {
    height: 1.3rem;
    width: auto;
 }
@@ -140,7 +169,7 @@ option:focus {
    border-color: var(--main-color);
    box-shadow: rgba(81, 81, 81, 0.59) 0px 30px 60px -12px inset,
       rgba(255, 255, 255, 0.3) 0px 18px 36px -18px inset,
-      0 0 0 0.25rem var(--main-color-half-alpha);
+      0 0 0 0.1rem var(--main-color);
 }
 
 /** scroll bars **/
@@ -341,17 +370,18 @@ textarea {
    border: none;
    border-radius: 50%;
    aspect-ratio: 1;
-   -webkit-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
+   -webkit-box-shadow: 10px 10px 38px 0px
+      rgba(0, 0, 0, 0.75);
    -moz-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
    box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
 
    /* light button and button hover */
    --_light-bg: var(--main-color);
-   --_light-bg-hover: var(--main-hover);
+   --_light-bg-hover: var(--main-color);
 
    /* dark button and button hover */
    --_dark-bg: var(--main-color);
-   --_dark-bg-hover: var(--main-hover);
+   --_dark-bg-hover: var(--main-color);
 
    /* adaptive variables set to light by default */
    --_bg: var(--_light-bg);
@@ -378,10 +408,11 @@ textarea {
 .fab:active,
 .fab:hover,
 .fab:focus-visible {
-   --_bg: var(--_light-bg-hover);
+   filter: brightness(76%);
+   /* --_bg: var(--_light-bg-hover); */
 
    @media (prefers-color-scheme: dark) {
-      --_bg: var(--_dark-bg-hover);
+      /* --_bg: var(--_dark-bg-hover); */
    }
 }
 
