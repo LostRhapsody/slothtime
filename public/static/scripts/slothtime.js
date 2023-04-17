@@ -615,7 +615,7 @@ function copyToClipboard(event, source) {
 /* gets the list of themes from _list.json */
 function getThemeList() {
    let myThemeListString =
-      "https://raw.githubusercontent.com/LostRhapsody/slothtime/develop/public/static/styles/themes/_list.json";
+      "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/static/styles/themes/_list.json";
 
    fetch(myThemeListString)
       .then((response) => response.json())
