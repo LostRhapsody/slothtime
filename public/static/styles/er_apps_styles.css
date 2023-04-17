@@ -15,7 +15,7 @@
 
    /* Bootstrap ovverrides */
    --bs-border-color: none;
-   --bs-form-control-bg: #ffffff00;
+   --bs-form-control-bg: #ffffff00;   
    --frosted-bg: rgba(255, 255, 255, 0.15);
 }
 
@@ -119,10 +119,17 @@ h1 {
    padding-right: 0px !important;
 }
 
-#information-modal .modal-body .card {
+.modal-body .card,
+.modal-body #theme-list {
    max-height: 50vh;
    overflow: auto;
 }
+
+/**** Cards ****/
+.card {
+   --bs-card-bg: var(--bg-color);
+}
+
 
 /**** Badges ****/
 .netlify-badge img,
@@ -136,6 +143,10 @@ h1 {
 .list-group-item {
    color: var(--text-color);
    background-color: var(--frosted-bg);
+}
+
+.list-group-item-action:focus, .list-group-item-action:hover {
+   --bs-list-group-action-hover-bg: var(--bg-color);
 }
 
 /** Bootstrap Toast Messages **/
@@ -375,31 +386,9 @@ textarea {
    -moz-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
    box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
 
-   /* light button and button hover */
-   --_light-bg: var(--main-color);
-   --_light-bg-hover: var(--main-color);
-
-   /* dark button and button hover */
-   --_dark-bg: var(--main-color);
-   --_dark-bg-hover: var(--main-color);
-
-   /* adaptive variables set to light by default */
-   --_bg: var(--_light-bg);
-
-   /* static icon colors set to the adaptive foreground variable */
-   --_light-fg: white;
-   --_dark-fg: black;
-   --_fg: var(--_light-fg);
-
    /* use the adaptive properties on some styles */
-   background: var(--_bg);
-   color: var(--_fg) !important;
-
-   /* if users prefers dark, set adaptive props to dark */
-   @media (prefers-color-scheme: dark) {
-      --_bg: var(--_dark-bg);
-      --_fg: var(--_dark-fg);
-   }
+   background: var(--main-color);
+   color: var(--sub-alt-color) !important;
 
    -webkit-tap-highlight-color: transparent;
 }
