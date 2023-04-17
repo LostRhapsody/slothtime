@@ -4,6 +4,9 @@
       "update":"010013",
       "commitMessage":[
          {
+            "message":"Switched to custom table class inherited from BS. Allows table to be customized with themes."
+         },
+         {
             "message":"Added themes from monkeytype.com (3 GPL License)."
          },
          {

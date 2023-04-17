@@ -591,6 +591,23 @@ function copyToClipboard(event, source) {
    $("#copied_toast").toast("show");
 }
 
+/* Loads the list of themes from _list.json */
+function loadThemeList() {
+   
+}
+
+/* list item element to build for each theme
+<li
+id="default"
+aria-hidden="true"
+aria-label="Atom Theme Selection"
+class="trigger-change-theme list-group-item list-group-item-action"
+data-theme="slothtime.css"
+>
+Slothtime
+</li>
+*/
+
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
 function changeTheme(theme) {
