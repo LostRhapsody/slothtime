@@ -7,7 +7,6 @@ var hoursToggle = true; /* toggle between start/end time and total hours */
 var trackingArray =
    []; /* stores the tracking objects that contain the input field details */
 var hideClock = false; /* toggles the clock visibility */
-var currentTheme; /* stores the current theme applied */
 var isFabMenuOpen; /* tracks if the FAB button menu is open */
 var isFabsHovered; /* tracks if the fabs div is being hovered */
 var switchingTheme; /* tracks if the theme is currently being changed */
@@ -17,6 +16,8 @@ let errorMessage; /* stores error messages. Empty after each error is logged */
 let errorTarget; /* stores targets from errors. Empty after each error is logged */
 let errorAction; /* stores actions from errors. Empty after each error is logged */
 
+$('document').ready(function(){
+
 /* Check and retrieve any stored data in the cache */
 var cacheTracking = JSON.parse(
    localStorage.getItem("Time_Tracking")
@@ -25,6 +26,9 @@ var cacheTracking = JSON.parse(
 if (cacheTracking != null) trackingArray = cacheTracking;
 updateTimeTrackingTableDisplay();
 
+var currentTheme = localStorage.getItem("current_theme"); /* stores the current theme applied */
+if(currentTheme == null) currentTheme = "slothtime.css";
+changeTheme(currentTheme);
 /**** Initializing Components *****/
 
 /* initialize Bootstrap modals */
@@ -66,7 +70,8 @@ $(".mini-fab").hide();
 $(".task_time").hide();
 /* Trigger the first row */
 newRow();
-
+/* get theme list */
+getThemeList();
 /****** Keyboard Shortcuts *******/
 
 /* 
@@ -201,30 +206,21 @@ $("#time-tracking-table").on(
       )
          newRow();
    }
-);
+);   
 
 /* changes the theme. Currently */
 /* just toggles to AtomOne Dark */
 /* exits if switching theme     */
 $(".trigger-change-theme").hover(
-   function (e) {
+   function (e) {      
       if (switchingTheme) return;
-      previewTheme(e.target.attributes[4].value, "show");
+      previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"show");
    },
    function (e) {
       if (switchingTheme) return;
-      previewTheme(e.target.attributes[4].value, "hide");
+      previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"hide");
    }
 );
-
-/* changes the theme. Currently */
-/* just toggles to AtomOne Dark */
-$(".trigger-change-theme").click(function (e) {
-   if (switchingTheme) return;
-   switchingTheme = true;
-   changeTheme(e.target.attributes[4].value);
-   themeModal.toggle();
-});
 
 /* When textarea is focused  */
 /* expand it for readability */
@@ -591,28 +587,66 @@ function copyToClipboard(event, source) {
    $("#copied_toast").toast("show");
 }
 
-/* Loads the list of themes from _list.json */
-function loadThemeList() {
+/* gets the list of themes from _list.json */
+function getThemeList() {
+   let myThemeListString =
+      "https://raw.githubusercontent.com/LostRhapsody/slothtime/develop/public/static/styles/themes/_list.json";
    
+   fetch(myThemeListString)
+      .then((response) => response.json())
+      .then((json) => loadThemeList(json));
 }
 
-/* list item element to build for each theme
-<li
-id="default"
-aria-hidden="true"
-aria-label="Atom Theme Selection"
-class="trigger-change-theme list-group-item list-group-item-action"
-data-theme="slothtime.css"
->
-Slothtime
-</li>
-*/
+/* loads the list of themes from _list.json */
+function loadThemeList(themes) {
+   themes.forEach(theme => {
+      const liElement = 
+      '<li' +
+      ' id=' + theme.name +
+      ' aria-hidden="true"' +
+      ' aria-label="' + theme.name + ' Selection"' +
+      ' class="trigger-change-theme list-group-item list-group-item-action"' +
+      ' data-theme="' + theme.name + '.css"' +
+      '>' +
+      theme.name +
+      '</li>';
+      $("#theme-list").append(liElement);
+   });
+   const themeElements = $(".trigger-change-theme");
+   themeElements.each(function() {
+      let themeID = '#' + this.id.toString();
+      /* when theme li is hovered, displays the theme but      */
+      /* does not change the current theme, then switches back */
+      $(themeID).hover(
+         function (e) {      
+            if (switchingTheme) return;
+            previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"show");
+         },
+         function (e) {
+            if (switchingTheme) return;
+            previewTheme($('#' + e.target.id.toString()).attr('data-theme'),"hide");
+         }
+      );
+      /* when theme li is clicked, changes current theme */
+      $(themeID).click(function (e) {
+         if (switchingTheme) return;
+         switchingTheme = true;
+         changeTheme(e.target.attributes[4].value);
+         themeModal.toggle();
+      });
+   });
+}
 
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
 function changeTheme(theme) {
-   $("#currentTheme")[0].href = "static/styles/themes/" + theme;
+   $("#currentTheme")[0].href =
+      "static/styles/themes/" + theme;
    currentTheme = theme;
+   localStorage.setItem(
+      "current_theme",
+      currentTheme
+   );
 }
 
 /* load the themes stylesheet */
@@ -620,10 +654,11 @@ function changeTheme(theme) {
 /* only for previews */
 function previewTheme(theme, mode) {
    if (mode == "show") {
-      $("#currentTheme")[0].href = "static/styles/themes/" + theme;
-   } 
-   else {
-      $("#currentTheme")[0].href = "static/styles/themes/" + currentTheme;
+      $("#currentTheme")[0].href =
+         "static/styles/themes/" + theme;
+   } else {
+      $("#currentTheme")[0].href =
+         "static/styles/themes/" + currentTheme;
    }
 }
 
@@ -724,7 +759,6 @@ function showChangelog() {
 }
 
 function updateChangelog(data) {
-   console.log(data);
    data.forEach((versionNote) => {
       $("#changelog-body").append(
          "<h3>" +
@@ -743,3 +777,4 @@ function updateChangelog(data) {
    });
    console.log($("#0.01.01"));
 }
+});

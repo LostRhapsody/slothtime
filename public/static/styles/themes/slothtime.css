@@ -1,10 +1,12 @@
 :root {
-   --frosted-bg: rgba(255, 255, 255, 0.15);
    --bg-color: #323437;
-   --main-color: #e2b714;
-   --main-hover: #bb960f;
-   --sub-color: #646669;
+   --main-color: rgb(226, 183, 20);
+   --sub-color: #222325;
    --sub-alt-color: #2c2e31;
    --text-color: #d1d0c5;
    --error-color: #ca4754;
+   --caret-color: #99d6ea;
+   --error-extra-color: #fffb85;
+   --colorful-error-color: #fffb85;
+   --colorful-error-extra-color: #fffb85;
 }
