@@ -183,7 +183,8 @@ option:focus {
 }
 
 .form-control:focus {
-   border-color: var(--main-color);
+   border-color: var(--sub-color);
+   box-shadow: 0 0 0 0.05rem var(--main-color);
 }
 
 /** scroll bars **/
