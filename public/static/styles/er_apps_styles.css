@@ -71,6 +71,11 @@ h3 {
 .st-table thead th {
    box-shadow: inset 0 0 0 9999px var(--main-color);
    color: var(--bg-color) !important;
+   border-bottom-width: 0px;
+}
+
+.st-table thead th:first-of-type {
+   border-left-width: 1px;
 }
 
 .st-table tr[row] th {
