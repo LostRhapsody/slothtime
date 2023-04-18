@@ -7,7 +7,7 @@
             "message":"New features: theme search bar. "
          },
          {
-            "message":"Misc: Working on caching stylesheets and scripts for faster load times."
+            "message":"Misc: Working on caching stylesheets and scripts for faster load times. Added previewTheme and currentTheme link tags, so we always have current theme loaded, and previewing loads a preview theme on TOP of that theme. This stops the site from having no theme loaded when previewing themes quickly."
          },{
             "message":"Bugs: Fixed several data entry and caching bugs."
          }

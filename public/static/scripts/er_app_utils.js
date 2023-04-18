@@ -89,13 +89,12 @@ function loadThemeList(themes) {
 }
 
 /* load the themes stylesheet */
-/* removes the loaded stylesheet if it's already loaded */
 /* only for previews */
 function previewTheme(theme, mode) {
    if (mode == "show") {
-      $("#currentTheme")[0].href = "static/styles/themes/" + theme;
+      $("#previewTheme")[0].href = "static/styles/themes/" + theme;
    } else {
-      $("#currentTheme")[0].href = "static/styles/themes/" + currentTheme;
+      $("#previewTheme")[0].href = "";
    }
 }
 
