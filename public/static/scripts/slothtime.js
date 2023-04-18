@@ -724,7 +724,7 @@ function updateChangelog(data) {
 /* MAJOR WIP */
 async function setupCache(cacheObject) {
 
-   // const cache = await caches.open('my-cache');
+   const cache = await caches.open('my-cache');
    const options = {
       headers:{
          'Content-Type':  'application/json'
@@ -734,23 +734,32 @@ async function setupCache(cacheObject) {
    
    
    switch(cacheObject){
-      case 'changelog':         
-         const changelogRequest = new Request('https://slothtime.dev/data/changelog/changelog.json');         
+      case 'changelog':        
+      
+   const url =
+   "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/data/changelog/changelog.json";
+      fetch(url)
+         .then((response) => response.json())
+         .then((json) => {
+            cache.put(json, jsonResponse);
+            updateChangelog(json);
+         });
+         // const changelogRequest = new Request('https://slothtime.dev/data/changelog/changelog.json');         
 
-         const cachedResponse = caches
-         .match(changelogRequest)
-         .catch(() => {
-            console.log("found");
-            fetch(changelogRequest)
-         })
-         .then(() => {
-            console.log("not found");
-            caches.open('my-cache').then(cache => {
-               cache.put(changelogRequest, jsonResponse);
-            });
-            return jsonResponse.clone().json();
-         })
-         .catch(() => caches.match("https://developer.mozilla.org/en-US/docs/Web/API/Cache/put"));
+         // const cachedResponse = caches
+         // .match(changelogRequest)
+         // .catch(() => {
+         //    console.log("found");
+         //    fetch(changelogRequest)
+         // })
+         // .then(() => {
+         //    console.log("not found");
+         //    caches.open('my-cache').then(cache => {
+         //       cache.put(changelogRequest, jsonResponse);
+         //    });
+         //    return jsonResponse.clone().json();
+         // })
+         // .catch(() => caches.match("https://developer.mozilla.org/en-US/docs/Web/API/Cache/put"));
 
 
          // if (!jsonResponse.ok || jsonResponse.body == null){

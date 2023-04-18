@@ -7,7 +7,7 @@
             "message":"New features: theme search bar. Themes favorite button. List of favorite themes is cached, favorite themes list doesn't have a user-facing purpose yet."
          },
          {
-            "message":"Misc: Working on caching stylesheets and scripts for faster load times. Added previewTheme and currentTheme link tags, so we always have current theme loaded, and previewing loads a preview theme on TOP of that theme. This stops the site from having no theme loaded when previewing themes quickly. New toast message for favoriting themes. Moved toast message code to utilities script."
+            "message":"Misc: Working on caching stylesheets and scripts for faster load times. Added previewTheme and currentTheme link tags, so we always have current theme loaded, and previewing loads a preview theme on TOP of that theme. This stops the site from having no theme loaded when previewing themes quickly. New toast message for favoriting themes. Moved toast message code to utilities script. Added a service worker to cache assets and improve load times."
          },{
             "message":"Bugs: Fixed several data entry and caching bugs."
          }

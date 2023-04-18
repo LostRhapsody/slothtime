@@ -32,9 +32,11 @@ and this file in footer
 ----------------------------*/
 
 /* gets the list of themes from _list.json */
-function getThemeList() {
+async function getThemeList() {
+   const cacheKey = 'slothtimeCache_v1';
+
    let myThemeListString =
-      "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/static/styles/themes/_list.json";
+      "static/styles/themes/_list.json";
 
    /* only load if it hasn't been loaded yet */
    if (typeof $("#theme-list").attr("data-st-loaded") == "undefined")

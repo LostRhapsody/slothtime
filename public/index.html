@@ -173,7 +173,9 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                      ></button>
                   </div>
                   <div class="modal-body">
-                     <div class="row flex-column flex-md-row align-items-center">
+                     <div
+                        class="row flex-column flex-md-row align-items-center"
+                     >
                         <div class="col">
                            <input
                               class="form-control mb-3"
@@ -978,7 +980,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
       <!-- er utils js -->
       <script src="static/scripts/er_app_utils.js"></script>
       <!-- slothtime general js -->
-      <script src="https://slothtime.dev/static/scripts/slothtime.js"></script>
+      <script src="static/scripts/slothtime.js"></script>
       <!-- clock controller -->
       <script src="https://slothtime.dev/static/scripts/clock.js"></script>
       <!-- Markdown block lib -->
@@ -986,5 +988,21 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
          type="module"
          src="https://md-block.verou.me/md-block.js"
       ></script>
+      <script>
+         window.addEventListener("load", () => {
+            // Is service worker available?
+            if ("serviceWorker" in navigator) {
+               navigator.serviceWorker
+                  .register("serviceworker.js")
+                  .then(() => {
+                     console.log("Service worker registered!");
+                  })
+                  .catch((error) => {
+                     console.warn("Error registering service worker:");
+                     console.warn(error);
+                  });
+            }
+         });
+      </script>
    </body>
 </html>
