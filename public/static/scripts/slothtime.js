@@ -687,12 +687,8 @@ async function showChangelog() {
    informationModal.toggle();
    showChangelogModal = true;
    const url =
-      "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/data/changelog/changelog.json";
-   /* TODO check for existing cache first and cache changelong */
-   
-   // if(cacheAvailable)      
-   // const changelog = await setupCache('changelog');
-   /* check if log has already been loaded */
+      "data/changelog/changelog.json";
+
    if (typeof $("#changelog-body").attr("data-st-loaded") == "undefined")
       fetch(url)
          .then((response) => response.json())
@@ -719,61 +715,4 @@ function updateChangelog(data) {
    });
    /* set loaded to true so we only fetch once */
    $("#changelog-body").attr("data-st-loaded", "true");
-}
-
-/* MAJOR WIP */
-async function setupCache(cacheObject) {
-
-   const cache = await caches.open('my-cache');
-   const options = {
-      headers:{
-         'Content-Type':  'application/json'
-      }
-   }
-   const jsonResponse = new Response('{}', options);
-   
-   
-   switch(cacheObject){
-      case 'changelog':        
-      
-   const url =
-   "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/data/changelog/changelog.json";
-      fetch(url)
-         .then((response) => response.json())
-         .then((json) => {
-            cache.put(json, jsonResponse);
-            updateChangelog(json);
-         });
-         // const changelogRequest = new Request('https://slothtime.dev/data/changelog/changelog.json');         
-
-         // const cachedResponse = caches
-         // .match(changelogRequest)
-         // .catch(() => {
-         //    console.log("found");
-         //    fetch(changelogRequest)
-         // })
-         // .then(() => {
-         //    console.log("not found");
-         //    caches.open('my-cache').then(cache => {
-         //       cache.put(changelogRequest, jsonResponse);
-         //    });
-         //    return jsonResponse.clone().json();
-         // })
-         // .catch(() => caches.match("https://developer.mozilla.org/en-US/docs/Web/API/Cache/put"));
-
-
-         // if (!jsonResponse.ok || jsonResponse.body == null){
-         //    throw new TypeError("Bad response status, couldn't get changelog");
-         // } else {
-         //    console.log(jsonResponse);
-         //    const changelogJson = await jsonResponse.clone().json();
-         //    console.log(changelogJson);
-         //    updateChangelog(changelogJson);
-         // }
-
-         break;
-      case 'themelist':
-         cache.add("https://slothtime.dev/static/styles/themes/_list.json");
-         break;
-   }
 }

@@ -38,7 +38,7 @@ async function getThemeList() {
    let myThemeListString =
       "static/styles/themes/_list.json";
 
-   /* only load if it hasn't been loaded yet */
+   /* only fetch if it hasn't been loaded yet */
    if (typeof $("#theme-list").attr("data-st-loaded") == "undefined")
       fetch(myThemeListString)
          .then((response) => response.json())

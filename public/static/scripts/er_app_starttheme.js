@@ -30,17 +30,17 @@ if (currentTheme == "slothtime.css")
 
 /* directly set the link tag's href */
 if (currentThemeStylesheet != null)
-   $("#currentTheme")[0].href = fileLocation + currentThemeStylesheet;
+   $("#currentTheme")[0].href = currentThemeStylesheet;
 /* set the theme */ else changeTheme(currentTheme);
 
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
 function changeTheme(theme) {
-   $("#currentTheme")[0].href = "https://slothtime.dev/static/styles/themes/" + theme;
+   $("#currentTheme")[0].href = "static/styles/themes/" + theme;
    currentTheme = theme;
    localStorage.setItem("current_theme", currentTheme);
    localStorage.setItem(
       "current_theme_stylesheet",
-      "../styles/themes/" + theme
+      "static/styles/themes/" + theme
    );   
 }
