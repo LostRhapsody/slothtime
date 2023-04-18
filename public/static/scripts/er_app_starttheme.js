@@ -20,6 +20,14 @@ var currentTheme =
 /* if no theme is cached, default to slothtime */
 if (currentTheme == null) currentTheme = "serika_dark.css";
 
+/* HACK Remove slothtime.css from cache if loaded */
+/* can be removed in a week or two                */
+if (currentThemeStylesheet == "../styles/themes/slothtime.css") 
+   currentThemeStylesheet = "https://slothtime.dev/static/styles/themes/serika_dark.css";
+if (currentTheme == "slothtime.css") 
+   currentTheme = "serika_dark.css";
+
+
 /* directly set the link tag's href */
 if (currentThemeStylesheet != null)
    $("#currentTheme")[0].href = fileLocation + currentThemeStylesheet;
@@ -28,7 +36,7 @@ if (currentThemeStylesheet != null)
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
 function changeTheme(theme) {
-   $("#currentTheme")[0].href = fileLocation + "../styles/themes/" + theme;
+   $("#currentTheme")[0].href = "https://slothtime.dev/static/styles/themes/" + theme;
    currentTheme = theme;
    localStorage.setItem("current_theme", currentTheme);
    localStorage.setItem(

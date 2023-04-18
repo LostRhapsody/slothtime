@@ -1,6 +1,36 @@
 
 [
    {
+      "update":"010015",
+      "commitMessage":[                  
+         {
+            "message":"New features: theme search bar. "
+         },
+         {
+            "message":"Misc: Working on caching stylesheets and scripts for faster load times."
+         },{
+            "message":"Bugs: Fixed several data entry and caching bugs."
+         }
+      ]
+   },
+   {
+      "update":"010014",
+      "commitMessage":[                  
+         {
+            "message":"Full revamp of stylesheets on buttons, table, and menus for better contrast and more simplicity"
+         },
+         {
+            "message":"Increased Number of rows in large jira entry."
+         },
+         {
+            "message":"Update styling for themes for better contrast on buttons, table, cells. Update the table borders, cells, header styles. Updated button styles and active/hover/focus states."
+         },
+         {
+            "message":"Bugs: Fixed the modal causing scroll bars to appear/dissapear and adjusting the position of elements. Fixed the stylesheet loading bug for switching themes."
+         }
+      ]
+   },
+   {
       "update":"010013",
       "commitMessage":[
          {
