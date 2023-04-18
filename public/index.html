@@ -10,7 +10,7 @@
       />
       <meta
          name="image"
-         content="https://slothtime.dev/static/images/sloth-icon.png"
+         content="static/images/sloth-icon.png"
       />
       <meta
          name="keywords"
@@ -29,7 +29,7 @@
       <meta property="og:type" content="website" />
       <meta
          property="og:image"
-         content="https://slothtime.dev/static/images/sloth-icon.png"
+         content="static/images/sloth-icon.png"
       />
       <meta
          property="og:description"
@@ -41,7 +41,7 @@
       />
       <meta
          name="twitter:image"
-         content="https://slothtime.dev/static/images/sloth-icon.png"
+         content="static/images/sloth-icon.png"
       />
       <meta name="twitter:card" content="summary_large_image" />
       <script type="application/ld+json">
@@ -59,7 +59,7 @@
       <link
          rel="icon"
          type="image/x-icon"
-         href="https://slothtime.dev/static/images/sloth-icon.svg"
+         href="static/images/sloth-icon.svg"
       />
       <title>slothtime | A minimalist, customizable time tracker</title>
       <!-- JQuery -->
@@ -87,7 +87,7 @@
 
       <link
          rel="stylesheet"
-         href="https://slothtime.dev/static/styles/er_apps_styles.css"
+         href="static/styles/er_apps_styles.css"
       />
    </head>
 
@@ -976,33 +976,17 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
          crossorigin="anonymous"
       ></script>
       <!-- er animations js -->
-      <script src="https://slothtime.dev/static/scripts/er_app_anim.js"></script>
+      <script src="static/scripts/er_app_anim.js"></script>
       <!-- er utils js -->
       <script src="static/scripts/er_app_utils.js"></script>
       <!-- slothtime general js -->
       <script src="static/scripts/slothtime.js"></script>
       <!-- clock controller -->
-      <script src="https://slothtime.dev/static/scripts/clock.js"></script>
+      <script src="static/scripts/clock.js"></script>
       <!-- Markdown block lib -->
       <script
          type="module"
          src="https://md-block.verou.me/md-block.js"
       ></script>
-      <script>
-         window.addEventListener("load", () => {
-            // Is service worker available?
-            if ("serviceWorker" in navigator) {
-               navigator.serviceWorker
-                  .register("serviceworker.js")
-                  .then(() => {
-                     console.log("Service worker registered!");
-                  })
-                  .catch((error) => {
-                     console.warn("Error registering service worker:");
-                     console.warn(error);
-                  });
-            }
-         });
-      </script>
    </body>
 </html>
