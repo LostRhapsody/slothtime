@@ -106,10 +106,17 @@ document.onkeyup = function (event) {
 };
 
 /****** Event Listeners ******/
+/* when any field is focues on the table  */
+/* populate the modal's fields            */
+$("#time-tracking-table").on("focus", "tr .form-control", function (e) {
+   setupModal(e);
+});
+
+/****** Event Listeners ******/
 /* when any field is changed on the table */
 /* update the trackingArray's object      */
 /* and populate the modal's fields        */
-$("#time-tracking-table").on("focus", "tr .form-control", function (e) {
+$("#time-tracking-table").on("change", "tr .form-control", function (e) {
    updateTrackingArray(e);
    setupModal(e);
 });
