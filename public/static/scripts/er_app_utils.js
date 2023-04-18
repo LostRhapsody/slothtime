@@ -4,8 +4,23 @@
 var fileLocation = $('script[src*="er_app_utils"]').attr("src");
 fileLocation = fileLocation.replace("er_app_utils.js", "");
 
+/* store the user's favorite themes */
+var favoriteThemes = [];
+
 /* just nice to have */
 const pageName = $("title")[0].text.slice(12);
+
+updateAddFaveBtn();
+
+/*----------------------------
+Toast Message Utilities
+----------------------------*/
+
+/* Initialize Bootstrap's Toast Utility */
+var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+var toastList = toastElList.map(function (toastEl) {
+   return new bootstrap.Toast(toastEl);
+});
 
 /*----------------------------
 Theme Utilities
@@ -83,6 +98,7 @@ function loadThemeList(themes) {
          switchingTheme = true;
          /* changeTheme defined in erp_app_starttheme.js */
          changeTheme(e.target.attributes[4].value);
+         updateAddFaveBtn()
          themeModal.toggle();
       });
    });
@@ -112,4 +128,21 @@ function filterThemes() {
          $(themeElements[element]).hide();      
    });
 
+}
+
+/* update the favorite button in theme modal */
+function updateAddFaveBtn() {
+   /* remove the .css from the theme name       */
+   $('#favorite-theme-label')[0].innerHTML = currentTheme.slice(0, currentTheme.length - 4).replaceAll('_', ' ');
+}
+
+/* TODO Switch to a config file for favorites, table data, etc. */
+/* FEATURE Make favorites list accessible                       */ 
+function addThemeToFavorites() {   
+   if(!favoriteThemes.includes(currentTheme)){
+      favoriteThemes.push(currentTheme);
+      localStorage.setItem("favorite_themes", favoriteThemes);
+      $("#favorited_toast").toast("show");
+   } else 
+      alert("Theme already in favorites");
 }

@@ -42,5 +42,5 @@ function changeTheme(theme) {
    localStorage.setItem(
       "current_theme_stylesheet",
       "../styles/themes/" + theme
-   );
+   );   
 }

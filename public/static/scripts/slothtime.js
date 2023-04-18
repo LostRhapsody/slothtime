@@ -60,11 +60,6 @@ var changelogModal = new bootstrap.Modal(
    document.getElementById("changelog-modal")
 );
 
-/* Initialize Bootstrap's Toast Utility */
-var toastElList = [].slice.call(document.querySelectorAll(".toast"));
-var toastList = toastElList.map(function (toastEl) {
-   return new bootstrap.Toast(toastEl);
-});
 /* hide mini-fab buttons */
 $(".mini-fab").hide();
 /* hide total task time column */

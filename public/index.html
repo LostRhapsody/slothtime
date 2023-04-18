@@ -71,7 +71,7 @@
       <link rel="stylesheet" id="currentTheme" />
       <link rel="stylesheet" id="previewTheme" />
       <!-- er starttheme js -->
-      <script src="https://slothtime.dev/static/scripts/er_app_starttheme.js"></script>
+      <script src="static/scripts/er_app_starttheme.js"></script>
       <!-- Bootstrap v5.2 (CSS)   -->
       <link
          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -85,7 +85,10 @@
          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
       />
 
-      <link rel="stylesheet" href="https://slothtime.dev/static/styles/er_apps_styles.css" />
+      <link
+         rel="stylesheet"
+         href="https://slothtime.dev/static/styles/er_apps_styles.css"
+      />
    </head>
 
    <body>
@@ -170,13 +173,27 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                      ></button>
                   </div>
                   <div class="modal-body">
-                     <input
-                        class="form-control mb-3"
-                        placeholder="type to search"
-                        type="text"
-                        id="theme-search-box"
-                        onkeyup="filterThemes()"
-                     />
+                     <div class="row flex-column flex-md-row align-items-center">
+                        <div class="col">
+                           <input
+                              class="form-control mb-3"
+                              placeholder="type to search"
+                              type="text"
+                              id="theme-search-box"
+                              onkeyup="filterThemes()"
+                           />
+                        </div>
+                        <div class="col">
+                           <button
+                              type="button"
+                              class="btn w-100 mb-3"
+                              id="btn-add-favorite-theme"
+                              data-st-action="addThemeToFavorites"
+                           >
+                              &#9733; <em id="favorite-theme-label"></em>
+                           </button>
+                        </div>
+                     </div>
                      <ul
                         class="list-group list-group-flush"
                         id="theme-list"
@@ -574,6 +591,8 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
          </div>
 
          <!-- Toast Messages -->
+
+         <!-- Copied test to clipboard message -->
          <div class="position-fixed bottom-0 start-0 p-3">
             <div
                id="copied_toast"
@@ -599,6 +618,35 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                   ></button>
                </div>
                <div class="toast-body">Copied to clipboard!</div>
+            </div>
+         </div>
+
+         <!-- Theme added to favorites message -->
+         <div class="position-fixed bottom-0 start-0 p-3">
+            <div
+               id="favorited_toast"
+               data-bs-delay="2000"
+               class="toast hide"
+               role="alert"
+               aria-live="assertive"
+               aria-atomic="true"
+            >
+               <div class="toast-header">
+                  <img
+                     src="https://slothtime.dev/static/images/sloth-icon.svg"
+                     class="rounded me-2"
+                     width="16px"
+                     alt="Slothtime Icon"
+                  />
+                  <strong class="me-auto">Slothtime</strong>
+                  <button
+                     type="button"
+                     class="btn-close"
+                     data-bs-dismiss="toast"
+                     aria-label="Close"
+                  ></button>
+               </div>
+               <div class="toast-body">Added to favorites!</div>
             </div>
          </div>
 
@@ -928,7 +976,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
       <!-- er animations js -->
       <script src="https://slothtime.dev/static/scripts/er_app_anim.js"></script>
       <!-- er utils js -->
-      <script src="https://slothtime.dev/static/scripts/er_app_utils.js"></script>
+      <script src="static/scripts/er_app_utils.js"></script>
       <!-- slothtime general js -->
       <script src="https://slothtime.dev/static/scripts/slothtime.js"></script>
       <!-- clock controller -->
