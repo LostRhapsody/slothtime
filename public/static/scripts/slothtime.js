@@ -1,4 +1,7 @@
 /***** Globals *****/
+/* Grab the currently loaded page source */
+var fileLocation = $('script[src*="slothtime"]').attr("src");
+fileLocation = fileLocation.replace("slothtime.js", "");
 /* TODO - remove all these globals. Yikes */
 var rowBuffer = []; /* store an array of deleted rows as a history buffer */
 var rowCounter; /* stores the number of rows   */
@@ -22,10 +25,6 @@ var cacheTracking = JSON.parse(localStorage.getItem("Time_Tracking"));
 if (cacheTracking != null) trackingArray = cacheTracking;
 updateTimeTrackingTableDisplay();
 
-var currentTheme =
-   localStorage.getItem("current_theme"); /* stores the current theme applied */
-if (currentTheme == null) currentTheme = "slothtime.css";
-changeTheme(currentTheme);
 /**** Initializing Components *****/
 
 /* initialize Bootstrap modals */
@@ -63,8 +62,7 @@ $(".mini-fab").hide();
 $(".task_time").hide();
 /* Trigger the first row */
 newRow();
-/* get theme list */
-getThemeList();
+
 /****** Keyboard Shortcuts *******/
 
 /* 
@@ -111,7 +109,7 @@ document.onkeyup = function (event) {
 /* when any field is changed on the table */
 /* update the trackingArray's object      */
 /* and populate the modal's fields        */
-$("#time-tracking-table").on("change", "tr .form-control", function (e) {
+$("#time-tracking-table").on("focus", "tr .form-control", function (e) {
    updateTrackingArray(e);
    setupModal(e);
 });
@@ -162,6 +160,22 @@ document
 
       $(updateRow).find('textarea[name="jira_entry"]').focus();
    });
+
+/* when theme modal is activated */
+/* get theme list                */
+document
+   .getElementById("theme-modal")
+   .addEventListener("show.bs.modal", (e) => {
+      getThemeList();
+   });
+
+/* when theme modal is shown. */
+/* focus on search box       */
+document
+.getElementById("theme-modal")
+.addEventListener("shown.bs.modal", (e) => {
+   $('#theme-search-box')[0].focus();
+});
 
 /* when theme modal is closed, set */
 /* switching theme to false        */
@@ -495,6 +509,7 @@ function toggleHoursColumns() {
 
 /* Populates the fields in the large jira entry modal */
 function setupModal(e) {
+   /* table elements in the actual table */
    const tableRow = $(e.target).parents("[row]");
    if (typeof tableRow == "undefined") {
       logDeveloperError("badRowFind", e);
@@ -502,29 +517,29 @@ function setupModal(e) {
    }
    const taskField = tableRow.find('input[name="task_number"]');
    const workCode = tableRow.find('select[name="work_code"]');
-   //get the row number
    const rowNumber = tableRow.attr("row");
 
+   /* elements in the modal */
+   const modal = $("#expanded-jira-entry-modal")[0];
+   const modalHeader = $(modal).find("#expanded-jira-entry-modal-label")[0];
+   const modalSubHeader = $(modal).find(
+      "#expanded-jira-entry-modal-sub-label"
+   )[0];
+   const modalRowNum = $(modal).find("#expanded-jira-entry-modal-row-label")[0];
+   const modalTextArea = $(modal).find("#modal-jira-entry")[0];
+
    /* set the modal's title */
-   $("#expanded-jira-entry-modal .modal-header h1")[0].textContent =
-      taskField[0].value;
+   modalHeader.textContent = taskField[0].value;
 
    /* set the modals subtitle */
-   $(
-      "#expanded-jira-entry-modal .modal-body #expanded-jira-entry-modal-sub-label"
-   )[0].textContent = workCode[0].value;
+   modalSubHeader.textContent = workCode[0].value;
 
    /* set the modal's row num and row attribute */
-   $(
-      "#expanded-jira-entry-modal .modal-body #expanded-jira-entry-modal-row-label"
-   )[0].textContent = "Row " + rowNumber;
-   $(
-      "#expanded-jira-entry-modal .modal-body #expanded-jira-entry-modal-row-label"
-   )[0].attributes.row.value = rowNumber;
+   modalRowNum.textContent = "Row " + rowNumber;
+   modalRowNum.attributes.row.value = rowNumber;
 
    /* set the modal's content */
-   $("#expanded-jira-entry-modal .modal-body #modal-jira-entry")[0].value =
-      trackingArray[rowNumber - 1].jiraEntry;
+   modalTextArea.value = trackingArray[rowNumber - 1].jiraEntry;
 }
 
 /* Copies the content of the selected row to the clipboard */
@@ -559,86 +574,6 @@ function copyToClipboard(event, source) {
    $("#copied_toast").toast("show");
 }
 
-/* gets the list of themes from _list.json */
-function getThemeList() {
-   let myThemeListString =
-      "https://raw.githubusercontent.com/LostRhapsody/slothtime/main/public/static/styles/themes/_list.json";
-
-   fetch(myThemeListString)
-      .then((response) => response.json())
-      .then((json) => loadThemeList(json));
-}
-
-/* loads the list of themes from _list.json */
-function loadThemeList(themes) {
-   themes.forEach((theme) => {
-      const liElement =
-         "<li" +
-         " id=" +
-         theme.name +
-         ' aria-hidden="true"' +
-         ' aria-label="' +
-         theme.name +
-         ' Selection"' +
-         ' class="trigger-change-theme list-group-item list-group-item-action"' +
-         ' data-theme="' +
-         theme.name +
-         '.css"' +
-         ">" +
-         theme.name +
-         "</li>";
-      $("#theme-list").append(liElement);
-   });
-   const themeElements = $(".trigger-change-theme");
-   themeElements.each(function () {
-      let themeID = "#" + this.id.toString();
-      /* when theme li is hovered, displays the theme but      */
-      /* does not change the current theme, then switches back */
-      $(themeID).hover(
-         function (e) {
-            if (switchingTheme) return;
-            previewTheme(
-               $("#" + e.target.id.toString()).attr("data-theme"),
-               "show"
-            );
-         },
-         function (e) {
-            if (switchingTheme) return;
-            previewTheme(
-               $("#" + e.target.id.toString()).attr("data-theme"),
-               "hide"
-            );
-         }
-      );
-      /* when theme li is clicked, changes current theme */
-      $(themeID).click(function (e) {
-         if (switchingTheme) return;
-         switchingTheme = true;
-         changeTheme(e.target.attributes[4].value);
-         themeModal.toggle();
-      });
-   });
-}
-
-/* load the themes stylesheet */
-/* removes the loaded stylesheet if it's already loaded */
-function changeTheme(theme) {
-   $("#currentTheme")[0].href = "static/styles/themes/" + theme;
-   currentTheme = theme;
-   localStorage.setItem("current_theme", currentTheme);
-}
-
-/* load the themes stylesheet */
-/* removes the loaded stylesheet if it's already loaded */
-/* only for previews */
-function previewTheme(theme, mode) {
-   if (mode == "show") {
-      $("#currentTheme")[0].href = "static/styles/themes/" + theme;
-   } else {
-      $("#currentTheme")[0].href = "static/styles/themes/" + currentTheme;
-   }
-}
-
 function showFabMenu() {
    isFabMenuOpen ? (isFabMenuOpen = false) : (isFabMenuOpen = true);
    isFabMenuOpen ? $(".mini-fab").show() : $(".mini-fab").hide();
@@ -647,16 +582,29 @@ function showFabMenu() {
 function updateTimeTrackingTableDisplay() {
    trackingArray.forEach((entry) => {
       /* if element is null, (empty row), remove from array */
-      if (entry == null) {
-         trackingArray.splice(trackingArray.indexOf(entry));
-      } else populateNewRow(entry);
+      populateNewRow(entry);
    });
 }
 
 function populateNewRow(row_data) {
    let new_row;
+   /* create the new row first, to increment row number */
+   /* important if there is void data */
    newRow();
+
+   if (row_data == null) {
+      row_data = {
+         row: rowCounter,
+         taskNumber: "",
+         workCode: "Work Code",
+         jiraEntry: "",
+         startTime: "",
+         endTime: "",
+         taskTime: "",
+      };
+   }
    new_row = findRowElement(row_data.row);
+
    $(new_row).find('input[name="task_number"]')[0].value = row_data.taskNumber;
    $(new_row).find('select[name="work_code"]')[0].value = row_data.workCode;
    $(new_row).find('textarea[name="jira_entry"]')[0].value = row_data.jiraEntry;
@@ -668,6 +616,8 @@ function populateNewRow(row_data) {
 function clearTrackingTable() {
    /* clear trackingArray */
    trackingArray.length = 0;
+   /* reset row counter */
+   rowCounter = 0;
    /* update cache with new empty array */
    localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
    $("[row]").remove();
@@ -733,11 +683,11 @@ function updateChangelog(data) {
    data.forEach((versionNote) => {
       $("#changelog-body").append(
          "<h3>" +
-            versionNote.update.substr(0, 2) +
+            versionNote.update.slice(0, 2) +
             "." +
-            versionNote.update.substr(2, 2) +
+            versionNote.update.slice(2, 4) +
             "." +
-            versionNote.update.substr(4, 2) +
+            versionNote.update.slice(4, 6) +
             "</h3>" +
             "<ul id=" +
             versionNote.update +

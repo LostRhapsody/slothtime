@@ -1,18 +1,5 @@
 /**** Body / Global ****/
 :root {
-   /* theme colors */
-   --bg-color: #323437;
-   --main-color: rgb(226, 183, 20);
-   --sub-color: #222325;
-   --sub-alt-color: #2c2e31;
-   --text-color: #d1d0c5;
-   --error-color: #ca4754;
-   --caret-color: #99d6ea;
-   --error-extra-color: #fffb85;
-   --colorful-error-color: #fffb85;
-   --colorful-error-extra-color: #fffb85;
-   /* theme colors */
-
    /* Bootstrap ovverrides */
    --bs-border-color: none;
    --bs-form-control-bg: #ffffff00;
@@ -24,10 +11,39 @@ body {
    font-family: "Roboto", Roboto, monospace;
    overflow-y: scroll;
 }
+
 h1,
 h2,
-h3 {
+h3,
+p {
    color: var(--text-color);
+}
+
+a {
+   text-decoration: none;
+   color: var(--main-color);
+}
+
+a:hover {
+   text-decoration: underline;
+}
+
+#homePageLink:hover {
+   text-decoration: none;
+}
+
+.iconRow {
+   width: 1.3rem;
+   height: 1.3rem;
+   align-self: center;
+   color: var(--sub-color);
+   margin-left: 1rem;
+   background-color: var(--bg-color);
+}
+
+.iconRow:hover {
+   color: var(--text-color);
+   transition: color 0.125s;
 }
 
 /* svg fallback */
@@ -142,6 +158,10 @@ h3 {
 .shield {
    height: 1.3rem;
    width: auto;
+}
+
+.shield-wrapper {
+   padding-bottom:16px;
 }
 
 #btn-changelog {
@@ -396,18 +416,6 @@ textarea {
    color: var(--sub-alt-color) !important;
 
    -webkit-tap-highlight-color: transparent;
-}
-
-/* fab button states */
-.fab:active,
-.fab:hover,
-.fab:focus-visible {
-   filter: brightness(76%);
-   /* --_bg: var(--_light-bg-hover); */
-
-   @media (prefers-color-scheme: dark) {
-      /* --_bg: var(--_dark-bg-hover); */
-   }
 }
 
 /* fab button icons */
