@@ -33,11 +33,11 @@ a:hover {
 }
 
 .iconRow {
-   width: 1.3rem;
-   height: 1.3rem;
+   width: 1.8rem;
+   height: 1.8rem;
    align-self: center;
    color: var(--sub-color);
-   margin-left: 1rem;
+   margin-left: 1.5rem;
    background-color: var(--bg-color);
 }
 
@@ -319,6 +319,7 @@ textarea::-webkit-resizer {
 /* The action Tray Button (Caret) */
 .action-tray-button {
    color: var(--main-color);
+   font-size: 3rem !important;
 }
 
 /* copy clipboard button */
@@ -393,7 +394,7 @@ textarea {
    display: flex;
    place-items: center;
    gap: var(--_viewport-margin);
-   inset-block: auto var(--_viewport-margin);
+   inset-block: auto -1.5rem;
    margin-bottom: var(--_viewport-margin);
    background-color: var(--bg-color);
 }
@@ -492,4 +493,26 @@ textarea {
    animation-iteration-count: 1;
    animation-fill-mode: forwards;
    animation-play-state: running;
+}
+
+/**** Flex ****/
+.justify-content-start-md {
+   justify-content: "";
+}
+
+/**** Media Queries ****/
+
+/*** Medium and up ***/
+@media screen and (min-width: 756px) {
+
+   /** Table **/
+   /* Override bootstrap's table responsive behaviour */
+   .table-responsive {
+      overflow-x: hidden !important;
+   }
+
+   /** Flex **/
+   .justify-content-start-md {
+      justify-content: flex-start !important;
+   }
 }

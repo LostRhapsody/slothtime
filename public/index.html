@@ -62,7 +62,7 @@
       <link rel="stylesheet" id="currentTheme" />
       <link rel="stylesheet" id="previewTheme" />
       <!-- er starttheme js -->
-      <script src="static/scripts/er_app_starttheme.js"></script>
+      <script src="static/scripts/er_app_starttheme.js"></script>      
       <!-- Bootstrap v5.2 (CSS)   -->
       <link
          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -748,8 +748,8 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
          </div>
 
          <!-- Title and Clock -->
-         <div class="row flex-column flex-md-row text-start">
-            <div class="col col-12 col-md-7 align-items-center d-flex flex-row">
+         <div class="row flex-column flex-md-row align-items-end text-start">
+            <div class="col col-12 col-md-7 align-items-center justify-content-center justify-content-start-md d-flex flex-row">
                <a id="homePageLink" href="https://slothtime.dev" class="d-flex">
                   <svg
                      fill="currentColor"
@@ -945,7 +945,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
          </div>
 
          <!-- Time Entry Table -->
-         <form class="d-none d-md-flex" id="time-tracking-form">
+         <form class="d-none d-md-block" id="time-tracking-form">
             <div class="table-responsive">
                <table id="time-tracking-table" class="st-table">
                   <thead>
@@ -1029,7 +1029,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                            aria-hidden="true"
                         >
                            <i
-                              class="bi bi-caret-down mx-auto w-100 text-center fs-1 action-tray-button"
+                              class="bi bi-caret-down mx-auto w-100 text-center action-tray-button"
                               id="action-tray-button"
                            ></i>
                         </button>
@@ -1041,7 +1041,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                         >
                            <div class="accordion-body">
                               <div
-                                 class="row flex-column flex-md-row mx-auto align-items-start"
+                                 class="row flex-column flex-md-row mx-auto align-items-start mb-3"
                               >
                                  <div
                                     class="col d-flex align-items-center flex-column"
