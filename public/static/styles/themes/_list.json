@@ -7,6 +7,13 @@
     "textColor": "#d2dff4"
   },
   {
+   "name": "atom_one_dark",
+   "bgColor": "#282c34",
+   "mainColor": "#c678dd",
+   "subColor": "#4cb6b9",
+   "textColor": "#8ac379"
+ },
+  {
     "name": "viridescent",
     "bgColor": "#2c3333",
     "mainColor": "#95d5b2",
