@@ -5,6 +5,10 @@ local paths with fully qualified paths
 to https://sothtime.dev/
 */
 
+/* 
+TODO Switch to using proper date times or at least integers for start/end/total time 
+*/
+
 /* check if cache is available */
 /* TODO Added cache checks whenever pulling from cache */
 const cacheAvailable = "caches" in self;
