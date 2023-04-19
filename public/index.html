@@ -8,10 +8,7 @@
          name="description"
          content="Slothtime is a minimalist time tracking webapp with an emphasis on ease of use, speed, and customization."
       />
-      <meta
-         name="image"
-         content="static/images/sloth-icon.png"
-      />
+      <meta name="image" content="static/images/sloth-icon.png" />
       <meta
          name="keywords"
          content="
@@ -27,10 +24,7 @@
       />
       <meta property="og:url" content="https://slothtime.dev" />
       <meta property="og:type" content="website" />
-      <meta
-         property="og:image"
-         content="static/images/sloth-icon.png"
-      />
+      <meta property="og:image" content="static/images/sloth-icon.png" />
       <meta
          property="og:description"
          content="Slothtime is a minimalist time tracking webapp with an emphasis on ease of use, speed, and customization."
@@ -39,10 +33,7 @@
          name="twitter:title"
          content="Slothtime | A minimalist, customizable time tracker"
       />
-      <meta
-         name="twitter:image"
-         content="static/images/sloth-icon.png"
-      />
+      <meta name="twitter:image" content="static/images/sloth-icon.png" />
       <meta name="twitter:card" content="summary_large_image" />
       <script type="application/ld+json">
          {
@@ -85,10 +76,7 @@
          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
       />
 
-      <link
-         rel="stylesheet"
-         href="static/styles/er_apps_styles.css"
-      />
+      <link rel="stylesheet" href="static/styles/er_apps_styles.css" />
    </head>
 
    <body>
@@ -504,6 +492,111 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                </div>
             </div>
          </div>
+         <!-- Mobile Time Entry Modal -->
+         <div
+            class="modal fade modal-md"
+            id="mobile-entry-modal"
+            tabindex="-1"
+            aria-labelledby="mobile-entry-label"
+            aria-hidden="true"
+            data-bs-theme="dark"
+         >
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h2 class="modal-title fs-5">Edit Time Entry</h2>
+                     <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                     ></button>
+                  </div>
+                  <div class="modal-body" id="mobile-entry-body">
+                     <form>
+                        <div class="row mb-3">
+                           <h3>Task Details</h3>
+                           <div class="col">
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 placeholder="Task Number"
+                                 aria-label="Task Number"
+                                 id="mobile-entry-task-number"
+                              />
+                           </div>
+                           <div class="col">
+                              <select
+                                 name="work_code"
+                                 class="form-control workCode"
+                                 aria-label="Work Code Input"
+                                 aria-describedby="inputGroup-timeentry-workcode"
+                                 id="mobile-entry-work-code"
+                              >
+                                 <option value="Work Code">Work Code</option>
+                                 <option value="Analysis">Analysis</option>
+                                 <option value="Programming">
+                                    Programming
+                                 </option>
+                                 <option value="Deployment">Deployment</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="row mb-3">
+                           <h3>Entry</h3>
+                           <div class="col">
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 placeholder="Time Entry"
+                                 aria-label="Time Entry"
+                                 id="mobile-entry-time-entry"
+                              />
+                           </div>
+                        </div>
+                        <div class="row">
+                           <h3>Time Spent</h3>
+                           <div class="col">
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 placeholder="Start"
+                                 aria-label="Start Time"
+                                 id="mobile-entry-start-time"
+                              />
+                           </div>
+                           <div class="col">
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 placeholder="End"
+                                 aria-label="End Time"
+                                 id="mobile-entry-end-time"
+                              />
+                           </div>
+                           <div class="col d-none">
+                              <input
+                                 type="text"
+                                 class="form-control"
+                                 placeholder="Total"
+                                 aria-label="Total Time"
+                                 id="mobile-entry-total-time"
+                              />
+                           </div>
+                        </div>
+                     </form>
+                  </div>
+                  <div class="modal-footer d-flex justify-content-between">
+                     <h2 class="modal-title fs-5" id="mobile-entry-row-label">
+                        Row
+                     </h2>
+                     <button type="button" class="btn" data-bs-dismiss="modal">
+                        Save &amp; Close
+                     </button>
+                  </div>
+               </div>
+            </div>
+         </div>
 
          <!--Netlify Error subtmit form-->
          <form name="submitDeveloperError" method="POST" data-netlify="true">
@@ -545,6 +638,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                title="Open Theme List"
                data-bs-toggle="modal"
                data-bs-target="#theme-modal"
+               style="display: none"
             >
                <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -572,6 +666,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                title="Settings menu"
                data-bs-toggle="modal"
                data-bs-target="#settings-modal"
+               style="display: none"
             >
                <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -830,8 +925,27 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
             </tbody>
          </table>
 
+         <!--  Mobile Time Entry Template -->
+         <div class="d-none">
+            <div id="templateCard" class="card mb-3">
+               <a data-bs-toggle="modal" data-bs-target="#mobile-entry-modal">
+                  <div class="card-header d-flex justify-content-between">
+                     <h2 class="h5">Task Number</h2>
+                     <h3 class="h6">Row</h3>
+                  </div>
+                  <div class="card-body">
+                     <div class="card-text">Time Entry</div>
+                  </div>
+                  <div class="card-footer d-flex justify-content-between">
+                     <h2 class="h5">Work Code</h2>
+                     <h3 class="h6">Task Time</h3>
+                  </div>
+               </a>
+            </div>
+         </div>
+
          <!-- Time Entry Table -->
-         <form id="time-tracking-form">
+         <form class="d-none d-md-flex" id="time-tracking-form">
             <div class="table-responsive">
                <table id="time-tracking-table" class="st-table">
                   <thead>
@@ -847,6 +961,47 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                   </thead>
                   <tbody id="time-tracking-table-body"></tbody>
                </table>
+               <hr class="hr-space" />
+            </div>
+         </form>
+
+         <!-- Mobile Time Entry Cards -->
+         <form
+            class="d-flex d-md-none flex-column w-100"
+            id="mobile-time-tracking-form"
+         >
+            <div class="row">
+               <div
+                  class="col-12 d-flex flex-column align-items-center"
+                  id="mobile-tracking-body"
+               ></div>
+               <div class="col-12 d-flex flex-column align-items-center">
+                  <!-- mobile new row button -->
+                  <button
+                     type="button"
+                     data-icon="bi bi-plus-lg"
+                     class="fab btn"
+                     aria-label="Add new time entry"
+                     aria-hidden="true"
+                     title="Expand menu"
+                     data-st-action="newRow"
+                     id="fab_new_row_btn"
+                  >
+                     <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-plus-lg"
+                        viewBox="0 0 16 16"
+                     >
+                        <path
+                           fill-rule="evenodd"
+                           d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                        />
+                     </svg>
+                  </button>
+               </div>
                <hr class="hr-space" />
             </div>
          </form>
