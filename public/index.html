@@ -381,7 +381,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                            <button
                               type="button"
                               class="btn btn-important w-100 mt-3"
-                              id="btn-cancel"
                               data-bs-dismiss="modal"
                               aria-label="Close"
                            >
@@ -392,7 +391,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                            <button
                               type="button"
                               class="btn w-100 mt-3"
-                              id="btn-confirm"
                               data-st-action="clearTrackingTable"
                               data-bs-dismiss="modal"
                            >
@@ -448,7 +446,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                            <button
                               type="button"
                               class="btn w-100 mt-3"
-                              id="btn-confirm"
                               data-st-action="sendErrorLogs"
                               data-bs-dismiss="modal"
                            >
@@ -556,7 +553,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                         </div>
                         <div class="row">
                            <h3>Time Spent</h3>
-                           <div class="col">
+                           <div class="col mobile-start-time-col">
                               <input
                                  type="text"
                                  class="form-control"
@@ -565,7 +562,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                                  id="mobile-entry-start-time"
                               />
                            </div>
-                           <div class="col">
+                           <div class="col mobile-end-time-col">
                               <input
                                  type="text"
                                  class="form-control"
@@ -574,13 +571,13 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                                  id="mobile-entry-end-time"
                               />
                            </div>
-                           <div class="col d-none">
+                           <div class="col mobile-total-time-col" style="display: none;">
                               <input
                                  type="text"
                                  class="form-control"
                                  placeholder="Total"
                                  aria-label="Total Time"
-                                 id="mobile-entry-total-time"
+                                 id="mobile-entry-total-time"                                 
                               />
                            </div>
                         </div>
@@ -600,7 +597,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
 
          <!--Netlify Error subtmit form-->
          <form name="submitDeveloperError" method="POST" data-netlify="true">
-            <input id="errorLog" type="text" name="errorLog" class="d-none" />
+            <input aria-label="Error Log" id="errorLog" type="text" name="errorLog" class="d-none" />
             <button id="sendErrorLog" type="submit" class="d-none">Send</button>
          </form>
 
@@ -701,7 +698,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
             >
                <div class="toast-header">
                   <img
-                     src="https://slothtime.dev/static/images/sloth-icon.svg"
+                     src="static/images/sloth-icon.svg"
                      class="rounded me-2"
                      width="16px"
                      alt="Slothtime Icon"
@@ -730,7 +727,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
             >
                <div class="toast-header">
                   <img
-                     src="https://slothtime.dev/static/images/sloth-icon.svg"
+                     src="static/images/sloth-icon.svg"
                      class="rounded me-2"
                      width="16px"
                      alt="Slothtime Icon"
@@ -795,7 +792,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                      />
                   </svg>
                </a>
-               <a href="https://slothtime.dev/about" class="d-flex">
+               <a aria-label="About Page" href="https://slothtime.dev/about" class="d-flex">
                   <svg
                      class="iconRow"
                      xmlns="http://www.w3.org/2000/svg"
@@ -985,6 +982,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                      aria-hidden="true"
                      title="Expand menu"
                      data-st-action="newRow"
+                     data-st-params="true,chicken"
                      id="fab_new_row_btn"
                   >
                      <svg
@@ -1051,6 +1049,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                                        class="btn btn-important w-100 mt-3"
                                        id="btn-new-row"
                                        data-st-action="newRow"
+                                       data-st-params="true,chicken,purple"
                                     >
                                        New Row
                                     </button>
@@ -1065,7 +1064,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                                     <button
                                        type="button"
                                        class="btn w-100 mt-3"
-                                       id="btn-export-text"
+                                       id="btn-delete-table"
                                        data-bs-toggle="modal"
                                        data-bs-target="#delete-table-modal"
                                     >

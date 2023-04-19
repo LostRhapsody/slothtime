@@ -32,11 +32,10 @@ let showChangelogModal = false; /* toggles whether to show the modal or not */
 var cacheTracking = JSON.parse(localStorage.getItem("Time_Tracking"));
 
 /* if tracking has been cached, load that and display */
-if (cacheTracking != null)
-   trackingArray = cacheTracking;
+if (cacheTracking != null) trackingArray = cacheTracking;
 
 /* if  tracking is cached but [] empty, new row       */
-if(trackingArray.length != 0) {
+if (trackingArray.length != 0) {
    updateTimeTrackingTableDisplay();
 } else {
    /* Trigger the first row */
@@ -275,12 +274,26 @@ $("#time-tracking-table").on("focusout", "textarea", function () {
    ------------------------------------------------*/
 $("body").on("click", "[data-st-action]", function (event) {
    /* get the action to be performed from the action attr */
-   let action = $(this).attr("data-st-action").toString();
+   const action = $(this).attr("data-st-action").toString();
+   let paramList;
+   let paramArray = [];
+
+   /* get the comma delimited list of params */
+   paramList = $(this).attr('data-st-params');
+
+   /* if params attribute doesn't exst, do nothing */
+   if(typeof paramList != "undefined")
+      /* if there are any params */
+      if (paramList.length != 0)
+         /* split by each comma and load into array */
+         paramList.split(",").forEach((x, y) => (paramArray[y] = x));
+
    /* check if function exists */
    if (typeof action === "function")
       /* call the function */
       try {
-         window[action]();
+         if (paramArray.length != 0) window[action](paramArray[0]);
+         else window[action]();
       } catch (e) {
          logDeveloperError("badFunction", e);
       }
@@ -288,7 +301,8 @@ $("body").on("click", "[data-st-action]", function (event) {
       typeof action !== "undefined"
    )
       try {
-         window[action]();
+         if (paramArray.length != 0) window[action](paramArray[0]);
+         else window[action]();
       } catch (e) {
          logDeveloperError("badFunction", e);
       }
@@ -440,7 +454,7 @@ function newRow(generateNewRecord) {
 
    cardTemplate.appendTo($("#mobile-tracking-body"));
 
-   if(generateNewRecord)
+   if (generateNewRecord)
       updateAndCacheTrackingArray(rowCounter, "", "Work Code", "", "", "", "");
 }
 
@@ -561,10 +575,17 @@ function findCardElement(rowNumber) {
 /* the start/end time columns                       */
 function toggleHoursColumns() {
    hoursToggle ? (hoursToggle = false) : (hoursToggle = true);
-   hoursToggle
-      ? $(".end_time, .start_time").show()
-      : $(".end_time, .start_time").hide();
-   hoursToggle ? $(".task_time").hide() : $(".task_time").show();
+   if (hoursToggle) {
+      $(".end_time, .start_time").show();
+      $(".mobile-end-time-col, .mobile-start-time-col").show();
+      $(".task_time").hide();
+      $(".mobile-total-time-col").hide();
+   } else {
+      $(".end_time, .start_time").hide();
+      $(".mobile-end-time-col, .mobile-start-time-col").hide();
+      $(".task_time").show();
+      $(".mobile-total-time-col").show();
+   }
 }
 
 /* Populates the fields in the large jira entry modal */
@@ -652,6 +673,17 @@ function updateTimeTrackingTableDisplay() {
    });
 }
 
+function setupTimeTrackingTableRow(row){
+   const new_row = findRowElement(row);
+
+   $(new_row).find('input[name="task_number"]')[0].value = trackingArray[row - 1].taskNumber;
+   $(new_row).find('select[name="work_code"]')[0].value = trackingArray[row - 1].workCode;
+   $(new_row).find('textarea[name="jira_entry"]')[0].value = trackingArray[row - 1].jiraEntry;
+   $(new_row).find('input[name="start_time"]')[0].value = trackingArray[row - 1].startTime;
+   $(new_row).find('input[name="end_time"]')[0].value = trackingArray[row - 1].endTime;
+   $(new_row).find('input[name="task_time"]')[0].value = trackingArray[row - 1].taskTime;
+}
+
 function populateNewRow(row_data) {
    let new_row;
    /* create the new row first, to increment row number */
@@ -681,6 +713,7 @@ function populateNewRow(row_data) {
    setupMobileCardRow(row_data.row);
 }
 
+/* BUG When table is deleted, the new row created has the old last row number displayed */
 function clearTrackingTable() {
    /* clear trackingArray */
    trackingArray.length = 0;
@@ -780,7 +813,7 @@ function updateTrackingArrayMobile(event) {
    const rowLabel = $(mobileModalConent).find("#mobile-entry-row-label")[0];
    let rowNumber = $(rowLabel).attr("row");
    /* If row number is not set on modal, set from table */
-   if (typeof rowNumber == "undefined") rowNumber = $(tableRow).attr("row");
+   if (rowNumber == "") rowNumber = $(tableRow).attr("row");
 
    const taskField = $(mobileModalConent).find("#mobile-entry-task-number")[0];
    const workCode = $(mobileModalConent).find("#mobile-entry-work-code")[0];
@@ -805,6 +838,7 @@ function updateTrackingArrayMobile(event) {
    localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
 
    setupMobileCardRow(rowNumber);
+   setupTimeTrackingTableRow(rowNumber);
 }
 
 function setupMobileCardRow(row) {
@@ -816,25 +850,21 @@ function setupMobileCardRow(row) {
 
    /* since we don't want the card values being blank,
    if array value is blank, set to default value */
-   if(trackingArray[row - 1].taskNumber == "")
+   if (trackingArray[row - 1].taskNumber == "")
       taskNumber.textContent = "Task #";
-   else
-      taskNumber.textContent = trackingArray[row - 1].taskNumber;
+   else taskNumber.textContent = trackingArray[row - 1].taskNumber;
 
-   if(trackingArray[row - 1].workCode == "")
+   if (trackingArray[row - 1].workCode == "")
       workCode.textContent = "Work Code";
-   else
-      workCode.textContent = trackingArray[row - 1].workCode;
-      
-   if(trackingArray[row - 1].jiraEntry == "")
+   else workCode.textContent = trackingArray[row - 1].workCode;
+
+   if (trackingArray[row - 1].jiraEntry == "")
       timeEntry.textContent = "Time Entry";
-   else
-      timeEntry.textContent = trackingArray[row - 1].jiraEntry;
-      
-   if(trackingArray[row - 1].taskTime == "")
+   else timeEntry.textContent = trackingArray[row - 1].jiraEntry;
+
+   if (trackingArray[row - 1].taskTime == "")
       taskTime.textContent = "Task Time";
-   else
-      taskTime.textContent = trackingArray[row - 1].taskTime;   
+   else taskTime.textContent = trackingArray[row - 1].taskTime;
 }
 
 /* populate the mobile task entry modal fields */
