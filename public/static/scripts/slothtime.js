@@ -7,7 +7,7 @@ to https://sothtime.dev/
 
 /* check if cache is available */
 /* TODO Added cache checks whenever pulling from cache */
-const cacheAvailable = 'caches' in self;
+const cacheAvailable = "caches" in self;
 /* Grab the currently loaded page source */
 var fileLocation = $('script[src*="slothtime"]').attr("src");
 fileLocation = fileLocation.replace("slothtime.js", "");
@@ -19,7 +19,7 @@ var hoursToggle = true; /* toggle between start/end time and total hours */
 var trackingArray =
    []; /* stores the tracking objects that contain the input field details */
 var hideClock = false; /* toggles the clock visibility */
-var isFabMenuOpen; /* tracks if the FAB button menu is open */
+var isFabMenuOpen = false; /* tracks if the FAB button menu is open */
 var isFabsHovered; /* tracks if the fabs div is being hovered */
 var switchingTheme; /* tracks if the theme is currently being changed */
 var exportType = "comma"; /* the format the table will be exported in */
@@ -31,8 +31,17 @@ let showChangelogModal = false; /* toggles whether to show the modal or not */
 /* Check and retrieve any stored data in the cache */
 var cacheTracking = JSON.parse(localStorage.getItem("Time_Tracking"));
 
-if (cacheTracking != null) trackingArray = cacheTracking;
-updateTimeTrackingTableDisplay();
+/* if tracking has been cached, load that and display */
+if (cacheTracking != null)
+   trackingArray = cacheTracking;
+
+/* if  tracking is cached but [] empty, new row       */
+if(trackingArray.length != 0) {
+   updateTimeTrackingTableDisplay();
+} else {
+   /* Trigger the first row */
+   newRow(true);
+}
 
 /**** Initializing Components *****/
 
@@ -59,13 +68,12 @@ var deleteTableModal = new bootstrap.Modal(
 var changelogModal = new bootstrap.Modal(
    document.getElementById("changelog-modal")
 );
-
-/* hide mini-fab buttons */
-$(".mini-fab").hide();
+/* Mobile Entry modal */
+var mobileModal = new bootstrap.Modal(
+   document.getElementById("mobile-entry-modal")
+);
 /* hide total task time column */
 $(".task_time").hide();
-/* Trigger the first row */
-newRow();
 
 /****** Keyboard Shortcuts *******/
 
@@ -105,7 +113,7 @@ document.onkeyup = function (event) {
       }
       /* new row shortcut */
    } else if (key.ctrlKey && key.shiftKey && key.key == ">") {
-      newRow();
+      newRow(true);
    }
 };
 
@@ -137,14 +145,20 @@ $("#time-tracking-table").click(function (e) {
    }
 });
 
-/* when a modal is opened, update      */
-/* the respective row's tracking array */
+/* when large jira entry is updated, */
+/* update the tracking array         */
 $("#expanded-jira-entry-modal .modal-body #modal-jira-entry").on(
    "change",
    function (e) {
       updateTrackingFromModal(e);
    }
 );
+
+/* when mobile modal is updated, */
+/* update the tracking array     */
+$("#mobile-entry-modal .form-control").on("change", function (e) {
+   updateTrackingArrayMobile(e);
+});
 
 /* when jira entry  modal is opened, focus */
 /* on the textarea                         */
@@ -172,6 +186,15 @@ document
       $(updateRow).find('textarea[name="jira_entry"]').focus();
    });
 
+/* when mobile modal is triggered, setup the     */
+/* fields with any existing date in the tracking */
+/* array                                         */
+document
+   .getElementById("mobile-entry-modal")
+   .addEventListener("show.bs.modal", (e) => {
+      setupMobileModal(e);
+   });
+
 /* when theme modal is activated */
 /* get theme list                */
 document
@@ -183,10 +206,10 @@ document
 /* when theme modal is shown. */
 /* focus on search box       */
 document
-.getElementById("theme-modal")
-.addEventListener("shown.bs.modal", (e) => {
-   $('#theme-search-box')[0].focus();
-});
+   .getElementById("theme-modal")
+   .addEventListener("shown.bs.modal", (e) => {
+      $("#theme-search-box")[0].focus();
+   });
 
 /* when theme modal is closed, set */
 /* switching theme to false        */
@@ -215,7 +238,7 @@ $("#time-tracking-table").on(
          event.target.parentElement.parentElement.attributes[0] ==
          $("tr").last()[0].attributes[0]
       )
-         newRow();
+         newRow(true);
    }
 );
 
@@ -282,21 +305,23 @@ $("body").on("click", "[data-st-action]", function (event) {
    We have to keep the click listener though for mobile.
    ---------------------------------------------------------*/
 
+/* commented out until I can figued out how to make it play
+nicely on mobile and desktop screens */
 /* show fab menu when hovered */
-$(".fabs").hover(
-   function () {
-      isFabsHovered = true;
-      showFabMenu();
-   },
-   function () {
-      isFabsHovered = false;
-      showFabMenu();
-   }
-);
+// $(".fabs").hover(
+//    function () {
+//       isFabsHovered = true;
+//       showFabMenu();
+//    },
+//    function () {
+//       isFabsHovered = false;
+//       showFabMenu();
+//    }
+// );
 
 /* show fab menu when clicked */
-$(".fab").click(function () {
-   if (isFabsHovered) return;
+$("#fab_menu_btn").click(function () {
+   // if (isFabMenuOpen)
    showFabMenu();
 });
 
@@ -309,12 +334,12 @@ function updateTrackingArray(e) {
       logDeveloperError("badRowFind", e);
       return;
    }
-   const taskField = tableRow.find('input[name="task_number"]');
-   const workCode = tableRow.find('select[name="work_code"]');
-   const inputField = tableRow.find('textarea[name="jira_entry"]');
-   const startTime = tableRow.find('input[name="start_time"]');
-   const endTime = tableRow.find('input[name="end_time"]');
-   const taskTime = tableRow.find('input[name="task_time"]');
+   const taskField = tableRow.find('input[name="task_number"]')[0];
+   const workCode = tableRow.find('select[name="work_code"]')[0];
+   const inputField = tableRow.find('textarea[name="jira_entry"]')[0];
+   const startTime = tableRow.find('input[name="start_time"]')[0];
+   const endTime = tableRow.find('input[name="end_time"]')[0];
+   const taskTime = tableRow.find('input[name="task_time"]')[0];
    //get the row number
    const rowNumber = tableRow.attr("row");
 
@@ -323,20 +348,22 @@ function updateTrackingArray(e) {
    let endDate = new Date();
 
    /* if values not set yet, just use placedholders */
-   if (typeof taskField == "undefined") taskField[0].value = "Task #";
-   if (typeof inputField == "undefined") inputField[0].value = "Jira Entry";
-   if (typeof startTime == "undefined") startTime[0].value = "Start Time";
-   if (typeof endTime == "undefined") endTime[0].value = "End Time";
+   if (typeof taskField == "undefined") taskField.value = "Task #";
+   if (typeof workCode == "undefined") workCode.value = "Work Code";
+   if (typeof inputField == "undefined") inputField.value = "Jira Entry";
+   if (typeof startTime == "undefined") startTime.value = "Start Time";
+   if (typeof endTime == "undefined") endTime.value = "End Time";
+   if (typeof taskTime == "undefined") taskTime.value = "Task Time";
 
    //populate the object from the table row input fields
    let trackingObject = {
       row: rowNumber,
-      taskNumber: taskField[0].value,
-      workCode: workCode[0].value,
-      jiraEntry: inputField[0].value,
-      startTime: startTime[0].value,
-      endTime: endTime[0].value,
-      taskTime: taskTime[0].value,
+      taskNumber: taskField.value,
+      workCode: workCode.value,
+      jiraEntry: inputField.value,
+      startTime: startTime.value,
+      endTime: endTime.value,
+      taskTime: taskTime.value,
    };
 
    if (trackingObject.taskTime == "") {
@@ -387,9 +414,11 @@ function updateTrackingFromModal(e) {
       trackingArray[modalRowNum - 1].jiraEntry;
 }
 
-/* clones the template and appens to table */
-function newRow() {
+/* clones the templates and appends to table */
+function newRow(generateNewRecord) {
    rowCounter += 1;
+
+   /* rows for desktop */
    let rowTemplate = $("#templateRow")
       .clone()
       .removeAttr("id")
@@ -400,6 +429,19 @@ function newRow() {
    rowTemplate.appendTo($("#time-tracking-table-body"));
 
    $("tr").last()[0].children[1].firstElementChild.focus();
+
+   /* cards for mobile */
+   let cardTemplate = $("#templateCard")
+      .clone()
+      .removeAttr("id")
+      .attr("row", rowCounter);
+
+   $(cardTemplate).find(".card-header h3")[0].textContent = rowCounter;
+
+   cardTemplate.appendTo($("#mobile-tracking-body"));
+
+   if(generateNewRecord)
+      updateAndCacheTrackingArray(rowCounter, "", "Work Code", "", "", "", "");
 }
 
 /* shows a modal to verify the action */
@@ -508,6 +550,13 @@ function findRowElement(rowNumber) {
    return correctRow;
 }
 
+/* finds a time entry card based on row number */
+function findCardElement(rowNumber) {
+   /* retrieve a list of all rows */
+   const card = $("#mobile-tracking-body [row='" + rowNumber + "']")[0];
+   return card;
+}
+
 /* Toggles the display of the Total Time column and */
 /* the start/end time columns                       */
 function toggleHoursColumns() {
@@ -590,6 +639,7 @@ function copyToClipboard(event, source) {
    $("#copied_toast").toast("show");
 }
 
+/* TODO clicking on fab twice doesn't hide the context menu */
 function showFabMenu() {
    isFabMenuOpen ? (isFabMenuOpen = false) : (isFabMenuOpen = true);
    isFabMenuOpen ? $(".mini-fab").show() : $(".mini-fab").hide();
@@ -606,7 +656,7 @@ function populateNewRow(row_data) {
    let new_row;
    /* create the new row first, to increment row number */
    /* important if there is void data */
-   newRow();
+   newRow(false);
 
    if (row_data == null) {
       row_data = {
@@ -627,6 +677,8 @@ function populateNewRow(row_data) {
    $(new_row).find('input[name="start_time"]')[0].value = row_data.startTime;
    $(new_row).find('input[name="end_time"]')[0].value = row_data.endTime;
    $(new_row).find('input[name="task_time"]')[0].value = row_data.taskTime;
+
+   setupMobileCardRow(row_data.row);
 }
 
 function clearTrackingTable() {
@@ -637,7 +689,7 @@ function clearTrackingTable() {
    /* update cache with new empty array */
    localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
    $("[row]").remove();
-   newRow();
+   newRow(true);
 }
 
 function logDeveloperError(errorType, event) {
@@ -686,8 +738,7 @@ function sendErrorLogs() {
 async function showChangelog() {
    informationModal.toggle();
    showChangelogModal = true;
-   const url =
-      "data/changelog/changelog.json";
+   const url = "data/changelog/changelog.json";
 
    if (typeof $("#changelog-body").attr("data-st-loaded") == "undefined")
       fetch(url)
@@ -715,4 +766,145 @@ function updateChangelog(data) {
    });
    /* set loaded to true so we only fetch once */
    $("#changelog-body").attr("data-st-loaded", "true");
+}
+
+/* update the tracking array from the mobile modal when edited */
+function updateTrackingArrayMobile(event) {
+   const target = event.target;
+   let mobileModalConent = $(target).parents(".modal-content");
+   const tableRow = $("#time-tracking-table #time-tracking-table-body tr")[0];
+
+   /* depending on event source, target may already be the modal */
+   if (target.id == "mobile-entry-modal") mobileModalConent = target;
+
+   const rowLabel = $(mobileModalConent).find("#mobile-entry-row-label")[0];
+   let rowNumber = $(rowLabel).attr("row");
+   /* If row number is not set on modal, set from table */
+   if (typeof rowNumber == "undefined") rowNumber = $(tableRow).attr("row");
+
+   const taskField = $(mobileModalConent).find("#mobile-entry-task-number")[0];
+   const workCode = $(mobileModalConent).find("#mobile-entry-work-code")[0];
+   const inputField = $(mobileModalConent).find("#mobile-entry-time-entry")[0];
+   const startTime = $(mobileModalConent).find("#mobile-entry-start-time")[0];
+   const endTime = $(mobileModalConent).find("#mobile-entry-end-time")[0];
+   const taskTime = $(mobileModalConent).find("#mobile-entry-total-time")[0];
+
+   const trackingObject = {
+      row: rowNumber,
+      taskNumber: taskField.value,
+      workCode: workCode.value,
+      jiraEntry: inputField.value,
+      startTime: startTime.value,
+      endTime: endTime.value,
+      taskTime: taskTime.value,
+   };
+
+   //store in tracking array, -1 to offset the row counter
+   trackingArray[rowNumber - 1] = trackingObject;
+
+   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
+
+   setupMobileCardRow(rowNumber);
+}
+
+function setupMobileCardRow(row) {
+   const card = findCardElement(row);
+   const taskNumber = $(card).find(".card-header h2")[0];
+   const workCode = $(card).find(".card-footer h2")[0];
+   const timeEntry = $(card).find(".card-text")[0];
+   const taskTime = $(card).find(".card-footer h3")[0];
+
+   /* since we don't want the card values being blank,
+   if array value is blank, set to default value */
+   if(trackingArray[row - 1].taskNumber == "")
+      taskNumber.textContent = "Task #";
+   else
+      taskNumber.textContent = trackingArray[row - 1].taskNumber;
+
+   if(trackingArray[row - 1].workCode == "")
+      workCode.textContent = "Work Code";
+   else
+      workCode.textContent = trackingArray[row - 1].workCode;
+      
+   if(trackingArray[row - 1].jiraEntry == "")
+      timeEntry.textContent = "Time Entry";
+   else
+      timeEntry.textContent = trackingArray[row - 1].jiraEntry;
+      
+   if(trackingArray[row - 1].taskTime == "")
+      taskTime.textContent = "Task Time";
+   else
+      taskTime.textContent = trackingArray[row - 1].taskTime;   
+}
+
+/* populate the mobile task entry modal fields */
+function setupMobileModal(event) {
+   const mobileModalElement = mobileModal._element;
+   const card = event.relatedTarget.parentElement;
+   const rowNumber = $(card).attr("row");
+   const rowLabel = $(mobileModalElement).find("#mobile-entry-row-label")[0];
+   const taskNumber = $(mobileModalElement).find(
+      "#mobile-entry-task-number"
+   )[0];
+   const workCode = $(mobileModalElement).find("#mobile-entry-work-code")[0];
+   const timeEntry = $(mobileModalElement).find("#mobile-entry-time-entry")[0];
+   const startTime = $(mobileModalElement).find("#mobile-entry-start-time")[0];
+   const endTime = $(mobileModalElement).find("#mobile-entry-end-time")[0];
+   const taskTime = $(mobileModalElement).find("#mobile-entry-total-time")[0];
+
+   try {
+      rowLabel.textContent = "Row " + rowNumber;
+      $(rowLabel).attr("row", rowNumber);
+      taskNumber.value = trackingArray[rowNumber - 1].taskNumber;
+      workCode.value = trackingArray[rowNumber - 1].workCode;
+      timeEntry.value = trackingArray[rowNumber - 1].jiraEntry;
+      startTime.value = trackingArray[rowNumber - 1].startTime;
+      endTime.value = trackingArray[rowNumber - 1].endTime;
+      taskTime.value = trackingArray[rowNumber - 1].taskTime;
+   } catch (e) {
+      console.log(e);
+      rowLabel.textContent = "Row";
+      $(rowLabel).attr("row", "");
+      taskNumber.value = "";
+      workCode.value = "Work Code";
+      timeEntry.value = "";
+      startTime.value = "";
+      endTime.value = "";
+      taskTime.value = "";
+   }
+}
+
+function updateAndCacheTrackingArray(
+   row,
+   taskNumber,
+   workCode,
+   jiraEntry,
+   startTime,
+   endTime,
+   taskTime
+) {
+   let trackingObject = {
+      row: row,
+      taskNumber: taskNumber,
+      workCode: workCode,
+      jiraEntry: jiraEntry,
+      startTime: startTime,
+      endTime: endTime,
+      taskTime: taskTime,
+   };
+
+   //store in tracking array, -1 to offset the row counter
+   trackingArray[row - 1] = trackingObject;
+
+   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
+}
+
+function backdropShow() {
+   // Show the backdrop
+   $('<div class="modal-backdrop"></div>').appendTo(document.body);
+}
+
+function backdropHide() {
+   // Remove it
+   $(".modal-backdrop").remove();
 }

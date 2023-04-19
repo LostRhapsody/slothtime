@@ -100,8 +100,8 @@ a:hover {
 /**** UI / Look and Feel ****/
 
 .sloth-icon {
-   width: 3rem;
-   height: 3rem;
+   width: 2.2rem;
+   height: 2.2rem;
    color: var(--main-color);
 }
 
@@ -150,7 +150,26 @@ a:hover {
 
 /**** Cards ****/
 .card {
-   --bs-card-bg: var(--bg-color);
+   --bs-card-bg: var(--bg-color);   
+}
+
+/** mobile cards **/
+#mobile-time-tracking-form .card {
+   color: var(--text-color);
+   width: 75%;
+   border: var(--bs-card-border-width) solid var(--sub-color);
+   border-right-width: 0px;
+}
+
+#mobile-time-tracking-form .card .card-header {
+   color: var(--bg-color);
+   background-color: var(--main-color);
+}
+
+#mobile-time-tracking-form .card-body {
+   border: var(--bs-card-border-width) solid var(--sub-color);
+   border-right-width: 0px;   
+   border-left-width: 0px;
 }
 
 /**** Badges ****/
@@ -205,6 +224,8 @@ option:focus {
 .form-control {
    border-left: 1px solid var(--sub-color);
    border-bottom: 1px solid var(--sub-color);
+   border-top: 0px;
+   border-right: 0px;
 }
 
 .form-control:focus {
@@ -374,6 +395,7 @@ textarea {
    gap: var(--_viewport-margin);
    inset-block: auto var(--_viewport-margin);
    margin-bottom: var(--_viewport-margin);
+   background-color: var(--bg-color);
 }
 .floating-shelf > .row {
    width: 100%;

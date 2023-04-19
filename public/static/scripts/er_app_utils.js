@@ -10,8 +10,6 @@ var favoriteThemes = [];
 /* just nice to have */
 const pageName = $("title")[0].text.slice(12);
 
-updateAddFaveBtn();
-
 /*----------------------------
 Toast Message Utilities
 ----------------------------*/
@@ -30,6 +28,9 @@ IMPORTANT -  include
 er_app_starttheme.js in header
 and this file in footer
 ----------------------------*/
+
+/* update the favorite button on theme modal to show current them name */
+updateAddFaveBtn();
 
 /* gets the list of themes from _list.json */
 async function getThemeList() {
