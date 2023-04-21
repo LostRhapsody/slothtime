@@ -383,9 +383,11 @@ textarea {
 /* doesn't overlap and cover the bottom row */
 .hr-space {
    height: 15rem;
-   color: var(--bg-color);
+   color: transparent;
 }
 
+/* TODO Shelf should be partially transparent */
+/* without affecting the buttons and text     */
 .floating-shelf {
    width: 100%;
    --_viewport-margin: 2.5vmin;
