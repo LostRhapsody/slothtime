@@ -1,5 +1,5 @@
 {
-    "name":"Slothtime | A minimalist, customizable time tracker",
+    "name":"Slothtime",
     "short_name":"Slothtime",
     "start_url":"/",
     "display":"standalone",
@@ -7,6 +7,8 @@
     "lang":"en",
     "dir":"ltr",
     "description":"A minimalist, customizable time tracker",
+    "theme_color":"#e2b714",
+    "background_color":"#323437",
     "categories":[
         "developer",
         "developer tools",
