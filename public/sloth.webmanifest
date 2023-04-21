@@ -118,13 +118,13 @@
             "purpose":"maskable"
         },
         {
-            "src":"static/images/slothtime_icon_x348.png",
-            "sizes":"348x384",
+            "src":"static/images/slothtime_icon_x384.png",
+            "sizes":"384x384",
             "type":"image/png",
             "purpose":"any"
         },
         {
-            "src":"static/images/slothtime_icon_x348.png",
+            "src":"static/images/slothtime_icon_x384.png",
             "sizes":"384x384",
             "type":"image/png",
             "purpose":"maskable"
