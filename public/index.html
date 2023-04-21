@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
+      <!-- Meta Data -->
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,7 +9,7 @@
          name="description"
          content="Slothtime is a minimalist time tracking webapp with an emphasis on ease of use, speed, and customization."
       />
-      <meta name="image" content="static/images/sloth-icon.png" />
+      <meta name="image" content="static/images/slothtime_icon_x128.png" />
       <meta
          name="keywords"
          content="
@@ -24,7 +25,7 @@
       />
       <meta property="og:url" content="https://slothtime.dev" />
       <meta property="og:type" content="website" />
-      <meta property="og:image" content="static/images/sloth-icon.png" />
+      <meta property="og:image" content="static/images/slothtime_icon_x128.png" />
       <meta
          property="og:description"
          content="Slothtime is a minimalist time tracking webapp with an emphasis on ease of use, speed, and customization."
@@ -33,7 +34,7 @@
          name="twitter:title"
          content="Slothtime | A minimalist, customizable time tracker"
       />
-      <meta name="twitter:image" content="static/images/sloth-icon.png" />
+      <meta name="twitter:image" content="static/images/slothtime_icon_x128.png" />
       <meta name="twitter:card" content="summary_large_image" />
       <script type="application/ld+json">
          {
@@ -47,22 +48,27 @@
             "description": "Slothtime is a minimalist time tracking webapp with an emphasis on ease of use, speed, and customization."
          }
       </script>
+
+      <!-- Icon -->
       <link
          rel="icon"
          type="image/x-icon"
          href="static/images/sloth-icon.svg"
       />
+      <!-- Title -->
       <title>slothtime | A minimalist, customizable time tracker</title>
+      <!-- Scipts and Stylesheets -->
       <!-- JQuery -->
       <script
          src="https://code.jquery.com/jquery-3.6.2.min.js"
          integrity="sha256-2krYZKh//PcchRtd+H+VyyQoZ/e3EcrkxhM8ycwASPA="
          crossorigin="anonymous"
       ></script>
+      <!-- themes -->
       <link rel="stylesheet" id="currentTheme" />
       <link rel="stylesheet" id="previewTheme" />
       <!-- er starttheme js -->
-      <script src="static/scripts/er_app_starttheme.js"></script>      
+      <script src="static/scripts/er_app_starttheme.js"></script>
       <!-- Bootstrap v5.2 (CSS)   -->
       <link
          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -75,8 +81,11 @@
          rel="stylesheet"
          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
       />
-
       <link rel="stylesheet" href="static/styles/er_apps_styles.css" />
+      <!-- Web App Manifest -->
+      <link rel="manifest" href="sloth.webmanifest" />
+      <!-- TODO switch this color based on theme's main color -->
+      <meta name="theme-color" content="#e2b714">
    </head>
 
    <body>
@@ -571,13 +580,16 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                                  id="mobile-entry-end-time"
                               />
                            </div>
-                           <div class="col mobile-total-time-col" style="display: none;">
+                           <div
+                              class="col mobile-total-time-col"
+                              style="display: none"
+                           >
                               <input
                                  type="text"
                                  class="form-control"
                                  placeholder="Total"
                                  aria-label="Total Time"
-                                 id="mobile-entry-total-time"                                 
+                                 id="mobile-entry-total-time"
                               />
                            </div>
                         </div>
@@ -597,7 +609,13 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
 
          <!--Netlify Error subtmit form-->
          <form name="submitDeveloperError" method="POST" data-netlify="true">
-            <input aria-label="Error Log" id="errorLog" type="text" name="errorLog" class="d-none" />
+            <input
+               aria-label="Error Log"
+               id="errorLog"
+               type="text"
+               name="errorLog"
+               class="d-none"
+            />
             <button id="sendErrorLog" type="submit" class="d-none">Send</button>
          </form>
 
@@ -746,7 +764,9 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
 
          <!-- Title and Clock -->
          <div class="row flex-column flex-md-row align-items-end text-start">
-            <div class="col col-12 col-md-7 align-items-center justify-content-center justify-content-start-md d-flex flex-row">
+            <div
+               class="col col-12 col-md-7 align-items-center justify-content-center justify-content-start-md d-flex flex-row"
+            >
                <a id="homePageLink" href="https://slothtime.dev" class="d-flex">
                   <svg
                      fill="currentColor"
@@ -792,7 +812,11 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                      />
                   </svg>
                </a>
-               <a aria-label="About Page" href="https://slothtime.dev/about" class="d-flex">
+               <a
+                  aria-label="About Page"
+                  href="https://slothtime.dev/about"
+                  class="d-flex"
+               >
                   <svg
                      class="iconRow"
                      xmlns="http://www.w3.org/2000/svg"
@@ -834,7 +858,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                         name="task_number"
                         type="text"
                         class="form-control my-3"
-                        placeholder="Task #"
+                        placeholder="Task Number"
                         aria-label="Task Number Input"
                         aria-describedby="inputGroup-timeentry-tasknum"
                      />

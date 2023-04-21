@@ -366,7 +366,7 @@ function updateTrackingArray(e) {
    let endDate = new Date();
 
    /* if values not set yet, just use placedholders */
-   if (typeof taskField == "undefined") taskField.value = "Task #";
+   if (typeof taskField == "undefined") taskField.value = "Task Number";
    if (typeof workCode == "undefined") workCode.value = "Work Code";
    if (typeof inputField == "undefined") inputField.value = "Jira Entry";
    if (typeof startTime == "undefined") startTime.value = "Start Time";
@@ -877,7 +877,7 @@ function setupMobileCardRow(row) {
    /* since we don't want the card values being blank,
    if array value is blank, set to default value */
    if (trackingArray[row - 1].taskNumber == "")
-      taskNumber.textContent = "Task #";
+      taskNumber.textContent = "Task Number";
    else taskNumber.textContent = trackingArray[row - 1].taskNumber;
 
    if (trackingArray[row - 1].workCode == "")
