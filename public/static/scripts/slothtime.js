@@ -17,6 +17,7 @@ var fileLocation = $('script[src*="slothtime"]').attr("src");
 fileLocation = fileLocation.replace("slothtime.js", "");
 /* HACK - remove all these globals. Yikes */
 var rowBuffer = []; /* store an array of deleted rows as a history buffer */
+var cardBuffer = []; /* store an array of deleted cards as a history buffer */
 var rowCounter; /* stores the number of rows   */
 rowCounter = 0;
 var hoursToggle = true; /* toggle between start/end time and total hours */
@@ -127,7 +128,6 @@ $("#time-tracking-table").on("focus", "tr .form-control", function (e) {
    setupModal(e);
 });
 
-/****** Event Listeners ******/
 /* when any field is changed on the table */
 /* update the trackingArray's object      */
 /* and populate the modal's fields        */
@@ -283,12 +283,12 @@ $("body").on("click", "[data-st-action]", function (event) {
    let paramArray = [];
 
    /* get the comma delimited list of params */
-   paramList = $(this).attr('data-st-params');
+   paramList = $(this).attr("data-st-params");
 
    /* if params attribute doesn't exst, do nothing */
-   if(typeof paramList != "undefined")
-      /* if there are any params */
+   if (typeof paramList != "undefined")
       if (paramList.length != 0)
+         /* if there are any params */
          /* split by each comma and load into array */
          paramList.split(",").forEach((x, y) => (paramArray[y] = x));
 
@@ -411,7 +411,9 @@ function updateTrackingArray(e) {
    //store in tracking array, -1 to offset the row counter
    trackingArray[rowNumber - 1] = trackingObject;
 
-   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
+   cacheTrackingArray();
+
+   setupMobileCardRow(rowNumber);
 }
 
 /* updates the tracking array and the        */
@@ -426,7 +428,7 @@ function updateTrackingFromModal(e) {
    let tableRow = findRowElement(modalRowNum);
 
    trackingArray[modalRowNum - 1].jiraEntry = textArea.value;
-   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
+   cacheTrackingArray();
 
    $(tableRow).find('textarea[name="jira_entry"]')[0].value =
       trackingArray[modalRowNum - 1].jiraEntry;
@@ -459,25 +461,28 @@ function newRow(generateNewRecord) {
    cardTemplate.appendTo($("#mobile-tracking-body"));
 
    if (generateNewRecord)
-      updateAndCacheTrackingArray(rowCounter, "", "Work Code", "", "", "", "");
+      updateAndCacheTrackingArray(rowCounter);
 }
 
 /* shows a modal to verify the action */
 function actionVerification(action) {}
 
-/* hides the last row */
+/* Removes last row/card, adds to temp client buffer, removes from cache */
 function removeRow() {
-   rowBuffer.push($("tr").last());
-
    /* if the row has a row arribute     */
    /* prevents from deleting the header */
    if ($("tr").last().attr("row")) {
+      rowBuffer.push($("tr").last());
+      cardBuffer.push($(".card").last());
       $("tr").last().remove();
+      $(".card").last().remove();
+      trackingArray.pop();
+      cacheTrackingArray();
       rowCounter -= 1;
    }
 }
 
-/* undos the last remove */
+/* undos remove, re-adds rows/cards from buffer, removes from buffer, adds to cache */
 function undoRemoveRow() {
    if (rowBuffer[rowBuffer.length - 1] == null) {
       alert("Nothing to undo");
@@ -486,9 +491,16 @@ function undoRemoveRow() {
    rowCounter += 1;
    rowBuffer[rowBuffer.length - 1]
       .removeAttr("row")
-      .attr("row", rowCounter)
+      .attr("row", '"' + rowCounter.toString() + '"')
       .appendTo($("#time-tracking-table-body"));
    rowBuffer.pop();
+   cardBuffer[cardBuffer.length - 1]
+      .removeAttr("row")
+      .attr("row", rowCounter.toString())
+      .appendTo($("#mobile-tracking-body"));
+   cardBuffer.pop();
+
+   updateAndCacheTrackingArray(rowCounter);
 }
 
 /* Export the table to a downloadable file */
@@ -632,6 +644,10 @@ function setupModal(e) {
    }
 }
 
+/* TODO prevent editing a row that's been delted */
+/* used to clear the modal when the row that was populating the modal last is deleted */
+function clearModal() {}
+
 /* Copies the content of the selected row to the clipboard */
 /* finds the textArea and badge based on event source      */
 function copyToClipboard(event, source) {
@@ -677,15 +693,21 @@ function updateTimeTrackingTableDisplay() {
    });
 }
 
-function setupTimeTrackingTableRow(row){
+function setupTimeTrackingTableRow(row) {
    const new_row = findRowElement(row);
 
-   $(new_row).find('input[name="task_number"]')[0].value = trackingArray[row - 1].taskNumber;
-   $(new_row).find('select[name="work_code"]')[0].value = trackingArray[row - 1].workCode;
-   $(new_row).find('textarea[name="jira_entry"]')[0].value = trackingArray[row - 1].jiraEntry;
-   $(new_row).find('input[name="start_time"]')[0].value = trackingArray[row - 1].startTime;
-   $(new_row).find('input[name="end_time"]')[0].value = trackingArray[row - 1].endTime;
-   $(new_row).find('input[name="task_time"]')[0].value = trackingArray[row - 1].taskTime;
+   $(new_row).find('input[name="task_number"]')[0].value =
+      trackingArray[row - 1].taskNumber;
+   $(new_row).find('select[name="work_code"]')[0].value =
+      trackingArray[row - 1].workCode;
+   $(new_row).find('textarea[name="jira_entry"]')[0].value =
+      trackingArray[row - 1].jiraEntry;
+   $(new_row).find('input[name="start_time"]')[0].value =
+      trackingArray[row - 1].startTime;
+   $(new_row).find('input[name="end_time"]')[0].value =
+      trackingArray[row - 1].endTime;
+   $(new_row).find('input[name="task_time"]')[0].value =
+      trackingArray[row - 1].taskTime;
 }
 
 function populateNewRow(row_data) {
@@ -724,7 +746,7 @@ function clearTrackingTable() {
    /* reset row counter */
    rowCounter = 0;
    /* update cache with new empty array */
-   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
+   cacheTrackingArray();
    $("[row]").remove();
    newRow(true);
 }
@@ -839,7 +861,7 @@ function updateTrackingArrayMobile(event) {
    //store in tracking array, -1 to offset the row counter
    trackingArray[rowNumber - 1] = trackingObject;
 
-   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
+   cacheTrackingArray();
 
    setupMobileCardRow(rowNumber);
    setupTimeTrackingTableRow(rowNumber);
@@ -908,15 +930,19 @@ function setupMobileModal(event) {
    }
 }
 
-function updateAndCacheTrackingArray(
-   row,
-   taskNumber,
-   workCode,
-   jiraEntry,
-   startTime,
-   endTime,
-   taskTime
-) {
+function updateAndCacheTrackingArray(row) {
+   /* get row */
+   const new_row = findRowElement(row);
+
+   /* set values */
+   const taskNumber = $(new_row).find('input[name="task_number"]')[0].value;
+   const workCode = $(new_row).find('select[name="work_code"]')[0].value;
+   const jiraEntry = $(new_row).find('textarea[name="jira_entry"]')[0].value;
+   const startTime = $(new_row).find('input[name="start_time"]')[0].value;
+   const endTime = $(new_row).find('input[name="end_time"]')[0].value;
+   const taskTime = $(new_row).find('input[name="task_time"]')[0].value;
+
+   /* create new tracking object */
    let trackingObject = {
       row: row,
       taskNumber: taskNumber,
@@ -930,6 +956,11 @@ function updateAndCacheTrackingArray(
    //store in tracking array, -1 to offset the row counter
    trackingArray[row - 1] = trackingObject;
 
+   /* cache said array */
+   cacheTrackingArray();
+}
+
+function cacheTrackingArray() {
    localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
 }
 
