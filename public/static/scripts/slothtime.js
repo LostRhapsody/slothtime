@@ -122,9 +122,18 @@ document.onkeyup = function (event) {
 
 /****** Event Listeners ******/
 /* when any field is focues on the table  */
-/* populate the modal's fields            */
+/* populate the modal's fields and add    */
+/* highlight                              */
 $("#time-tracking-table").on("focus", "tr .form-control", function (e) {
    setupModal(e);
+   highlghtRow(e,true);
+});
+
+/* whenever you lose focus on a field in  */
+/* the table, remove highlight            */
+$("#time-tracking-table").on("focusout", "tr .form-control", function (e) {
+   setupModal(e);
+   highlghtRow(e,false);
 });
 
 /* when any field is changed on the table */
@@ -137,13 +146,15 @@ $("#time-tracking-table").on("change", "tr .form-control", function (e) {
 
 /* whenever the table is clicked, check the event   */
 /* if the target is the copy to clipboard btn, copy */
-/* that row's jira entry to the clipboard           */
+/* that row's jira entry to the clipboard and       */
+/* highlight row                                    */
 $("#time-tracking-table").click(function (e) {
    if (
       e.target.parentElement.classList.contains("btn-copy-to-clipboard") ||
       e.target.classList.contains("btn-copy-to-clipboard")
    ) {
       copyToClipboard(e, "click");
+      highlghtRow(e,true);
    }
 });
 
@@ -668,7 +679,8 @@ function copyToClipboard(event, source) {
    /* copy text to clipboard, async proc */
    navigator.clipboard.writeText(textArea.value).then(
       () => {
-         console.log("Content copied to clipboard");
+         //console.log("Content copied to clipboard");
+         //do nothing, we already get the toast message
       },
       () => {
          console.error("Failed to copy");
@@ -971,4 +983,25 @@ function backdropShow() {
 function backdropHide() {
    // Remove it
    $(".modal-backdrop").remove();
+}
+
+/**
+ * Applies a class that highlights a given row
+ * using the event passed in
+ * @param e an event triggered from an input inside the table
+ * @param isFocused boolean that indicates if the event 
+ * was focus in or focus out, which will add or remove
+ * the class respectivley. 
+ */
+function highlghtRow(e,isFocused) {
+   const table = $("#time-tracking-table");
+   const tableRow = $(e.target).parents("[row]");
+   if(isFocused) {
+      /* first check for any rows that are
+      already highlighted and remove it */
+      table.find(".st-row-highlight").removeClass("st-row-highlight");
+      tableRow.addClass("st-row-highlight");
+   }
+   else   
+      tableRow.removeClass("st-row-highlight");
 }
