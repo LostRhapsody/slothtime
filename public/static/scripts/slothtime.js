@@ -244,7 +244,7 @@ document
 /* changed, start a new row */
 $("#time-tracking-table").on(
    "change",
-   ".end_time, .task_time",
+   ".end_time, .task_time, .task_time",
    function (event) {
       /* only call new row if you are editing the last row */
       if (
