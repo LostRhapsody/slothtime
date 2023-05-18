@@ -29,6 +29,12 @@ er_app_starttheme.js in header
 and this file in footer
 ----------------------------*/
 
+/* TODO 
+include check to query monkeytype.com's github to check for new theme updates
+Then, update the list on the server.
+*/
+
+
 /* update the favorite button on theme modal to show current them name */
 updateAddFaveBtn();
 
