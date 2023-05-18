@@ -9,7 +9,7 @@ to https://sothtime.dev/
 TODO Switch to using proper date times or at least integers for start/end/total time 
 */
 /* check if cache is available */
-/* TODO Added cache checks whenever pulling from cache */
+/* TODO Add cache checks whenever pulling from cache */
 const cacheAvailable = "caches" in self;
 /* Grab the currently loaded page source */
 var fileLocation = $('script[src*="slothtime"]').attr("src");
@@ -654,7 +654,7 @@ function setupModal(e) {
    }
 }
 
-/* TODO prevent editing a row that's been delted */
+/* TODO prevent editing a row that's been deleted */
 /* used to clear the modal when the row that was populating the modal last is deleted */
 function clearModal() {}
 
@@ -691,7 +691,6 @@ function copyToClipboard(event, source) {
    $("#copied_toast").toast("show");
 }
 
-/* TODO clicking on fab twice doesn't hide the context menu */
 function showFabMenu() {
    isFabMenuOpen ? (isFabMenuOpen = false) : (isFabMenuOpen = true);
    isFabMenuOpen ? $(".mini-fab").show() : $(".mini-fab").hide();
@@ -750,7 +749,6 @@ function populateNewRow(row_data) {
    setupMobileCardRow(row_data.row);
 }
 
-/* BUG When table is deleted, the new row created has the old last row number displayed */
 function clearTrackingTable() {
    /* clear trackingArray */
    trackingArray.length = 0;
@@ -758,7 +756,8 @@ function clearTrackingTable() {
    rowCounter = 0;
    /* update cache with new empty array */
    cacheTrackingArray();
-   $("[row]").remove();
+   $("#time-tracking-table-body [row]").remove();
+   $("#mobile-tracking-body [row]").remove();
    newRow(true);
 }
 

@@ -238,7 +238,7 @@ option:focus {
 }
 
 .form-control:focus {
-   border-color: var(--sub-color);
+   border: none;
    box-shadow: 0 0 0 0.05rem var(--main-color);
 }
 
@@ -417,7 +417,7 @@ textarea {
 }
 
 /**** FAB Buttons ****/
-
+/* TODO add smooth open animation to menu */
 /* Fabs DIV */
 .fabs {
    --_viewport-margin: 2.5vmin;
