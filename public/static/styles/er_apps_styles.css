@@ -82,10 +82,12 @@ a:hover {
    background-color: var(--bg-color);
    border-bottom-width: 1px;
    box-shadow: inset 0 0 0 9999px var(--bg-color);
+   background-color: var(--bg-color);
 }
 
 .st-table thead th {
    box-shadow: inset 0 0 0 9999px var(--main-color);
+   background-color: var(--main-color);
    color: var(--bg-color) !important;
    border-bottom-width: 0px;
 }
@@ -164,6 +166,7 @@ a:hover {
    width: 75%;
    border: var(--bs-card-border-width) solid var(--sub-color);
    border-right-width: 0px;
+   border-top-width: 0px;
 }
 
 #mobile-time-tracking-form .card .card-header {
