@@ -1,5 +1,27 @@
-
 [
+   {
+      "update":"010016",
+      "commitMessage":[         
+         {
+            "message":"Feature: The total task time field will now trigger new rows to be created, just like the End Time field."
+         },
+         {
+            "message":"Feature: The row you are working in is now highlighted. When the copy to clipboard button is used, it's also highlighted. Allows you to better keep track of where you left off."
+         },
+         {
+            "message":"Quality of life: The links on the about page now open in a new tab."
+         },
+         {
+            "message":"Style cleanup, removed overlapping borders and box shadows on inputs, removed top border of mobile cards, added background color to table cells to fix gap adjustments on some screens."
+         },
+         {
+            "message":"Bug: The delete button no longer deletes required page elements, meaning you don't have to refresh your browser to stop errors from ocurring."
+         },
+         {
+            "message":"Bug: The tray is now solid and non-transparent, so the toast message (copy to clipboard notification) was non visible, moved up to accomodate."
+         }
+      ]
+   },
    {
       "update":"010015",
       "commitMessage":[                  

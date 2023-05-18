@@ -5,6 +5,10 @@ local paths with fully qualified paths
 to https://sothtime.dev/
 */
 
+/* TODO move any code that handles caching to a new file */
+/* TODO check cache for a difference between stored changelog 
+version and most recent version on the server, and open changelog window if server is newer */
+
 /* 
 TODO Switch to using proper date times or at least integers for start/end/total time 
 */
