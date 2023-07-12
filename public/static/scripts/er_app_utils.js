@@ -113,14 +113,14 @@ function loadThemeList(themes) {
          function (e) {
             if (switchingTheme) return;
             previewTheme(
-               $("#" + e.target.id.toString()).attr("data-theme"),
+               document.getElementById(e.currentTarget.id).dataset.theme,
                "show"
             );
          },
          function (e) {
             if (switchingTheme) return;
             previewTheme(
-               $("#" + e.target.id.toString()).attr("data-theme"),
+               document.getElementById(e.currentTarget.id).dataset.theme,
                "hide"
             );
          }
