@@ -1,10 +1,4 @@
 /***** Globals *****/
-
-/* FEATURE Write a script that replaces all 
-local paths with fully qualified paths
-to https://sothtime.dev/
-*/
-
 /* TODO move any code that handles caching to a new file */
 /* TODO check cache for a difference between stored changelog 
 version and most recent version on the server, and open changelog window if server is newer */
@@ -12,9 +6,7 @@ version and most recent version on the server, and open changelog window if serv
 /* 
 TODO Switch to using proper date times or at least integers for start/end/total time 
 */
-/* check if cache is available */
-/* TODO Add cache checks whenever pulling from cache */
-const cacheAvailable = "caches" in self;
+
 /* Grab the currently loaded page source */
 var fileLocation = $('script[src*="slothtime"]').attr("src");
 fileLocation = fileLocation.replace("slothtime.js", "");
@@ -24,8 +16,7 @@ var cardBuffer = []; /* store an array of deleted cards as a history buffer */
 var rowCounter; /* stores the number of rows   */
 rowCounter = 0;
 var hoursToggle = true; /* toggle between start/end time and total hours */
-var trackingArray =
-   []; /* stores the tracking objects that contain the input field details */
+var tracking_array = slothtime_config.tracking_array; /* stores the tracking objects that contain the input field details */
 var hideClock = false; /* toggles the clock visibility */
 var isFabMenuOpen = false; /* tracks if the FAB button menu is open */
 var isFabsHovered; /* tracks if the fabs div is being hovered */
@@ -36,14 +27,8 @@ let errorTarget; /* stores targets from errors. Empty after each error is logged
 let errorAction; /* stores actions from errors. Empty after each error is logged */
 let showChangelogModal = false; /* toggles whether to show the modal or not */
 
-/* Check and retrieve any stored data in the cache */
-var cacheTracking = JSON.parse(localStorage.getItem("Time_Tracking"));
-
-/* if tracking has been cached, load that and display */
-if (cacheTracking != null) trackingArray = cacheTracking;
-
 /* if  tracking is cached but [] empty, new row       */
-if (trackingArray.length != 0) {
+if (tracking_array.length != 0) {
    updateTimeTrackingTableDisplay();
 } else {
    /* Trigger the first row */
@@ -423,9 +408,9 @@ function updateTrackingArray(e) {
    }
 
    //store in tracking array, -1 to offset the row counter
-   trackingArray[rowNumber - 1] = trackingObject;
+   tracking_array[rowNumber - 1] = trackingObject;
 
-   cacheTrackingArray();
+   cacheTrackingArray(tracking_array);
 
    setupMobileCardRow(rowNumber);
 }
@@ -441,11 +426,11 @@ function updateTrackingFromModal(e) {
    let modalSubLabel = modalBody.children[1];
    let tableRow = findRowElement(modalRowNum);
 
-   trackingArray[modalRowNum - 1].jiraEntry = textArea.value;
-   cacheTrackingArray();
+   tracking_array[modalRowNum - 1].jiraEntry = textArea.value;
+   cacheTrackingArray(tracking_array);
 
    $(tableRow).find('textarea[name="jira_entry"]')[0].value =
-      trackingArray[modalRowNum - 1].jiraEntry;
+      tracking_array[modalRowNum - 1].jiraEntry;
 }
 
 /* clones the templates and appends to table */
@@ -491,7 +476,7 @@ function removeRow() {
       $("tr").last().remove();
       $(".card").last().remove();
       trackingArray.pop();
-      cacheTrackingArray();
+      cacheTrackingArray(tracking_array);
       rowCounter -= 1;
    }
 }
@@ -539,10 +524,10 @@ function exportTable() {
    /* comma: prints them out in comma delimited rows */
    switch (exportType) {
       case "json":
-         exportData = JSON.stringify(trackingArray);
+         exportData = JSON.stringify(tracking_array);
          break;
       case "comma":
-         trackingArray.forEach((element) => {
+         tracking_array.forEach((element) => {
             exportData +=
                element.row +
                "," +
@@ -651,7 +636,7 @@ function setupModal(e) {
 
    /* set the modal's content */
    try {
-      modalTextArea.value = trackingArray[rowNumber - 1].jiraEntry;
+      modalTextArea.value = tracking_array[rowNumber - 1].jiraEntry;
    } catch (e) {
       /* would log error, buuuut, it's not really important */
       modalTextArea.value = "";
@@ -701,7 +686,7 @@ function showFabMenu() {
 }
 
 function updateTimeTrackingTableDisplay() {
-   trackingArray.forEach((entry) => {
+   tracking_array.forEach((entry) => {
       /* if element is null, (empty row), remove from array */
       populateNewRow(entry);
    });
@@ -711,17 +696,17 @@ function setupTimeTrackingTableRow(row) {
    const new_row = findRowElement(row);
 
    $(new_row).find('input[name="task_number"]')[0].value =
-      trackingArray[row - 1].taskNumber;
+      tracking_array[row - 1].taskNumber;
    $(new_row).find('select[name="work_code"]')[0].value =
-      trackingArray[row - 1].workCode;
+      tracking_array[row - 1].workCode;
    $(new_row).find('textarea[name="jira_entry"]')[0].value =
-      trackingArray[row - 1].jiraEntry;
+      tracking_array[row - 1].jiraEntry;
    $(new_row).find('input[name="start_time"]')[0].value =
-      trackingArray[row - 1].startTime;
+      tracking_array[row - 1].startTime;
    $(new_row).find('input[name="end_time"]')[0].value =
-      trackingArray[row - 1].endTime;
+      tracking_array[row - 1].endTime;
    $(new_row).find('input[name="task_time"]')[0].value =
-      trackingArray[row - 1].taskTime;
+      tracking_array[row - 1].taskTime;
 }
 
 function populateNewRow(row_data) {
@@ -754,12 +739,12 @@ function populateNewRow(row_data) {
 }
 
 function clearTrackingTable() {
-   /* clear trackingArray */
-   trackingArray.length = 0;
+   /* clear tracking_array */
+   tracking_array.length = 0;
    /* reset row counter */
    rowCounter = 0;
    /* update cache with new empty array */
-   cacheTrackingArray();
+   cacheTrackingArray(tracking_array);
    $("#time-tracking-table-body [row]").remove();
    $("#mobile-tracking-body [row]").remove();
    newRow(true);
@@ -873,9 +858,9 @@ function updateTrackingArrayMobile(event) {
    };
 
    //store in tracking array, -1 to offset the row counter
-   trackingArray[rowNumber - 1] = trackingObject;
+   tracking_array[rowNumber - 1] = trackingObject;
 
-   cacheTrackingArray();
+   cacheTrackingArray(tracking_array);
 
    setupMobileCardRow(rowNumber);
    setupTimeTrackingTableRow(rowNumber);
@@ -890,21 +875,21 @@ function setupMobileCardRow(row) {
 
    /* since we don't want the card values being blank,
    if array value is blank, set to default value */
-   if (trackingArray[row - 1].taskNumber == "")
+   if (tracking_array[row - 1].taskNumber == "")
       taskNumber.textContent = "Task Number";
-   else taskNumber.textContent = trackingArray[row - 1].taskNumber;
+   else taskNumber.textContent = tracking_array[row - 1].taskNumber;
 
-   if (trackingArray[row - 1].workCode == "")
+   if (tracking_array[row - 1].workCode == "")
       workCode.textContent = "Work Code";
-   else workCode.textContent = trackingArray[row - 1].workCode;
+   else workCode.textContent = tracking_array[row - 1].workCode;
 
-   if (trackingArray[row - 1].jiraEntry == "")
+   if (tracking_array[row - 1].jiraEntry == "")
       timeEntry.textContent = "Time Entry";
-   else timeEntry.textContent = trackingArray[row - 1].jiraEntry;
+   else timeEntry.textContent = tracking_array[row - 1].jiraEntry;
 
-   if (trackingArray[row - 1].taskTime == "")
+   if (tracking_array[row - 1].taskTime == "")
       taskTime.textContent = "Task Time";
-   else taskTime.textContent = trackingArray[row - 1].taskTime;
+   else taskTime.textContent = tracking_array[row - 1].taskTime;
 }
 
 /* populate the mobile task entry modal fields */
@@ -925,12 +910,12 @@ function setupMobileModal(event) {
    try {
       rowLabel.textContent = "Row " + rowNumber;
       $(rowLabel).attr("row", rowNumber);
-      taskNumber.value = trackingArray[rowNumber - 1].taskNumber;
-      workCode.value = trackingArray[rowNumber - 1].workCode;
-      timeEntry.value = trackingArray[rowNumber - 1].jiraEntry;
-      startTime.value = trackingArray[rowNumber - 1].startTime;
-      endTime.value = trackingArray[rowNumber - 1].endTime;
-      taskTime.value = trackingArray[rowNumber - 1].taskTime;
+      taskNumber.value = tracking_array[rowNumber - 1].taskNumber;
+      workCode.value = tracking_array[rowNumber - 1].workCode;
+      timeEntry.value = tracking_array[rowNumber - 1].jiraEntry;
+      startTime.value = tracking_array[rowNumber - 1].startTime;
+      endTime.value = tracking_array[rowNumber - 1].endTime;
+      taskTime.value = tracking_array[rowNumber - 1].taskTime;
    } catch (e) {
       console.log(e);
       rowLabel.textContent = "Row";
@@ -944,6 +929,10 @@ function setupMobileModal(event) {
    }
 }
 
+/* 
+Updates the tracking array and then caches it
+row - the row from the time entry table to update 
+*/
 function updateAndCacheTrackingArray(row) {
    /* get row */
    const new_row = findRowElement(row);
@@ -968,15 +957,13 @@ function updateAndCacheTrackingArray(row) {
    };
 
    //store in tracking array, -1 to offset the row counter
-   trackingArray[row - 1] = trackingObject;
+   tracking_array[row - 1] = trackingObject;
 
    /* cache said array */
-   cacheTrackingArray();
+   cacheTrackingArray(tracking_array);
 }
 
-function cacheTrackingArray() {
-   localStorage.setItem("Time_Tracking", JSON.stringify(trackingArray));
-}
+/* cacheTrackingArray moved to er_app_config.js */
 
 function backdropShow() {
    // Show the backdrop

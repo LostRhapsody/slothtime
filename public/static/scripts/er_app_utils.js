@@ -5,10 +5,10 @@ var fileLocation = $('script[src*="er_app_utils"]').attr("src");
 fileLocation = fileLocation.replace("er_app_utils.js", "");
 
 /* store the user's favorite themes */
-var favoriteThemes = [];
+var favoriteThemes = slothtime_config.favorite_themes;
 
 /* just nice to have */
-const pageName = $("title")[0].text.slice(12);
+/* const pageName = $("title")[0].text.slice(12); */
 
 /*----------------------------
 Toast Message Utilities
@@ -29,13 +29,7 @@ er_app_starttheme.js in header
 and this file in footer
 ----------------------------*/
 
-/* TODO 
-include check to query monkeytype.com's github to check for new theme updates
-Then, update the list on the server.
-*/
-
-
-/* update the favorite button on theme modal to show current them name */
+/* update the favorite button on theme modal to show current theme name */
 updateAddFaveBtn();
 
 /* gets the list of themes from _list.json */
@@ -60,16 +54,46 @@ function loadThemeList(themes) {
          "<li" +
          " id=" +
          theme.name +
-         ' aria-hidden="true"' +
-         ' aria-label="' +
+         " aria-hidden='true'" +
+         " aria-label='" +
          theme.name +
-         ' Selection"' +
-         ' class="trigger-change-theme list-group-item list-group-item-action"' +
-         ' data-theme="' +
+         " Selection'" +
+         " class='trigger-change-theme list-group-item " + 
+         " list-group-item-action'" +
+         " data-theme='" +
          theme.name +
-         '.css"' +
+         ".css'" +
+         " data-mainColor='" +
+         theme.mainColor + "'" +
+         " data-subColor='" +
+         theme.subColor + "'" +
+         " data-bgColor='" +
+         theme.bgColor + "'" +
+         " data-textColor='" +
+         theme.textColor + "'" +
          ">" +
-         theme.name.replaceAll('_', ' ') +
+         "<div class='row'>" +
+            "<div class='col-8'>" + 
+               theme.name.replaceAll('_', ' ') + 
+            "</div>" +
+            "<div class='col-4 d-flex align-items-center justify-content-around rounded' style='background-color:" + theme.bgColor + "'>" + 
+               "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'" +
+               "fill='" + theme.mainColor + 
+               "' class='bi bi-circle-fill' viewBox='0 0 16 16'>" + 
+               "<circle cx='8' cy='8' r='8'/>" +
+               "</svg>" +
+               "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'" +
+               "fill='" + theme.subColor + 
+               "' class='bi bi-circle-fill' viewBox='0 0 16 16'>" + 
+               "<circle cx='8' cy='8' r='8'/>" +
+               "</svg>" +               
+               "<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'" +
+               "fill='" + theme.textColor + 
+               "' class='bi bi-circle-fill' viewBox='0 0 16 16'>" + 
+               "<circle cx='8' cy='8' r='8'/>" +
+               "</svg>" +
+            "</div>" +
+         "</div>" +
          "</li>";
       $("#theme-list").append(liElement);
    });
@@ -106,7 +130,7 @@ function loadThemeList(themes) {
          if (switchingTheme) return;
          switchingTheme = true;
          /* changeTheme defined in erp_app_starttheme.js */
-         changeTheme(e.target.attributes[4].value);
+         changeTheme(e.currentTarget.dataset.theme);
          updateAddFaveBtn()
          themeModal.toggle();
       });
@@ -150,7 +174,7 @@ function updateAddFaveBtn() {
 function addThemeToFavorites() {   
    if(!favoriteThemes.includes(currentTheme)){
       favoriteThemes.push(currentTheme);
-      localStorage.setItem("favorite_themes", favoriteThemes);
+      cacheFavoriteThemes(favoriteThemes);
       $("#favorited_toast").toast("show");
    } else 
       alert("Theme already in favorites");
