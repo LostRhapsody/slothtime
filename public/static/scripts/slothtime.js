@@ -963,7 +963,7 @@ function updateAndCacheTrackingArray(row) {
    cacheTrackingArray(tracking_array);
 }
 
-/* cacheTrackingArray moved to er_app_config.js */
+/* cacheTrackingArray moved to config.js */
 
 function backdropShow() {
    // Show the backdrop

@@ -1,11 +1,14 @@
 /*** Utilities for ER Applications ****/
 
 /* Grab the currently loaded page source */
-var fileLocation = $('script[src*="er_app_utils"]').attr("src");
-fileLocation = fileLocation.replace("er_app_utils.js", "");
+// var fileLocation = $('script[src*="utilities"]').attr("src");
+// fileLocation = fileLocation.replace("utilities.js", "");
 
 /* store the user's favorite themes */
 var favoriteThemes = slothtime_config.favorite_themes;
+
+/* keeps track of it the theme list is filtered by favorites or not */
+var isFiltered = false;
 
 /* just nice to have */
 /* const pageName = $("title")[0].text.slice(12); */
@@ -24,13 +27,61 @@ var toastList = toastElList.map(function (toastEl) {
 Theme Utilities
 Handles loading, storing,
 caching, and switching themes
-IMPORTANT -  include
-er_app_starttheme.js in header
-and this file in footer
 ----------------------------*/
 
+/* stores the stylesheet pathing */
+var themeStylesheetPath = "static/styles/themes/";
+
+/* grab all the theme data from the config file */
+var themeObj = slothtime_config.current_theme;
+var currentTheme = themeObj.name;
+var themeName = currentTheme.replaceAll("_", " ").replace(".css", "");
+var currentMain = themeObj.main_color;
+var currentBg = themeObj.bg_color;
+var currentSub = themeObj.sub_color;
+var currentText = themeObj.text_color;
+
+/* TODO: verify all data from the config file is valid */
+/* only necessary if we decide to use additional data */
+
+/* if no theme is cached, default to serika_dark */
+if (currentTheme == null) currentTheme = "serika_dark.css";
+
+/* set the theme */ 
+changeTheme(currentTheme);
+
 /* update the favorite button on theme modal to show current theme name */
-updateAddFaveBtn();
+updateAddFaveBtn(currentTheme);
+
+/* load the themes stylesheet */
+/* removes the loaded stylesheet if it's already loaded */
+function changeTheme(theme) {
+
+   /* update the currentTheme sylesheet tag */
+   $("#currentTheme")[0].href = themeStylesheetPath + theme;   
+   /* this ensures the theme-color meta tag is the same as */ 
+   /* the current theme's main color */
+   $("#metaThemeColor")[0].content = currentMain;
+
+   /* get just the ID of list item the theme is in */
+   let themeID = theme.replace(".css", "");
+   let themeElement = document.getElementById(themeID);
+
+   /* if element exists (meaning the theme list has been loaded) */
+   if (themeElement != null) {
+      /* update the theme-color meta tag */
+      $("#metaThemeColor")[0].content = themeElement.dataset.maincolor;
+      themeObj.name       = theme;
+      themeObj.main_color = themeElement.dataset.maincolor;
+      themeObj.bg_color   = themeElement.dataset.bgcolor;
+      themeObj.sub_color  = themeElement.dataset.subcolor;
+      themeObj.text_color = themeElement.dataset.textcolor;
+      themeName = theme.replaceAll("_", " ").replace(".css", "");
+      currentTheme = theme;
+      cacheCurrentTheme(themeObj);
+      updateAddFaveBtn(themeName);
+   } /* else, the theme is default or just loaded in from cache */
+}
 
 /* gets the list of themes from _list.json */
 async function getThemeList() {
@@ -127,11 +178,11 @@ function loadThemeList(themes) {
       );
       /* when theme li is clicked, changes current theme */
       $(themeID).click(function (e) {
+         if(e.target.classList.contains("remove-from-favorites")) return;
          if (switchingTheme) return;
          switchingTheme = true;
          /* changeTheme defined in erp_app_starttheme.js */
          changeTheme(e.currentTarget.dataset.theme);
-         updateAddFaveBtn()
          themeModal.toggle();
       });
    });
@@ -147,8 +198,8 @@ function previewTheme(theme, mode) {
    }
 }
 
-/* filters through the list of themes */
-function filterThemes() {
+/* searches through the list of themes */
+function searchThemes() {
    /* search box */
    var input = $("#theme-search-box")[0];
    /* input value to uppercase */
@@ -163,14 +214,49 @@ function filterThemes() {
 
 }
 
-/* update the favorite button in theme modal */
-function updateAddFaveBtn() {
-   /* remove the .css from the theme name       */
-   $('#favorite-theme-label')[0].innerHTML = currentTheme.slice(0, currentTheme.length - 4).replaceAll('_', ' ');
+/* filters the list of themes by favorites */
+function filterFavorites() {
+   const favoriteList = slothtime_config.favorite_themes;
+   const themeElements = $(".trigger-change-theme");
+   if (isFiltered) {
+      $('.trigger-change-theme .btn').remove();
+      /* display whole list */
+      themeElements.each(element => {
+         $(themeElements[element]).show();
+      });   
+      /* toggle text */
+      $("#btn-filter-favorites")[0].innerHTML = "&#9733; Filter by favorite themes";
+   } else {
+      /* remove all bookmark buttons, if we're running from
+      remove favorites they will still be there */
+      $('.trigger-change-theme .btn').remove();
+      /* display only favorites */
+      themeElements.each(element => {
+         if(favoriteList.includes(themeElements[element].dataset.theme)) {
+            $(themeElements[element]).show();
+            $(themeElements[element]).append(
+               "<button type='button' data-theme='" + themeElements[element].dataset.theme +
+                  "' class='btn remove-from-favorites' " +
+                  "aria-hidden='true' aria-label='Remove from favorites'>X" +
+               "</button>"
+            );
+         }
+         else{
+            $(themeElements[element]).hide();      
+         }
+      });
+      /* toggle text */
+      $("#btn-filter-favorites")[0].innerHTML = "Display all themes";
+   }
+   isFiltered = !isFiltered;   
 }
 
-/* TODO Switch to a config file for favorites, table data, etc. */
-/* FEATURE Make favorites list accessible                       */ 
+/* update the favorite button in theme modal */
+function updateAddFaveBtn(theme) {
+   /* remove the .css from the theme name       */
+   $('#favorite-theme-label')[0].innerHTML = themeName;
+}
+
 function addThemeToFavorites() {   
    if(!favoriteThemes.includes(currentTheme)){
       favoriteThemes.push(currentTheme);
@@ -179,3 +265,24 @@ function addThemeToFavorites() {
    } else 
       alert("Theme already in favorites");
 }
+
+function removeThemeFromFavorites(theme) {
+   if(favoriteThemes.includes(theme)){
+      favoriteThemes.forEach(function(element, index) {
+         if(element == theme)
+            favoriteThemes.splice(index, 1);
+      });
+      cacheFavoriteThemes(favoriteThemes);
+      $("#unfavorited_toast").toast("show");
+   }
+   /* toggle this so it re-runs the 'display favorites' branch */
+   isFiltered = !isFiltered;   
+   /* re-load the list of favorites */
+   filterFavorites();
+}
+
+$("#theme-list").click(".remove-from-favorites",function(e) {
+   console.log(e);
+   console.log(e.target.dataset.theme);
+   removeThemeFromFavorites(e.target.dataset.theme);
+});
