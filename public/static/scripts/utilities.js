@@ -29,6 +29,9 @@ Handles loading, storing,
 caching, and switching themes
 ----------------------------*/
 
+/* tracks if the theme is currently being changed */
+var switchingTheme = false; 
+
 /* stores the stylesheet pathing */
 var themeStylesheetPath = "static/styles/themes/";
 
@@ -81,6 +84,7 @@ function changeTheme(theme) {
       cacheCurrentTheme(themeObj);
       updateAddFaveBtn(themeName);
    } /* else, the theme is default or just loaded in from cache */
+   switchingTheme = false;
 }
 
 /* gets the list of themes from _list.json */
@@ -181,9 +185,7 @@ function loadThemeList(themes) {
          if(e.target.classList.contains("remove-from-favorites")) return;
          if (switchingTheme) return;
          switchingTheme = true;
-         /* changeTheme defined in erp_app_starttheme.js */
          changeTheme(e.currentTarget.dataset.theme);
-         themeModal.toggle();
       });
    });
 }

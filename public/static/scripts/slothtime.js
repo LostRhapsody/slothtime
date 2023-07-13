@@ -20,7 +20,6 @@ var tracking_array = slothtime_config.tracking_array; /* stores the tracking obj
 var hideClock = false; /* toggles the clock visibility */
 var isFabMenuOpen = false; /* tracks if the FAB button menu is open */
 var isFabsHovered; /* tracks if the fabs div is being hovered */
-var switchingTheme; /* tracks if the theme is currently being changed */
 var exportType = "comma"; /* the format the table will be exported in */
 let errorMessage; /* stores error messages. Empty after each error is logged */
 let errorTarget; /* stores targets from errors. Empty after each error is logged */
@@ -213,14 +212,6 @@ document
       $("#theme-search-box")[0].focus();
    });
 
-/* when theme modal is closed, set */
-/* switching theme to false        */
-document
-   .getElementById("theme-modal")
-   .addEventListener("hidden.bs.modal", (e) => {
-      switchingTheme = false;
-   });
-
 /* when information modal is closed */
 document
    .getElementById("information-modal")
@@ -241,20 +232,6 @@ $("#time-tracking-table").on(
          $("tr").last()[0].attributes[0]
       )
          newRow(true);
-   }
-);
-
-/* changes the theme. Currently */
-/* just toggles to AtomOne Dark */
-/* exits if switching theme     */
-$(".trigger-change-theme").hover(
-   function (e) {
-      if (switchingTheme) return;
-      previewTheme($("#" + e.target.id.toString()).attr("data-theme"), "show");
-   },
-   function (e) {
-      if (switchingTheme) return;
-      previewTheme($("#" + e.target.id.toString()).attr("data-theme"), "hide");
    }
 );
 
