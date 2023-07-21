@@ -13,11 +13,11 @@
     <meta
       name="keywords"
       content="
-         sloth time, slothtime, sloth-time, sloth_time,
-         time tracking, time-tracking, time blocks, time logging,
-         customizable, customization, minimalist, fast time entry,
-         time entry, time tracker
-         "
+        sloth time, slothtime, sloth-time, sloth_time,
+        time tracking, time-tracking, time blocks, time logging,
+        customizable, customization, minimalist, fast time entry,
+        time entry, time tracker
+        "
     />
     <meta
       property="og:title"
@@ -68,7 +68,7 @@
     <link rel="stylesheet" id="currentTheme" />
     <link rel="stylesheet" id="previewTheme" />
     <!-- slothtime user config file js -->
-    <script src="static/scripts/config.js"></script>   
+    <script src="static/scripts/config.js"></script>
     <!-- Bootstrap v5.2 (CSS)   -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
@@ -87,7 +87,6 @@
     <!-- apple icon -->
     <link rel="apple-touch-icon" href="static/images/slothtime_icon_x192.png" />
   </head>
-
   <body>
     <div class="container-fluid my-5">
       <!-- Large Time Entry Modal -->
@@ -956,7 +955,95 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
             </thead>
             <tbody id="time-tracking-table-body"></tbody>
           </table>
-          <hr class="hr-space" />
+          <!-- <hr class="hr-space" /> -->
+        </div>
+        <div class="row flex-column flex-md-row lower-menu-wrapper">
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Add new row"
+              aria-hidden="true"
+              title="Add new row"
+              data-st-action="newRow"
+              id="btn-new-row"
+            >
+              <i class="bi bi-plus-lg"></i>
+              <span class="visually-hidden">Add new time entry</span>
+            </button>
+          </div>
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Remove last row"
+              aria-hidden="true"
+              title="Remove last row"
+              id="btn-remove-row"
+               data-st-action="removeRow"
+            >
+               <i class="bi bi-dash-lg"></i>
+               <span class="visually-hidden">Remove the last row</span>
+            </button>
+          </div>
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Export to CSV"
+              aria-hidden="true"
+              title="Export to CSV"
+              data-st-action="exportTable"
+              id="btn-export-text"
+            >
+               <i class="bi bi-file-earmark-arrow-down"></i>
+               <span class="visually-hidden">Export the table to CSV</span>
+            </button>
+          </div>          
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Delete Table"
+              aria-hidden="true"
+              title="Delete Table"
+              id="btn-delete-table"
+              data-bs-toggle="modal"
+              data-bs-target="#delete-table-modal"
+            >
+               <i class="bi bi-trash"></i>
+               <span class="visually-hidden">Delete the table</span>
+            </button>
+          </div>
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Show information"
+              aria-hidden="true"
+              title="Show information"
+              id="btn-show-information-modal"
+              data-bs-toggle="modal"
+              data-bs-target="#information-modal"
+            >
+               <i class="bi bi-info-lg"></i>
+               <span class="visually-hidden">Show information</span>
+            </button>
+          </div>
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Undo last remove"
+              aria-hidden="true"
+              title="Undo last remove"
+              id="btn-undo-remove"
+              data-st-action="undoRemoveRow"
+            >
+               <i class="bi bi-arrow-counterclockwise"></i>
+               <span class="visually-hidden">Undo last remove</span>
+            </button>
+          </div>
         </div>
       </form>
 
@@ -980,7 +1067,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               aria-hidden="true"
               title="Expand menu"
               data-st-action="newRow"
-              data-st-params="true,chicken"
               id="fab_new_row_btn"
             >
               <svg
@@ -1003,128 +1089,16 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
       </form>
     </div>
 
-    <div
-      class="floating-shelf"
-      role="group"
-      aria-label="Floating action buttons"
-    >
-      <!-- Controls -->
-      <div class="row flex-column">
-        <div class="row flex mx-auto align-items-center">
-          <div class="accordian accordian-flush" id="action-accordian">
-            <div class="accordian-item">
-              <div class="row justify-content-center">
-                <button
-                  id="flush-heading-action"
-                  class="accordion-button collapsed"
-                  type="button"
-                  data-bs-toggle="collapse"
-                  data-bs-target="#flush-collapse-action"
-                  aria-expanded="false"
-                  aria-controls="flush-collapse-action"
-                  aria-hidden="true"
-                >
-                  <i
-                    class="bi bi-caret-down mx-auto w-100 text-center action-tray-button"
-                    id="action-tray-button"
-                  ></i>
-                </button>
-                <div
-                  id="flush-collapse-action"
-                  class="accordion-collapse collapse"
-                  aria-labelledby="flush-heading-action"
-                  data-bs-parent="#action-accordian"
-                >
-                  <div class="accordion-body">
-                    <div
-                      class="row flex-column flex-md-row mx-auto align-items-start mb-3"
-                    >
-                      <div class="col d-flex align-items-center flex-column">
-                        <button
-                          type="button"
-                          class="btn btn-important w-100 mt-3"
-                          id="btn-new-row"
-                          data-st-action="newRow"
-                          data-st-params="true,chicken,purple"
-                        >
-                          New Row
-                        </button>
-                        <button
-                          type="button"
-                          class="btn w-100 mt-3"
-                          id="btn-export-text"
-                          data-st-action="exportTable"
-                        >
-                          Export to text file
-                        </button>
-                        <button
-                          type="button"
-                          class="btn w-100 mt-3"
-                          id="btn-delete-table"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete-table-modal"
-                        >
-                          Delete Table
-                        </button>
-                      </div>
-                      <div class="col d-flex align-items-center flex-column">
-                        <button
-                          type="button"
-                          class="btn btn-important w-100 mt-3"
-                          id="btn-remove-row"
-                          data-st-action="removeRow"
-                        >
-                          Remove Last Row
-                        </button>
-                        <button
-                          type="button"
-                          class="btn w-100 mt-3"
-                          id="btn-show-expanded-jira-entry-modal"
-                          data-bs-toggle="modal"
-                          data-bs-target="#expanded-jira-entry-modal"
-                        >
-                          Large Time Entry
-                        </button>
-                      </div>
-                      <div class="col d-flex align-items-center flex-column">
-                        <button
-                          type="button"
-                          class="btn btn-important w-100 mt-3"
-                          id="btn-undo-remove"
-                          data-st-action="undoRemoveRow"
-                        >
-                          Undo Remove
-                        </button>
-                        <button
-                          type="button"
-                          class="btn w-100 mt-3"
-                          id="btn-show-information-modal"
-                          data-bs-toggle="modal"
-                          data-bs-target="#information-modal"
-                        >
-                          Information
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Bootstrap JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-    <!-- er animations js -->
-    <script src="static/scripts/animations.js"></script>
     <!-- er utils js -->
     <script src="static/scripts/utilities.js"></script>
+    <!-- er animations js -->
+    <script src="static/scripts/animations.js"></script>
     <!-- slothtime general js -->
     <script src="static/scripts/slothtime.js"></script>
     <!-- clock controller -->

@@ -26,298 +26,307 @@ let errorTarget; /* stores targets from errors. Empty after each error is logged
 let errorAction; /* stores actions from errors. Empty after each error is logged */
 let showChangelogModal = false; /* toggles whether to show the modal or not */
 
-/* if  tracking is cached but [] empty, new row       */
-if (tracking_array.length != 0) {
-   updateTimeTrackingTableDisplay();
-} else {
-   /* Trigger the first row */
-   newRow(true);
-}
+pageInit();
 
-/**** Initializing Components *****/
+/* handles instantiating the page, event lsiteners, etc */
+function pageInit() {
 
-/* initialize Bootstrap modals */
-/* large Jira entry modal */
-var largeEntryModal = new bootstrap.Modal(
-   document.getElementById("expanded-jira-entry-modal")
-);
-/* Theme list modal */
-var themeModal = new bootstrap.Modal(document.getElementById("theme-modal"));
-/* Settings menu modal */
-var settingsModal = new bootstrap.Modal(
-   document.getElementById("settings-modal")
-);
-/* Information modal */
-var informationModal = new bootstrap.Modal(
-   document.getElementById("information-modal")
-);
-/* Delete table modal */
-var deleteTableModal = new bootstrap.Modal(
-   document.getElementById("delete-table-modal")
-);
-/* Changelog modal */
-var changelogModal = new bootstrap.Modal(
-   document.getElementById("changelog-modal")
-);
-/* Mobile Entry modal */
-var mobileModal = new bootstrap.Modal(
-   document.getElementById("mobile-entry-modal")
-);
-/* hide total task time column */
-$(".task_time").hide();
-
-/****** Keyboard Shortcuts *******/
-
-/* 
-Shortcuts legend:
-   Shift Alt N:
-      New row
-   Shift Alt R:
-      Remove last row
-   Shit Ctrl Space:
-      Expand textarea into modal
-*/
-
-/* Shift + Ctrl + Space              */
-/* Opens modal for larger jira entry */
-document.onkeyup = function (event) {
-   let key = event;
-   let textArea = event.target;
-
-   /* open large jira entry modal shortcut */
-   if (key.ctrlKey && key.shiftKey && key.key == " ") {
-      /* if the target is a text area inside a td tag          */
-      /* prevents non-table row textareas from triggering this */
-      if (textArea.name == "jira_entry") {
-         /* update the tracking array so we have the newest content */
-         updateTrackingArray(event);
-         setupModal(event);
-         /* show the modal */
-         largeEntryModal.toggle();
-      }
-      /* copy to clipboard listener for space bar when focused on button */
-   } else if (key.key == " ") {
-      /* else if space is pressed */
-      /* listener for copy the clipboard */
-      if (event.target.classList.contains("btn-copy-to-clipboard")) {
-         copyToClipboard(event, "space");
-      }
-      /* new row shortcut */
-   } else if (key.ctrlKey && key.shiftKey && key.key == ">") {
+   /* only load on the home page */
+   if(!isHomePage) return;
+   /* if  tracking is cached but [] empty, new row       */
+   if (tracking_array.length != 0) {
+      updateTimeTrackingTableDisplay();
+   } else {
+      /* Trigger the first row */
       newRow(true);
    }
-};
 
-/****** Event Listeners ******/
-/* when any field is focues on the table  */
-/* populate the modal's fields and add    */
-/* highlight                              */
-$("#time-tracking-table").on("focus", "tr .form-control", function (e) {
-   setupModal(e);
-   highlghtRow(e,true);
-});
 
-/* whenever you lose focus on a field in  */
-/* the table, remove highlight            */
-$("#time-tracking-table").on("focusout", "tr .form-control", function (e) {
-   setupModal(e);
-   highlghtRow(e,false);
-});
+   /**** Initializing Components *****/
 
-/* when any field is changed on the table */
-/* update the trackingArray's object      */
-/* and populate the modal's fields        */
-$("#time-tracking-table").on("change", "tr .form-control", function (e) {
-   updateTrackingArray(e);
-   setupModal(e);
-});
+   /* initialize Bootstrap modals */
+   /* large Jira entry modal */
+   var largeEntryModal = new bootstrap.Modal(
+      document.getElementById("expanded-jira-entry-modal")
+   );
+   /* Theme list modal */
+   var themeModal = new bootstrap.Modal(document.getElementById("theme-modal"));
+   /* Settings menu modal */
+   var settingsModal = new bootstrap.Modal(
+      document.getElementById("settings-modal")
+   );
+   /* Information modal */
+   var informationModal = new bootstrap.Modal(
+      document.getElementById("information-modal")
+   );
+   /* Delete table modal */
+   var deleteTableModal = new bootstrap.Modal(
+      document.getElementById("delete-table-modal")
+   );
+   /* Changelog modal */
+   var changelogModal = new bootstrap.Modal(
+      document.getElementById("changelog-modal")
+   );
+   /* Mobile Entry modal */
+   var mobileModal = new bootstrap.Modal(
+      document.getElementById("mobile-entry-modal")
+   );
+   /* hide total task time column */
+   $(".task_time").hide();
 
-/* whenever the table is clicked, check the event   */
-/* if the target is the copy to clipboard btn, copy */
-/* that row's jira entry to the clipboard and       */
-/* highlight row                                    */
-$("#time-tracking-table").click(function (e) {
-   if (
-      e.target.parentElement.classList.contains("btn-copy-to-clipboard") ||
-      e.target.classList.contains("btn-copy-to-clipboard")
-   ) {
-      copyToClipboard(e, "click");
-      highlghtRow(e,true);
-   }
-});
+   /****** Keyboard Shortcuts *******/
 
-/* when large jira entry is updated, */
-/* update the tracking array         */
-$("#expanded-jira-entry-modal .modal-body #modal-jira-entry").on(
-   "change",
-   function (e) {
-      updateTrackingFromModal(e);
-   }
-);
+   /* 
+   Shortcuts legend:
+      Shift Alt N:
+         New row
+      Shift Alt R:
+         Remove last row
+      Shit Ctrl Space:
+         Expand textarea into modal
+   */
 
-/* when mobile modal is updated, */
-/* update the tracking array     */
-$("#mobile-entry-modal .form-control").on("change", function (e) {
-   updateTrackingArrayMobile(e);
-});
+   /* Shift + Ctrl + Space              */
+   /* Opens modal for larger jira entry */
+   document.onkeyup = function (event) {
+      let key = event;
+      let textArea = event.target;
 
-/* when jira entry  modal is opened, focus */
-/* on the textarea                         */
-/* this uses 'shown' which means the end   */
-/* of the modal fade-in animation          */
-document
-   .getElementById("expanded-jira-entry-modal")
-   .addEventListener("shown.bs.modal", () => {
-      $("#modal-jira-entry").focus();
-   });
-
-/* when jira entry modal is closed, focus */
-/* on the origin row's textarea           */
-document
-   .getElementById("expanded-jira-entry-modal")
-   .addEventListener("hidden.bs.modal", (e) => {
-      const rowNumber = $(e.target).find("[row]").attr("row");
-      if (typeof rowNumber == "undefined") {
-         logDeveloperError("badRowFind", e);
-         return;
-      }
-
-      const updateRow = findRowElement(rowNumber);
-
-      $(updateRow).find('textarea[name="jira_entry"]').focus();
-   });
-
-/* when mobile modal is triggered, setup the     */
-/* fields with any existing date in the tracking */
-/* array                                         */
-document
-   .getElementById("mobile-entry-modal")
-   .addEventListener("show.bs.modal", (e) => {
-      setupMobileModal(e);
-   });
-
-/* when theme modal is activated */
-/* get theme list                */
-document
-   .getElementById("theme-modal")
-   .addEventListener("show.bs.modal", (e) => {
-      getThemeList();
-   });
-
-/* when theme modal is shown. */
-/* focus on search box       */
-document
-   .getElementById("theme-modal")
-   .addEventListener("shown.bs.modal", (e) => {
-      $("#theme-search-box")[0].focus();
-   });
-
-/* when information modal is closed */
-document
-   .getElementById("information-modal")
-   .addEventListener("hidden.bs.modal", (e) => {
-      if (showChangelogModal) changelogModal.toggle();
-      showChangelogModal = false;
-   });
-
-/* when an end_time cell is */
-/* changed, start a new row */
-$("#time-tracking-table").on(
-   "change",
-   ".end_time, .task_time, .task_time",
-   function (event) {
-      /* only call new row if you are editing the last row */
-      if (
-         event.target.parentElement.parentElement.attributes[0] ==
-         $("tr").last()[0].attributes[0]
-      )
+      /* open large jira entry modal shortcut */
+      if (key.ctrlKey && key.shiftKey && key.key == " ") {
+         /* if the target is a text area inside a td tag          */
+         /* prevents non-table row textareas from triggering this */
+         if (textArea.name == "jira_entry") {
+            /* update the tracking array so we have the newest content */
+            updateTrackingArray(event);
+            setupModal(event);
+            /* show the modal */
+            largeEntryModal.toggle();
+         }
+         /* copy to clipboard listener for space bar when focused on button */
+      } else if (key.key == " ") {
+         /* else if space is pressed */
+         /* listener for copy the clipboard */
+         if (event.target.classList.contains("btn-copy-to-clipboard")) {
+            copyToClipboard(event, "space");
+         }
+         /* new row shortcut */
+      } else if (key.ctrlKey && key.shiftKey && key.key == ">") {
          newRow(true);
-   }
-);
-
-/* When textarea is focused  */
-/* expand it for readability */
-$("#time-tracking-table").on("focus", "textarea", function () {
-   $(this).attr("rows", 5);
-});
-
-/* When textarea is unfocused  */
-/* shrink it back to 1 row     */
-$("#time-tracking-table").on("focusout", "textarea", function () {
-   $(this).attr("rows", 1);
-});
-
-/*------------------------------------------------
-   universal confirm event listener. When a confirm 
-   button is clicked triggers this listener, which 
-   triggers a function based on the event's data
-   ------------------------------------------------*/
-$("body").on("click", "[data-st-action]", function (event) {
-   /* get the action to be performed from the action attr */
-   const action = $(this).attr("data-st-action").toString();
-   let paramList;
-   let paramArray = [];
-
-   /* get the comma delimited list of params */
-   paramList = $(this).attr("data-st-params");
-
-   /* if params attribute doesn't exst, do nothing */
-   if (typeof paramList != "undefined")
-      if (paramList.length != 0)
-         /* if there are any params */
-         /* split by each comma and load into array */
-         paramList.split(",").forEach((x, y) => (paramArray[y] = x));
-
-   /* check if function exists */
-   if (typeof action === "function")
-      /* call the function */
-      try {
-         if (paramArray.length != 0) window[action](paramArray[0]);
-         else window[action]();
-      } catch (e) {
-         logDeveloperError("badFunction", e);
       }
-   /* sometimes above fails, last ditch attempt */ else if (
-      typeof action !== "undefined"
-   )
-      try {
-         if (paramArray.length != 0) window[action](paramArray[0]);
-         else window[action]();
-      } catch (e) {
-         logDeveloperError("badFunction", e);
+   };
+
+   /****** Event Listeners ******/
+   /* when any field is focues on the table  */
+   /* populate the modal's fields and add    */
+   /* highlight                              */
+   $("#time-tracking-table").on("focus", "tr .form-control", function (e) {
+      setupModal(e);
+      highlghtRow(e,true);
+   });
+
+   /* whenever you lose focus on a field in  */
+   /* the table, remove highlight            */
+   $("#time-tracking-table").on("focusout", "tr .form-control", function (e) {
+      setupModal(e);
+      highlghtRow(e,false);
+   });
+
+   /* when any field is changed on the table */
+   /* update the trackingArray's object      */
+   /* and populate the modal's fields        */
+   $("#time-tracking-table").on("change", "tr .form-control", function (e) {
+      updateTrackingArray(e);
+      setupModal(e);
+   });
+
+   /* whenever the table is clicked, check the event   */
+   /* if the target is the copy to clipboard btn, copy */
+   /* that row's jira entry to the clipboard and       */
+   /* highlight row                                    */
+   $("#time-tracking-table").click(function (e) {
+      if (
+         e.target.parentElement.classList.contains("btn-copy-to-clipboard") ||
+         e.target.classList.contains("btn-copy-to-clipboard")
+      ) {
+         copyToClipboard(e, "click");
+         highlghtRow(e,true);
       }
-   else logDeveloperError("badFunction", event);
-});
+   });
 
-/* FAB Buttons */
+   /* when large jira entry is updated, */
+   /* update the tracking array         */
+   $("#expanded-jira-entry-modal .modal-body #modal-jira-entry").on(
+      "change",
+      function (e) {
+         updateTrackingFromModal(e);
+      }
+   );
 
-/* ---------------------------------------------------------
-   Fab event explainer:
-   When fab menu is opened with hover, clicking is disabled.
-   This makes clicking on desktop essentially impossible, which
-   is fine, we can't really notice the difference.
-   We have to keep the click listener though for mobile.
-   ---------------------------------------------------------*/
+   /* when mobile modal is updated, */
+   /* update the tracking array     */
+   $("#mobile-entry-modal .form-control").on("change", function (e) {
+      updateTrackingArrayMobile(e);
+   });
 
-/* commented out until I can figued out how to make it play
-nicely on mobile and desktop screens */
-/* show fab menu when hovered */
-// $(".fabs").hover(
-//    function () {
-//       isFabsHovered = true;
-//       showFabMenu();
-//    },
-//    function () {
-//       isFabsHovered = false;
-//       showFabMenu();
-//    }
-// );
+   /* when jira entry  modal is opened, focus */
+   /* on the textarea                         */
+   /* this uses 'shown' which means the end   */
+   /* of the modal fade-in animation          */
+   document
+      .getElementById("expanded-jira-entry-modal")
+      .addEventListener("shown.bs.modal", () => {
+         $("#modal-jira-entry").focus();
+      });
 
-/* show fab menu when clicked */
-$("#fab_menu_btn").click(function () {
-   // if (isFabMenuOpen)
-   showFabMenu();
-});
+   /* when jira entry modal is closed, focus */
+   /* on the origin row's textarea           */
+   document
+      .getElementById("expanded-jira-entry-modal")
+      .addEventListener("hidden.bs.modal", (e) => {
+         const rowNumber = $(e.target).find("[row]").attr("row");
+         if (typeof rowNumber == "undefined") {
+            logDeveloperError("badRowFind", e);
+            return;
+         }
+
+         const updateRow = findRowElement(rowNumber);
+
+         $(updateRow).find('textarea[name="jira_entry"]').focus();
+      });
+
+   /* when mobile modal is triggered, setup the     */
+   /* fields with any existing date in the tracking */
+   /* array                                         */
+   document
+      .getElementById("mobile-entry-modal")
+      .addEventListener("show.bs.modal", (e) => {
+         setupMobileModal(e);
+      });
+
+   /* when theme modal is activated */
+   /* get theme list                */
+   document
+      .getElementById("theme-modal")
+      .addEventListener("show.bs.modal", (e) => {
+         getThemeList();
+      });
+
+   /* when theme modal is shown. */
+   /* focus on search box       */
+   document
+      .getElementById("theme-modal")
+      .addEventListener("shown.bs.modal", (e) => {
+         $("#theme-search-box")[0].focus();
+      });
+
+   /* when information modal is closed */
+   document
+      .getElementById("information-modal")
+      .addEventListener("hidden.bs.modal", (e) => {
+         if (showChangelogModal) changelogModal.toggle();
+         showChangelogModal = false;
+      });
+
+   /* when an end_time cell is */
+   /* changed, start a new row */
+   $("#time-tracking-table").on(
+      "change",
+      ".end_time, .task_time, .task_time",
+      function (event) {
+         /* only call new row if you are editing the last row */
+         if (
+            event.target.parentElement.parentElement.attributes[0] ==
+            $("tr").last()[0].attributes[0]
+         )
+            newRow(true);
+      }
+   );
+
+   /* When textarea is focused  */
+   /* expand it for readability */
+   $("#time-tracking-table").on("focus", "textarea", function () {
+      $(this).attr("rows", 5);
+   });
+
+   /* When textarea is unfocused  */
+   /* shrink it back to 1 row     */
+   $("#time-tracking-table").on("focusout", "textarea", function () {
+      $(this).attr("rows", 1);
+   });
+
+   /*------------------------------------------------
+      universal confirm event listener. When a confirm 
+      button is clicked triggers this listener, which 
+      triggers a function based on the event's data
+      ------------------------------------------------*/
+   $("body").on("click", "[data-st-action]", function (event) {
+      /* get the action to be performed from the action attr */
+      const action = $(this).attr("data-st-action").toString();
+      let paramList;
+      let paramArray = [];
+
+      /* get the comma delimited list of params */
+      paramList = $(this).attr("data-st-params");
+
+      /* if params attribute doesn't exst, do nothing */
+      if (typeof paramList != "undefined")
+         if (paramList.length != 0)
+            /* if there are any params */
+            /* split by each comma and load into array */
+            paramList.split(",").forEach((x, y) => (paramArray[y] = x));
+
+      /* check if function exists */
+      if (typeof action === "function")
+         /* call the function */
+         try {
+            if (paramArray.length != 0) window[action](paramArray[0]);
+            else window[action]();
+         } catch (e) {
+            logDeveloperError("badFunction", e);
+         }
+      /* sometimes above fails, last ditch attempt */ else if (
+         typeof action !== "undefined"
+      )
+         try {
+            if (paramArray.length != 0) window[action](paramArray[0]);
+            else window[action]();
+         } catch (e) {
+            logDeveloperError("badFunction", e);
+         }
+      else logDeveloperError("badFunction", event);
+   });
+
+   /* FAB Buttons */
+
+   /* ---------------------------------------------------------
+      Fab event explainer:
+      When fab menu is opened with hover, clicking is disabled.
+      This makes clicking on desktop essentially impossible, which
+      is fine, we can't really notice the difference.
+      We have to keep the click listener though for mobile.
+      ---------------------------------------------------------*/
+
+   /* commented out until I can figued out how to make it play
+   nicely on mobile and desktop screens */
+   /* show fab menu when hovered */
+   // $(".fabs").hover(
+   //    function () {
+   //       isFabsHovered = true;
+   //       showFabMenu();
+   //    },
+   //    function () {
+   //       isFabsHovered = false;
+   //       showFabMenu();
+   //    }
+   // );
+
+   /* show fab menu when clicked */
+   $("#fab_menu_btn").click(function () {
+      // if (isFabMenuOpen)
+      showFabMenu();
+   });
+} /* end of pageInit() */
 
 /***** Functions *****/
 
@@ -452,7 +461,7 @@ function removeRow() {
       cardBuffer.push($(".card").last());
       $("tr").last().remove();
       $(".card").last().remove();
-      trackingArray.pop();
+      tracking_array.pop();
       cacheTrackingArray(tracking_array);
       rowCounter -= 1;
    }

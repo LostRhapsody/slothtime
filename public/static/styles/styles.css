@@ -100,6 +100,11 @@ a:hover {
    border-left-width: 1px;
 }
 
+.st-table td.end_time,
+.st-table td.task_time {
+   border-right-width: 1px;
+}
+
 .st-row-highlight td,
 .st-row-highlight th {
    filter: brightness(1.3);
@@ -512,6 +517,26 @@ textarea {
 /**** Flex ****/
 .justify-content-start-md {
    justify-content: "";
+}
+
+/**** lower menu for actions ****/
+.lower-menu-wrapper {
+   width: 100%;
+   margin: auto;   
+}
+
+.menu-btn {
+   width: 3rem;
+   background: transparent;
+}
+
+.menu-btn:hover {
+   color: var(--main-color);
+   background-color: var(--sub-color);
+}
+
+.menu-btn i {
+   font-size: 1.5rem;
 }
 
 /**** Media Queries ****/

@@ -1,8 +1,12 @@
 /*** Utilities for ER Applications ****/
 
 /* Grab the currently loaded page source */
-// var fileLocation = $('script[src*="utilities"]').attr("src");
-// fileLocation = fileLocation.replace("utilities.js", "");
+var filePath = $('script[src*="utilities"]').attr("src");
+var fileName = filePath.split("/").pop();
+var fileLocation = filePath.replace("utilities.js", "");
+var pageName = $(document)[0].title;
+var isHomePage = false;
+if (pageName == "slothtime | A minimalist, customizable time tracker") isHomePage = true;
 
 /* store the user's favorite themes */
 var favoriteThemes = slothtime_config.favorite_themes;
@@ -54,7 +58,15 @@ if (currentTheme == null) currentTheme = "serika_dark.css";
 changeTheme(currentTheme);
 
 /* update the favorite button on theme modal to show current theme name */
-updateAddFaveBtn(currentTheme);
+/* don't fire on about page */
+if (isHomePage)
+   updateAddFaveBtn(currentTheme);
+
+/* Events */
+/* attaches to the 'X' button on the favorites list */
+$("#theme-list").on("click",".remove-from-favorites",function(e) {
+   removeThemeFromFavorites(e.target.dataset.theme);
+});
 
 /* load the themes stylesheet */
 /* removes the loaded stylesheet if it's already loaded */
@@ -282,9 +294,3 @@ function removeThemeFromFavorites(theme) {
    /* re-load the list of favorites */
    filterFavorites();
 }
-
-$("#theme-list").click(".remove-from-favorites",function(e) {
-   console.log(e);
-   console.log(e.target.dataset.theme);
-   removeThemeFromFavorites(e.target.dataset.theme);
-});

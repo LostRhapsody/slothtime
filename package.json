@@ -1,5 +1,5 @@
 {
   "devDependencies": {
-    "workbox-cli": "^6.5.4"
+    "workbox-cli": "^6.6.0"
   }
 }
