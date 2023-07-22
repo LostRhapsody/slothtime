@@ -57,7 +57,9 @@
     <!-- Title -->
     <title>slothtime | A minimalist, customizable time tracker</title>
     <meta id="metaThemeColor" name="theme-color" content="#e2b714" />
+
     <!-- Scipts and Stylesheets -->
+
     <!-- JQuery -->
     <script
       src="https://code.jquery.com/jquery-3.6.2.min.js"
@@ -81,6 +83,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
     />
+    <!-- Bootstrap v5.2 (JS) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="static/styles/styles.css" />
     <!-- Web App Manifest -->
     <link rel="manifest" href="sloth.webmanifest" />
@@ -100,9 +108,9 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header pb-0">
-              <h2 class="modal-title fs-5" id="expanded-jira-entry-modal-label">
+              <h1 class="modal-title fs-5" id="expanded-jira-entry-modal-label">
                 No row selected
-              </h2>
+              </h1>
               <button
                 type="button"
                 class="btn-close"
@@ -156,7 +164,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5" id="themes-modal-label">Themes</h2>
+              <h1 class="modal-title fs-5" id="themes-modal-label">Themes</h1>
               <button
                 type="button"
                 class="btn-close"
@@ -215,9 +223,9 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5" id="settings-modal-label">
+              <h1 class="modal-title fs-5" id="settings-modal-label">
                 Settings
-              </h2>
+              </h1>
               <button
                 type="button"
                 class="btn-close"
@@ -230,7 +238,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                 type="button"
                 class="btn w-100 mt-3"
                 id="btn-hide-clock"
-                data-st-action="hideClock"
+                data-st-action="toggleClock"
               >
                 Hide Clock
               </button>
@@ -258,9 +266,9 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5" id="information-modal-label">
+              <h1 class="modal-title fs-5" id="information-modal-label">
                 Information
-              </h2>
+              </h1>
               <button
                 type="button"
                 class="btn-close"
@@ -269,36 +277,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               ></button>
             </div>
             <div class="modal-body">
-              <div class="row flex-column flex-lg-row align-items-start">
-                <div class="col d-flex justify-content-center">
-                  <md-block class="netlify-badge">
-                    [![Netlify
-                    Status](https://api.netlify.com/api/v1/badges/56830fd5-ff33-438e-a0fd-2d68868cb2e6/deploy-status)](https://app.netlify.com/sites/astounding-narwhal-949e89/deploys)
-                  </md-block>
-                </div>
-                <div class="col d-flex justify-content-center">
-                  <a
-                    class="shield-wrapper"
-                    href="https://github.com/LostRhapsody/slothtime"
-                  >
-                    <img class="shield" src="static/images/github_badge.svg" />
-                  </a>
-                </div>
-                <div class="col d-flex justify-content-center">
-                  <a class="shield-wrapper" href="https://evanrobertson.dev">
-                    <img class="shield" src="static/images/dev_badge.svg" />
-                  </a>
-                </div>
-                <div class="col d-flex justify-content-center">
-                  <a
-                    class="shield-wrapper"
-                    id="btn-changelog"
-                    data-st-action="showChangelog"
-                  >
-                    <img class="shield" src="static/images/git_badge.svg" />
-                  </a>
-                </div>
-              </div>
               <div class="card">
                 <div class="card-header">Shortcuts</div>
                 <div class="card-body">
@@ -313,7 +291,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                       </ul>
                     </li>
                     <li>
-                      Ctrl + Shift + .:
+                      Ctrl + Shift + Period:
                       <ul>
                         <li>Create a new row.</li>
                       </ul>
@@ -337,9 +315,36 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
                       The total task time (total number of hours/minutes spent
                       on a ticket) will be auto-filled in the export file if you
                       enter your start and end times in a 0900 or 09:00 format.
-                      <strong>Currently not accurate</strong>
+                      <strong>Currently only accouts for 12 hours (Doesn't take AM/PM into account)</strong>
                     </li>
                   </ul>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <div class="row flex-column flex-md-row align-items-start">
+                <div class="col">
+                  <a
+                    href="https://github.com/LostRhapsody/slothtime"
+                    title="View on Github"
+                    ><i class="bi bi-github"></i>
+                  </a>
+                </div>
+                <div class="col">
+                  <a href="https://evanrobertson.dev" title="Visit Developer Website">
+                    <i class="bi bi-emoji-laughing"></i>
+                  </a>
+                </div>
+                <div class="col">
+                  <a
+                    title="Open Changelog"
+                    href="#"
+                    id="btn-changelog"
+                    data-st-action="displayChangelogModal"
+                    data-bs-dismiss="modal"
+                    aria-label="Close info and show changelog"
+                    ><i class="bi bi-git"></i>
+                  </a>
                 </div>
               </div>
             </div>
@@ -358,7 +363,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5">Clear Table?</h2>
+              <h1 class="modal-title fs-5">Clear Table?</h1>
               <button
                 type="button"
                 class="btn-close"
@@ -409,7 +414,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5">An Error Has Occurred</h2>
+              <h1 class="modal-title fs-5">An Error Has Occurred</h1>
               <button
                 type="button"
                 class="btn-close"
@@ -455,7 +460,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
       </div>
       <!-- Changelog Modal -->
       <div
-        class="modal fade modal-md"
+        class="modal fade modal-lg"
         id="changelog-modal"
         tabindex="-1"
         aria-labelledby="changelog-label"
@@ -464,15 +469,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
       >
         <div class="modal-dialog">
           <div class="modal-content">
-            <div class="modal-header">
-              <h2 class="modal-title fs-5">Changelog</h2>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
             <div class="modal-body">
               <div class="card">
                 <div class="card-body" id="changelog-body"></div>
@@ -493,7 +489,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h2 class="modal-title fs-5">Edit Time Entry</h2>
+              <h1 class="modal-title fs-5">Edit Time Entry</h1>
               <button
                 type="button"
                 class="btn-close"
@@ -596,7 +592,11 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
       </form>
 
       <!-- FAB buttons -->
-      <div class="fabs" role="group" aria-label="Floating action buttons">
+      <div
+        class="fabs d-md-none"
+        role="group"
+        aria-label="Floating action buttons"
+      >
         <!-- FAB Menu Button -->
         <button
           data-icon="bi-three-dots-vertical"
@@ -631,22 +631,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
           data-bs-target="#theme-modal"
           style="display: none"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-palette"
-            viewBox="0 0 16 16"
-            id="svg-themeModal"
-          >
-            <path
-              d="M8 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm4 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM5.5 7a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm.5 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
-            />
-            <path
-              d="M16 8c0 3.15-1.866 2.585-3.567 2.07C11.42 9.763 10.465 9.473 10 10c-.603.683-.475 1.819-.351 2.92C9.826 14.495 9.996 16 8 16a8 8 0 1 1 8-8zm-8 7c.611 0 .654-.171.655-.176.078-.146.124-.464.07-1.119-.014-.168-.037-.37-.061-.591-.052-.464-.112-1.005-.118-1.462-.01-.707.083-1.61.704-2.314.369-.417.845-.578 1.272-.618.404-.038.812.026 1.16.104.343.077.702.186 1.025.284l.028.008c.346.105.658.199.953.266.653.148.904.083.991.024C14.717 9.38 15 9.161 15 8a7 7 0 1 0-7 7z"
-            />
-          </svg>
+          <i class="bi bi-palette"></i>
         </button>
         <!-- Settings Menu button -->
         <button
@@ -659,22 +644,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
           data-bs-target="#settings-modal"
           style="display: none"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            class="bi bi-gear"
-            viewBox="0 0 16 16"
-            id="svg-settingsModal"
-          >
-            <path
-              d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z"
-            />
-            <path
-              d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z"
-            />
-          </svg>
+        <i class="bi bi-gear"></i>
         </button>
       </div>
 
@@ -743,7 +713,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         <div
           class="col col-12 col-md-7 align-items-center justify-content-center justify-content-start-md d-flex flex-row"
         >
-          <a id="homePageLink" href="https://slothtime.dev" class="d-flex">
+          <a id="homePageLink" href="https://slothtime.dev" class="d-flex align-items-center">
             <svg
               fill="currentColor"
               height="800px"
@@ -812,9 +782,9 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
           </a>
         </div>
         <div class="col col-12 col-md-5">
-          <div id="clock" class="row frosted clock-back mx-auto text-center">
-            <h2 id="time" class="clock-face-focus"></h2>
-            <h2 id="timer" class="timer-face-unfocus d-none"></h2>
+          <div id="clock" class="row text-center">
+            <h2 id="time" class="display-6 mb-0"></h2>
+            <h2 id="timer" class="display-5 mb-0"></h2>
           </div>
         </div>
       </div>
@@ -957,8 +927,8 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
           </table>
           <!-- <hr class="hr-space" /> -->
         </div>
-        <div class="row flex-column flex-md-row lower-menu-wrapper">
-          <div class="col-2">
+        <div id="action-row" class="row flex-column flex-md-row lower-menu-wrapper">
+          <div class="col d-flex justify-content-center">
             <button
               type="button"
               class="btn menu-btn"
@@ -972,7 +942,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               <span class="visually-hidden">Add new time entry</span>
             </button>
           </div>
-          <div class="col-2">
+          <div class="col d-flex justify-content-center">
             <button
               type="button"
               class="btn menu-btn"
@@ -980,13 +950,13 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               aria-hidden="true"
               title="Remove last row"
               id="btn-remove-row"
-               data-st-action="removeRow"
+              data-st-action="removeRow"
             >
-               <i class="bi bi-dash-lg"></i>
-               <span class="visually-hidden">Remove the last row</span>
+              <i class="bi bi-dash-lg"></i>
+              <span class="visually-hidden">Remove the last row</span>
             </button>
           </div>
-          <div class="col-2">
+          <div class="col d-flex justify-content-center">
             <button
               type="button"
               class="btn menu-btn"
@@ -996,11 +966,11 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               data-st-action="exportTable"
               id="btn-export-text"
             >
-               <i class="bi bi-file-earmark-arrow-down"></i>
-               <span class="visually-hidden">Export the table to CSV</span>
+              <i class="bi bi-file-earmark-arrow-down"></i>
+              <span class="visually-hidden">Export the table to CSV</span>
             </button>
-          </div>          
-          <div class="col-2">
+          </div>
+          <div class="col d-flex justify-content-center">
             <button
               type="button"
               class="btn menu-btn"
@@ -1011,11 +981,11 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               data-bs-toggle="modal"
               data-bs-target="#delete-table-modal"
             >
-               <i class="bi bi-trash"></i>
-               <span class="visually-hidden">Delete the table</span>
+              <i class="bi bi-trash"></i>
+              <span class="visually-hidden">Delete the table</span>
             </button>
           </div>
-          <div class="col-2">
+          <div class="col d-flex justify-content-center">
             <button
               type="button"
               class="btn menu-btn"
@@ -1026,11 +996,11 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               data-bs-toggle="modal"
               data-bs-target="#information-modal"
             >
-               <i class="bi bi-info-lg"></i>
-               <span class="visually-hidden">Show information</span>
+              <i class="bi bi-info-lg"></i>
+              <span class="visually-hidden">Show information</span>
             </button>
           </div>
-          <div class="col-2">
+          <div class="col d-flex justify-content-center">
             <button
               type="button"
               class="btn menu-btn"
@@ -1040,8 +1010,34 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
               id="btn-undo-remove"
               data-st-action="undoRemoveRow"
             >
-               <i class="bi bi-arrow-counterclockwise"></i>
-               <span class="visually-hidden">Undo last remove</span>
+              <i class="bi bi-arrow-counterclockwise"></i>
+              <span class="visually-hidden">Undo last remove</span>
+            </button>
+          </div>
+          <div class="col d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Open Theme List"
+              aria-hidden="true"
+              title="Open Theme List"
+              data-bs-toggle="modal"
+              data-bs-target="#theme-modal"
+            >
+              <i class="bi bi-palette"></i>
+            </button>
+          </div>
+          <div class="col d-flex justify-content-center">
+            <button
+              type="button"
+              class="btn menu-btn"
+              aria-label="Settings Menu"
+              aria-hidden="true"
+              title="Settings menu"
+              data-bs-toggle="modal"
+              data-bs-target="#settings-modal"
+            >
+              <i class="bi bi-gear"></i>
             </button>
           </div>
         </div>
@@ -1053,6 +1049,7 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
         id="mobile-time-tracking-form"
       >
         <div class="row">
+          <h2>Notice: Mobile cards are non-functioning currently. Using them could corrupt your slothtime config. Please use the desktop site.</h2>
           <div
             class="col-12 d-flex flex-column align-items-center"
             id="mobile-tracking-body"
@@ -1089,12 +1086,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
       </form>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-    ></script>
     <!-- er utils js -->
     <script src="static/scripts/utilities.js"></script>
     <!-- er animations js -->
@@ -1103,8 +1094,6 @@ Start typing in a Time Entry field and re-open this for easier reading and editi
     <script src="static/scripts/slothtime.js"></script>
     <!-- clock controller -->
     <script src="static/scripts/clock.js"></script>
-    <!-- Markdown block lib -->
-    <script type="module" src="https://md-block.verou.me/md-block.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
         // Register a service worker after the load event

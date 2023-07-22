@@ -1,0 +1,78 @@
+
+[
+   {
+      "update": "01.00.22",
+      "date": "2023-07-21",
+      "commitMessage":
+      {
+         "Features":"Added the theme and settings buttons to the row of actions below the table.|Can now keep track of if the clock is hidden or shown, and if the table is using the 'total task time' or 'start to end time' format.|Updated the clock styling, it's now more consistent with the rest of the page and less distracting.|The total task time being automatically calculated based on start and end time is now improved, though still not perfect.|All time-related fields now auto format to 12hr HH:MM format! Options to toggle how this behaves will be introduced later.",
+         "Other":"Added the changelog info to the cache so it keeps track of the site's current version and whether the changelog has been shown.|Updated all modal titles to H1 tags for better accessibility.|Removed header and footer of changelog modal to make it cleaner.|Updated how the changelog is tracked with a better JSON format, hence why all old version notes from > 01.00.16 are missing.|Removed the FAB buttons (bottom right floating action buttons) in desktop view.|Updated margin and spacing on about page's text.",
+         "Bugs":"Fixed a bug where you couldn't open the information modal."
+      }               
+   },
+   {
+      "update": "01.00.21",
+      "date": "2023-07-20",
+      "commitMessage":
+      {
+         "Features":"Removed the old action try (controlled by the arrow at the bottom of the screen) in favor of a small list of icons, below the time tracking table.",
+         "Other":"Added template files for the header and footer. In theory, this should keep them in sync across all pages. It won't though.|Updated About page header and footer to match home page.",
+         "Bugs":"Fixed the bug that removes a theme from your favorites list when clicking anywhere on the theme when filtered by favorites."
+      }               
+   },
+   {
+      "update": "01.00.20",
+      "date": "2023-07-13",
+      "commitMessage":
+      {
+         "Features":"Theme modal stays open after a theme is selected, makes it easier to add/remove favorites.",
+         "Other":"Removed old unsued theme switching code.|"
+      }               
+   },
+   {
+      "update": "01.00.19",
+      "date": "2023-07-13",
+      "commitMessage":
+      {
+         "Features":"Added a filter by favorite themes button in themes menu.|Added button in the new filtered list to remove themes from favorites.",
+         "Other":"Renamed some files for consistency.",
+         "Bugs":"Fixed a stylesheet and meta theme tag bug that caused themes to not be applied when switching.|Introduced a bug that removes favorites from the list inadvertantly."
+      }               
+   },
+   {
+      "update": "01.00.18",
+      "date": "2023-07-21",
+      "commitMessage":
+      {
+         "Features":"Improved theme preview efficiency.",
+         "Bugs":"Fixed a bug in the theme list"
+      }               
+   },
+   {
+      "update": "01.00.17",
+      "date": "2023-07-12",
+      "commitMessage":
+      {
+         "Features":"Title bar in PWA now matches theme.|Declutter the cache by only storing user preferences in one object instead of several.|Added theme colors to the theme list as color swatches.",
+         "Other":"Refactored several files"
+      }               
+   },
+   {
+      "update": "01.00.16",
+      "date": "2023-05-20",
+      "commitMessage":
+      {
+         "Features":"The total task time field will now trigger new rows to be created, just like the End Time field.|The row you are working in is now highlighted. When the copy to clipboard button is used, it's also highlighted. Allows you to better keep track of where you left off.|The links on the about page now open in a new tab.",
+         "Other":"Style cleanup, removed overlapping borders and box shadows on inputs, removed top border of mobile cards, added background color to table cells to fix gap adjustments on some screens.",
+         "Bugs":"The delete button no longer deletes required page elements, meaning you don't have to refresh your browser to stop errors from ocurring.|The tray is now solid and non-transparent, so the toast message (copy to clipboard notification) was non visible, moved up to accomodate."
+      }               
+   },
+   {
+      "update": "< 01.00.16",
+      "date": "2023-05-20",
+      "commitMessage":
+      {
+         "Other":"Versions prior to 01.00.16 were tracked in a different storage format. To view them, <a href='https://github.com/LostRhapsody/slothtime/blob/main/public/data/changelog/changelog.json'>click here</a>."
+      }               
+   }
+]

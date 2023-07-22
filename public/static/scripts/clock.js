@@ -8,7 +8,7 @@
 var twentyFour = true;
 var showTimer = false;
 var showMilli = false;
-var showClock = true;
+var hideClock = slothtime_config.hide_clock; /* toggles the clock visibility */;
 var clockInterval = 1000;
 var timerInterval = 10;
 const timer = new Date();
@@ -20,6 +20,10 @@ var timerhour, timerminutes, timerseconds, timermseconds;
 updateClock();
 
 clockIntervalID = window.setInterval(updateClock, clockInterval);
+
+if(hideClock) {
+   toggleClock(true);
+}
 
 $("#24hrToggle").click(function () {
    twentyFour ? (twentyFour = false) : (twentyFour = true);
@@ -162,12 +166,22 @@ function updateTimer() {
    }
 }
 
-function hideClock() {
-   if (showClock) {
-      showClock = false;
+/* Toggle showing the clock */
+/* If isStartup is true, it will not update */
+/* the cache or toggle the value */
+function toggleClock(isStartup) {
+   if(isStartup == undefined)
+      isStartup = false;
+
+   if(!isStartup)
+      hideClock = !hideClock;
+
+   if (hideClock) {
       $("#clock").hide();
    } else {
-      showClock = true;
       $("#clock").show();
+   }   
+   if(!isStartup) {
+      cacheHideClock(hideClock);
    }
 }

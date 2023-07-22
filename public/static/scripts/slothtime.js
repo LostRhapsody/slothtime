@@ -15,9 +15,8 @@ var rowBuffer = []; /* store an array of deleted rows as a history buffer */
 var cardBuffer = []; /* store an array of deleted cards as a history buffer */
 var rowCounter; /* stores the number of rows   */
 rowCounter = 0;
-var hoursToggle = true; /* toggle between start/end time and total hours */
+var hoursToggle = !slothtime_config.use_total_time; /* toggle between start/end time and total hours */
 var tracking_array = slothtime_config.tracking_array; /* stores the tracking objects that contain the input field details */
-var hideClock = false; /* toggles the clock visibility */
 var isFabMenuOpen = false; /* tracks if the FAB button menu is open */
 var isFabsHovered; /* tracks if the fabs div is being hovered */
 var exportType = "comma"; /* the format the table will be exported in */
@@ -25,6 +24,8 @@ let errorMessage; /* stores error messages. Empty after each error is logged */
 let errorTarget; /* stores targets from errors. Empty after each error is logged */
 let errorAction; /* stores actions from errors. Empty after each error is logged */
 let showChangelogModal = false; /* toggles whether to show the modal or not */
+let use24hrFormat = false; /* toggles whether to use 24hr format or not */ /* TODO add this to the config file */
+let autoCalcTaskTime = true; /* toggles whether to auto calculate the task time or not */ /* TODO add this to the config file */
 
 pageInit();
 
@@ -41,6 +42,7 @@ function pageInit() {
       newRow(true);
    }
 
+   toggleHoursColumns(true);
 
    /**** Initializing Components *****/
 
@@ -70,9 +72,7 @@ function pageInit() {
    /* Mobile Entry modal */
    var mobileModal = new bootstrap.Modal(
       document.getElementById("mobile-entry-modal")
-   );
-   /* hide total task time column */
-   $(".task_time").hide();
+   );   
 
    /****** Keyboard Shortcuts *******/
 
@@ -136,6 +136,7 @@ function pageInit() {
    /* update the trackingArray's object      */
    /* and populate the modal's fields        */
    $("#time-tracking-table").on("change", "tr .form-control", function (e) {
+      formatTime(e);
       updateTrackingArray(e);
       setupModal(e);
    });
@@ -218,14 +219,6 @@ function pageInit() {
       .getElementById("theme-modal")
       .addEventListener("shown.bs.modal", (e) => {
          $("#theme-search-box")[0].focus();
-      });
-
-   /* when information modal is closed */
-   document
-      .getElementById("information-modal")
-      .addEventListener("hidden.bs.modal", (e) => {
-         if (showChangelogModal) changelogModal.toggle();
-         showChangelogModal = false;
       });
 
    /* when an end_time cell is */
@@ -369,30 +362,21 @@ function updateTrackingArray(e) {
       taskTime: taskTime.value,
    };
 
-   if (trackingObject.taskTime == "") {
-      /* if start and end times are 09:00 or 0900 formats */
-      if (
-         (trackingObject.startTime.length == 5 ||
-            trackingObject.startTime.length == 4) &&
-         (trackingObject.endTime.length == 5 ||
-            trackingObject.endTime.length == 4)
-      ) {
-         startDate.setHours(
-            trackingObject.startTime.substring(0, 2),
-            trackingObject.startTime.substring(3)
-         );
-         endDate.setHours(
-            trackingObject.endTime.substring(0, 2),
-            trackingObject.endTime.substring(3)
-         );
-         let taskHours = endDate.getHours() - startDate.getHours();
-         let taskMinutes = endDate.getMinutes() - startDate.getMinutes();
-         if (taskHours < 0) taskHours *= -1;
-         if (taskMinutes < 0) taskMinutes *= -1;
-         trackingObject.taskTime = taskHours + ":" + taskMinutes;
-      }
+   if(autoCalcTaskTime) {
+      startDate.setHours(
+         trackingObject.startTime.substring(0, 2),
+         trackingObject.startTime.substring(3,5)
+      );
+      endDate.setHours(
+         trackingObject.endTime.substring(0, 2),
+         trackingObject.endTime.substring(3,5)
+      );
+      let taskHours = endDate.getHours() - startDate.getHours();
+      let taskMinutes = endDate.getMinutes() - startDate.getMinutes();
+      if (taskHours < 0) taskHours *= -1;
+      if (taskMinutes < 0) taskMinutes *= -1;
+      trackingObject.taskTime = taskHours + ":" + taskMinutes;
    }
-
    //store in tracking array, -1 to offset the row counter
    tracking_array[rowNumber - 1] = trackingObject;
 
@@ -574,8 +558,10 @@ function findCardElement(rowNumber) {
 
 /* Toggles the display of the Total Time column and */
 /* the start/end time columns                       */
-function toggleHoursColumns() {
-   hoursToggle ? (hoursToggle = false) : (hoursToggle = true);
+function toggleHoursColumns(isStartup) {
+   if (!isStartup)
+      hoursToggle = !hoursToggle;
+
    if (hoursToggle) {
       $(".end_time, .start_time").show();
       $(".mobile-end-time-col, .mobile-start-time-col").show();
@@ -587,6 +573,9 @@ function toggleHoursColumns() {
       $(".task_time").show();
       $(".mobile-total-time-col").show();
    }
+
+   if(!isStartup)
+      cacheUseTotalTime(!hoursToggle);
 }
 
 /* Populates the fields in the large jira entry modal */
@@ -779,39 +768,6 @@ function sendErrorLogs() {
    $("#errorLog").value = errorMessage;
 }
 
-async function showChangelog() {
-   informationModal.toggle();
-   showChangelogModal = true;
-   const url = "data/changelog/changelog.json";
-
-   if (typeof $("#changelog-body").attr("data-st-loaded") == "undefined")
-      fetch(url)
-         .then((response) => response.json())
-         .then((json) => updateChangelog(json));
-}
-
-function updateChangelog(data) {
-   data.forEach((versionNote) => {
-      $("#changelog-body").append(
-         "<h3>" +
-            versionNote.update.slice(0, 2) +
-            "." +
-            versionNote.update.slice(2, 4) +
-            "." +
-            versionNote.update.slice(4, 6) +
-            "</h3>" +
-            "<ul id=" +
-            versionNote.update +
-            ">"
-      );
-      versionNote.commitMessage.forEach((bullet) => {
-         $("#" + versionNote.update).append("<li>" + bullet.message + "</li>");
-      });
-   });
-   /* set loaded to true so we only fetch once */
-   $("#changelog-body").attr("data-st-loaded", "true");
-}
-
 /* update the tracking array from the mobile modal when edited */
 function updateTrackingArrayMobile(event) {
    const target = event.target;
@@ -880,6 +836,9 @@ function setupMobileCardRow(row) {
 
 /* populate the mobile task entry modal fields */
 function setupMobileModal(event) {
+   var mobileModal = new bootstrap.Modal(
+      document.getElementById("mobile-entry-modal")
+   );   
    const mobileModalElement = mobileModal._element;
    const card = event.relatedTarget.parentElement;
    const rowNumber = $(card).attr("row");
@@ -980,4 +939,103 @@ function highlghtRow(e,isFocused) {
    }
    else   
       tableRow.removeClass("st-row-highlight");
+}
+
+/**
+ * Formats the time to be in the format of HH:MM
+ */
+function formatTime(e){
+
+   /* find the row */
+   const tableRow = $(e.target).parents("[row]");
+   if (typeof tableRow == "undefined") {
+      logDeveloperError("badRowFind", e);
+      return;
+   }
+
+   /* get the time values */
+   const startTime = tableRow.find('input[name="start_time"]')[0].value;
+   const endTime = tableRow.find('input[name="end_time"]')[0].value;
+   const taskTime = tableRow.find('input[name="task_time"]')[0].value;
+
+   let formattedStartTime;
+   let formattedEndTime;
+   let formattedTaskTime;
+
+   /* Check if it's in HH:MM or HHMM format then format it */
+   if (startTime.indexOf(":") > 0)
+      formattedStartTime = formatTimeArray(startTime,"HH:MM");
+   else
+      formattedStartTime = formatTimeArray(startTime,"HHMM");
+
+   if (endTime.indexOf(":") > 0)
+      formattedEndTime = formatTimeArray(endTime,"HH:MM");
+   else
+      formattedEndTime = formatTimeArray(endTime,"HHMM");
+
+   if (taskTime.indexOf(":") > 0)
+      formattedTaskTime = formatTimeArray(taskTime,"HH:MM");
+   else
+      formattedTaskTime = formatTimeArray(taskTime,"HHMM");
+
+   /* set the values */
+   tableRow.find('input[name="start_time"]')[0].value = formattedStartTime;
+   tableRow.find('input[name="end_time"]')[0].value = formattedEndTime;
+   tableRow.find('input[name="task_time"]')[0].value = formattedTaskTime;
+}
+
+/* actually does the formatting */
+function formatTimeArray(time, format) {
+
+   /* don't format empty cells */
+   if(time == "")
+      return time;
+
+   /* if format includes a colon, retain the first 5 characters */
+   /* else, only retain the first 4 (HHMM) */
+   if(format == "HH:MM")
+      time = time.substring(0, 5).trim();
+   else
+      time = time.substring(0, 4).trim();
+
+   /* automatically format it to include the : */
+   if(format == "HHMM")
+      time = time.substring(0, 2) + ":" + time.substring(3, 5);
+
+   /* split the time up into hours and minutes */
+   const timeArray = time.split(":"); 
+   let hours = timeArray[0];
+   let minutes = timeArray[1];
+
+   /* don't allow use of 24hr format for now */
+   if(!use24hrFormat){
+
+      /* if gt 12, use it's 12hr equivalent */
+      if(hours > 12 && hours < 24){
+         hours = hours - 12;
+         if(hours.length == 1)
+            hours = "0" + hours;
+      }
+      /* if 0/midnight or gt 24, just set to 12 */
+      else if(hours == 0 || hours > 24)
+         hours = 12;
+
+      hours = hours.toString();
+   }
+
+   /* if minutes are gt 59, set to 00 */
+   if (Number(minutes) > 59) {
+      minutes = "00";
+   }
+
+   /* append 0 if single digit */
+   if(hours.length == 1)
+      hours = "0" + hours;
+   if(minutes.length == 1)
+      minutes = "0" + minutes;
+   if(minutes.length == 0)
+      minutes = "00";
+   
+   /* return the formatted time in HH:MM */
+   return hours + ":" + minutes;
 }

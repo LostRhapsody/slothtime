@@ -1,10 +1,13 @@
+/* Action tray is decomissioned, keeping the code just for reference */
+var useActionTray = false;
+
 /* Action Tray */
 var actionTrayToggled    = false;
 var actionTrayAnimating  = false;
 const action_tray_button = document.getElementById("flush-heading-action");
 
 /* don't load on about page */
-if (isHomePage){
+if (isHomePage && useActionTray){
    action_tray_button.addEventListener("click", (event) => {
       if (actionTrayAnimating) { return; }
       actionTrayToggled ? actionTrayToggled = false : actionTrayToggled = true;

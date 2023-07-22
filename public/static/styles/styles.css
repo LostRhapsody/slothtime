@@ -160,9 +160,20 @@ a:hover {
    overflow: auto;
 }
 
+/* specifically the changelog modal */
+#changelog-modal .modal-dialog {
+   max-width: 80vw;
+}
+
 /**** Cards ****/
 .card {
    --bs-card-bg: var(--bg-color);   
+   --bs-card-border-color: var(--bg-color);
+}
+
+.card h1,
+.card .col .fs-5 {
+   color: var(--sub-color);
 }
 
 /** mobile cards **/
@@ -530,13 +541,22 @@ textarea {
    background: transparent;
 }
 
-.menu-btn:hover {
+.menu-btn:hover,
+.menu-btn:focus-visible {
    color: var(--main-color);
    background-color: var(--sub-color);
 }
 
 .menu-btn i {
-   font-size: 1.5rem;
+   font-size: 1.3rem;
+}
+
+#action-row .col:first-child {
+   margin-left: 5rem;
+}
+
+#action-row .col:last-child {
+   margin-right: 5rem;
 }
 
 /**** Media Queries ****/
