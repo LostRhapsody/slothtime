@@ -1032,7 +1032,7 @@ function formatTimeArray(time, format) {
    if(hours.length == 1)
       hours = "0" + hours;
    if(minutes.length == 1)
-      minutes = "0" + minutes;
+      minutes = minutes + "0";
    if(minutes.length == 0)
       minutes = "00";
    
