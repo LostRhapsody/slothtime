@@ -990,6 +990,23 @@ function formatTimeArray(time, format) {
    /* don't format empty cells */
    if(time == "")
       return time;
+      
+   /* if only 3 digits are entered, assume its hhm   */
+   /* or, if it's 4 digits with a colon, assume hh:m */
+   if(time.length == 3 ||
+   format == "HH:M" && time.length == 4) {
+
+      /* if its starting with a double digit */
+      if(Number(time.substring(0,2)) >= 10 &&
+      Number(time.substring(0,2)) <= 23) {
+         /* append a zero to the end */
+         /* this way, entering 123 or 12:3 will be 12:30, not 12:03 */
+         time += "0";
+      } else { /* else, it will be a single digit, and a zero needs to be appended to the front */
+         /* this way, entering 444 or 4:44 it will be 04:44, not 44:40 (which would get formatted to 12:40) */
+         time = "0" + time;
+      }
+   }
 
    /* if format includes a colon, retain the first 5 characters */
    /* else, only retain the first 4 (HHMM) */
@@ -1017,7 +1034,7 @@ function formatTimeArray(time, format) {
             hours = "0" + hours;
       }
       /* if 0/midnight or gt 24, just set to 12 */
-      else if(hours == 0 || hours > 24)
+      else if(hours == 0 || hours >= 24)
          hours = 12;
 
       hours = hours.toString();
