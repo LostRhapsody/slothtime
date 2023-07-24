@@ -1000,7 +1000,7 @@ function formatTimeArray(time, format) {
 
    /* automatically format it to include the : */
    if(format == "HHMM")
-      time = time.substring(0, 2) + ":" + time.substring(3, 5);
+      time = time.substring(0, 2) + ":" + time.substring(2, 4);
 
    /* split the time up into hours and minutes */
    const timeArray = time.split(":"); 
