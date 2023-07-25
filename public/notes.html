@@ -55,9 +55,11 @@
     <!-- Icon -->
     <link rel="icon" type="image/x-icon" href="static/images/sloth-icon.svg" />
     <!-- Title -->
-    <title>about | slothtime</title>
+    <title>notes | slothtime</title>
     <meta id="metaThemeColor" name="theme-color" content="#e2b714" />
+
     <!-- Scipts and Stylesheets -->
+
     <!-- JQuery -->
     <script
       src="https://code.jquery.com/jquery-3.6.2.min.js"
@@ -81,6 +83,12 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css"
     />
+    <!-- Bootstrap v5.2 (JS) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
     <link rel="stylesheet" href="static/styles/styles.css" />
     <!-- Web App Manifest -->
     <link rel="manifest" href="sloth.webmanifest" />
@@ -94,7 +102,11 @@
         <div
           class="col col-12 col-md-7 align-items-center justify-content-center justify-content-start-md d-flex flex-row"
         >
-          <a id="homePageLink" href="https://slothtime.dev" class="d-flex align-items-center">
+          <a
+            id="homePageLink"
+            href="https://slothtime.dev"
+            class="d-flex align-items-center"
+          >
             <svg
               fill="currentColor"
               height="800px"
@@ -141,7 +153,7 @@
           </a>
           <a
             aria-label="About Page"
-            href="#"
+            href="https://slothtime.dev/about"
             class="d-flex"
           >
             <svg
@@ -163,13 +175,24 @@
           </a>
           <a
             aria-label="Notes Page"
-            href="https://slothtime.dev/notes"
+            href="#"
             class="d-flex"
           >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-journals iconRow" viewBox="0 0 16 16">
-            <path d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"/>
-            <path d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"/>
-          </svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-journals iconRow"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M5 0h8a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2 2 2 0 0 1-2 2H3a2 2 0 0 1-2-2h1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1H1a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v9a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1H3a2 2 0 0 1 2-2z"
+              />
+              <path
+                d="M1 6v-.5a.5.5 0 0 1 1 0V6h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V9h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 2.5v.5H.5a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1H2v-.5a.5.5 0 0 0-1 0z"
+              />
+            </svg>
           </a>
         </div>
         <div class="col col-12 col-md-5">
@@ -179,64 +202,62 @@
           </div>
         </div>
       </div>
-      <div class="container-md">
-        <div class="row justify-content-center">
-          <div class="col-12 col-md-6 text-center">
-            <h1 class="mt-3">About</h1>
-            <p class="lh-base">
-              A personal time entry project created so I don't have to use my
-              company's time entry website all day. Correct, this was a spite
-              project.
-            </p>
-            <p class="lh-base">But it's turned into much more.</p>
-            <p class="lh-base">
-              lol (lots of love) to
-              <a target="_blank" href="https://monkeytype.com" rel="noopener"
-                >monkeytype.com</a
-              >,
-              <a target="_blank" href="https://github.com/Miodec" rel="noopener"
-                >Miodec</a
-              >
-              and all the
-              <a
-                target="_blank"
-                href="https://github.com/monkeytypegame"
-                rel="noopener"
-                >awesome people who contributed to that project</a
-              >, for serving as inspiration.
-            </p>
+      <div class="row flex-column flex-md-row mt-5">
+        <div class="col d-flex justify-content-center my-3">
+         <!-- Note Card Template -->
+          <div class="card note">
+            <div class="card-body">
+               <h2 class="card-title">CS-9999</h2>
+               <h3 class="card-subtitle fs-4">Programming</h3>
+               <hr />
+               <p class="card-text">
+                  I've found the bug, this is how I found it, I think I'll try reversing the polarity next.
+               </p>
+            </div>
+          </div>
+         </div>
+         <div class="col d-flex justify-content-center my-3">
+          <div class="card note">
+            <div class="card-body">
+               <h2 class="card-title">Card Title</h2>
+               <h3 class="card-subtitle fs-4">Card subtitle</h3>
+               <hr />
+               <p class="card-text">
+                  Just some notes.
+               </p>
+            </div>
           </div>
         </div>
+        <div class="col d-flex justify-content-center my-3">
+         <div class="card note">
+           <div class="card-body">
+              <h2 class="card-title">Card Title</h2>
+              <h3 class="card-subtitle fs-4">Card subtitle</h3>
+              <hr />
+              <p class="card-text">
+                 Just some notes.
+              </p>
+           </div>
+         </div>
+       </div>
       </div>
     </div>
-    <footer>
-      <!-- Bootstrap JS -->
-      <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-        crossorigin="anonymous"
-      ></script>
-      <!-- er utils js -->
-      <script src="static/scripts/utilities.js"></script>
-      <!-- er animations js -->
-      <script src="static/scripts/animations.js"></script>
-      <!-- slothtime general js -->
-      <script src="static/scripts/slothtime.js"></script>
-      <!-- clock controller -->
-      <script src="static/scripts/clock.js"></script>
-      <!-- Markdown block lib -->
-      <script
-        type="module"
-        src="https://md-block.verou.me/md-block.js"
-      ></script>
-      <script>
-        if ("serviceWorker" in navigator) {
-          // Register a service worker after the load event
-          window.addEventListener("load", () => {
-            navigator.serviceWorker.register("sw.js");
-          });
-        }
-      </script>
-    </footer>
+
+    <!-- er utils js -->
+    <script src="static/scripts/utilities.js"></script>
+    <!-- er animations js -->
+    <script src="static/scripts/animations.js"></script>
+    <!-- slothtime general js -->
+    <script src="static/scripts/slothtime.js"></script>
+    <!-- clock controller -->
+    <script src="static/scripts/clock.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        // Register a service worker after the load event
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("sw.js");
+        });
+      }
+    </script>
   </body>
 </html>
