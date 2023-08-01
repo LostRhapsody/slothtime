@@ -1005,6 +1005,13 @@ function formatTimeArray(time, format) {
       } else { /* else, it will be a single digit, and a zero needs to be appended to the front */
          /* this way, entering 444 or 4:44 it will be 04:44, not 44:40 (which would get formatted to 12:40) */
          time = "0" + time;
+
+         /* if time starts with 00, it's a single digit starting with a zero,
+         like 013, which should be formatted to 01:30, so add 0 to end to make 0130 */
+         if (time.substring(0,2) == "00") {
+            time = time.substring(1,4) + "0";
+         }
+         
       }
    }
 
