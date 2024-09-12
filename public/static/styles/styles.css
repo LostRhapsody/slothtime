@@ -1,398 +1,410 @@
 /**** Body / Global ****/
 :root {
-   /* Bootstrap ovverrides */
-   --bs-border-color: none;
-   --bs-form-control-bg: #ffffff00;
-   --frosted-bg: rgba(255, 255, 255, 0.15);
+  /* Bootstrap ovverrides */
+  --bs-border-color: none;
+  --bs-form-control-bg: #ffffff00;
+  --frosted-bg: rgba(255, 255, 255, 0.15);
 }
 
 body {
-   background-color: var(--bg-color);
-   font-family: "Roboto", Roboto, monospace;
-   overflow-y: scroll;
+  background-color: var(--bg-color);
+  font-family: "Roboto", Roboto, monospace;
+  overflow-y: scroll;
 }
 
 h1,
 h2,
 h3,
 p {
-   color: var(--text-color);
+  color: var(--text-color);
 }
 
 a {
-   text-decoration: none;
-   color: var(--main-color);
+  text-decoration: none;
+  color: var(--main-color);
 }
 
 a:hover {
-   text-decoration: underline;
+  text-decoration: underline;
 }
 
 #homePageLink:hover {
-   text-decoration: none;
+  text-decoration: none;
 }
 
 .iconRow {
-   width: 1.8rem;
-   height: 1.8rem;
-   align-self: center;
-   color: var(--sub-color);
-   margin-left: 1.5rem;
-   background-color: var(--bg-color);
+  width: 1.8rem;
+  height: 1.8rem;
+  align-self: center;
+  color: var(--sub-color);
+  margin-left: 1.5rem;
+  background-color: var(--bg-color);
 }
 
 .iconRow:hover {
-   color: var(--text-color);
-   transition: color 0.125s;
+  color: var(--text-color);
+  transition: color 0.125s;
 }
 
 /* svg fallback */
 .no-svg .logo {
-   width: 200px;
-   height: 164px;
-   background-image: url(images/sloth-icon.svg);
+  width: 200px;
+  height: 164px;
+  background-image: url(images/sloth-icon.svg);
 }
 
 /**** Table ****/
 /* Override bootstrap's table responsive behaviour */
 .table-responsive {
-   overflow-x: auto !important;
+  overflow-x: auto !important;
 }
 
 @media screen and (min-width: 756px) {
-   .table-responsive {
-      overflow-x: hidden !important;
-   }
+  .table-responsive {
+    overflow-x: hidden !important;
+  }
 }
 
 /* Only take the desired traits of BS table */
 .st-table {
-   width: 100%;
-   margin-bottom: 1rem;
-   color: var(--text-color);
-   vertical-align: top;
-   border-color: var(--sub-color);
-   caption-side: bottom;
-   border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  vertical-align: top;
+  border-color: var(--sub-color);
+  caption-side: bottom;
+  border-collapse: collapse;
 }
 
 .st-table th,
 .st-table td {
-   padding: 0.5rem;
-   background-color: var(--bg-color);
-   border-bottom-width: 1px;
-   box-shadow: inset 0 0 0 9999px var(--bg-color);
-   background-color: var(--bg-color);
+  padding: 0.5rem;
+  background-color: var(--bg-color);
+  border-bottom-width: 1px;
+  box-shadow: inset 0 0 0 9999px var(--bg-color);
+  background-color: var(--bg-color);
 }
 
 .st-table thead th {
-   box-shadow: inset 0 0 0 9999px var(--main-color);
-   background-color: var(--main-color);
-   color: var(--bg-color) !important;
-   border-bottom-width: 0px;
+  box-shadow: inset 0 0 0 9999px var(--main-color);
+  background-color: var(--main-color);
+  color: var(--bg-color) !important;
+  border-bottom-width: 0px;
 }
 
 .st-table thead th:first-of-type {
-   border-left-width: 1px;
+  border-left-width: 1px;
 }
 
 .st-table tr[row] th {
-   border-left-width: 1px;
+  border-left-width: 1px;
 }
 
 .st-table td.end_time,
 .st-table td.task_time {
-   border-right-width: 1px;
+  border-right-width: 1px;
 }
 
 .st-row-highlight td,
 .st-row-highlight th {
-   filter: brightness(1.3);
+  filter: brightness(1.3);
 }
 /**** UI / Look and Feel ****/
 
 .sloth-icon {
-   width: 2.2rem;
-   height: 2.2rem;
-   color: var(--main-color);
+  width: 2.2rem;
+  height: 2.2rem;
+  color: var(--main-color);
 }
 
 .accordion-button {
-   width: var(--bs-accordion-btn-icon-width) !important;
+  width: var(--bs-accordion-btn-icon-width) !important;
 }
 
 /* used in Clocky, adds a frosted glass effect */
 .frosted {
-   background-color: var(--frosted-bg);
-   --bs-accordion-bg: var(--frosted-bg);
-   --bs-accordion-active-bg: var(--frosted-bg);
-   -webkit-backdrop-filter: blur(5px);
-   backdrop-filter: blur(5px);
+  background-color: var(--frosted-bg);
+  --bs-accordion-bg: var(--frosted-bg);
+  --bs-accordion-active-bg: var(--frosted-bg);
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 }
 
 /** Modal **/
 .modal-header,
 .modal-footer,
 .modal-body {
-   color: var(--text-color);
-   background-color: var(--bg-color);
+  color: var(--text-color);
+  background-color: var(--bg-color);
 }
 
 .modal-header {
-   border-bottom-color: var(--sub-alt-color);
+  border-bottom-color: var(--sub-alt-color);
 }
 
 .modal-footer {
-   border-top-color: var(--sub-alt-color);
+  border-top-color: var(--sub-alt-color);
 }
 
 /* stops the modal from hiding the scrollbar on open                    */
 /* when the scroll bar hides it forces the page to move which I dislike */
 .modal-open {
-   overflow-y: scroll !important;
-   overflow-x: auto !important;
-   padding-right: 0px !important;
+  overflow-y: scroll !important;
+  overflow-x: auto !important;
+  padding-right: 0px !important;
 }
 
 .modal-body .card,
 .modal-body #theme-list {
-   max-height: 50vh;
-   overflow: auto;
+  max-height: 50vh;
+  overflow: auto;
 }
 
 /* specifically the changelog modal */
 #changelog-modal .modal-dialog {
-   max-width: 80vw;
+  max-width: 80vw;
 }
 
 /**** Cards ****/
 .card {
-   --bs-card-bg: var(--bg-color);   
-   --bs-card-border-color: var(--bg-color);
+  --bs-card-bg: var(--bg-color);
+  --bs-card-border-color: var(--bg-color);
 }
 
 .card h1,
 .card .col .fs-5 {
-   color: var(--sub-color);
+  color: var(--sub-color);
 }
 
 /** mobile cards **/
 #mobile-time-tracking-form .card {
-   color: var(--text-color);
-   width: 75%;
-   border: var(--bs-card-border-width) solid var(--sub-color);
-   border-right-width: 0px;
-   border-top-width: 0px;
+  color: var(--text-color);
+  width: 75%;
+  border: var(--bs-card-border-width) solid var(--sub-color);
+  border-right-width: 0px;
+  border-top-width: 0px;
 }
 
 #mobile-time-tracking-form .card .card-header {
-   color: var(--bg-color);
-   background-color: var(--main-color);
+  color: var(--bg-color);
+  background-color: var(--main-color);
 }
 
 #mobile-time-tracking-form .card-body {
-   border: var(--bs-card-border-width) solid var(--sub-color);
-   border-right-width: 0px;   
-   border-left-width: 0px;
+  border: var(--bs-card-border-width) solid var(--sub-color);
+  border-right-width: 0px;
+  border-left-width: 0px;
 }
 
 /**** Badges ****/
 .netlify-badge img,
 .shield {
-   height: 1.3rem;
-   width: auto;
+  height: 1.3rem;
+  width: auto;
 }
 
 .shield-wrapper {
-   padding-bottom:16px;
+  padding-bottom: 16px;
 }
 
 #btn-changelog {
-   cursor: pointer;
+  cursor: pointer;
+}
+
+.badge-label {
+   color: var(--main-color);
+   top: 8px;
+   position: relative;
+   left: -18px;
+   padding: 1px;
+   font-size: 18px;
+   letter-spacing: 1px;
+   line-height: 16px;
+   height: 32px;
 }
 
 /** Theme List Group **/
 /* override bootstrap's list-group-item */
 .list-group-item {
-   color: var(--bg-color);
-   background-color: var(--main-color);
+  color: var(--bg-color);
+  background-color: var(--main-color);
 }
 
 .list-group-item-action:focus,
 .list-group-item-action:hover {
-   --bs-list-group-action-hover-bg: var(--sub-alt-color);
+  --bs-list-group-action-hover-bg: var(--sub-alt-color);
 }
 
 /** Bootstrap Toast Messages **/
 .toast,
 .toast-header,
 .toast-body {
-   background-color: var(--frosted-bg);
-   color: var(--text-color);
+  background-color: var(--frosted-bg);
+  color: var(--text-color);
 }
 
 .toast {
-   z-index: 11;
+  z-index: 11;
 }
 
 .bottom-55 {
-   bottom: 55px !important;
+  bottom: 55px !important;
 }
 
 /** inputs **/
 option {
-   background-color: var(--bg-color);
-   border: var(--bg-color);
+  background-color: var(--bg-color);
+  border: var(--bg-color);
 }
 
 option:focus {
-   background-color: var(--main-color);
+  background-color: var(--main-color);
 }
 
 .form-control {
-   border-left: 1px solid var(--sub-color);
-   border-bottom: 1px solid var(--sub-color);
-   border-top: 0px;
-   border-right: 0px;
+  border-left: 1px solid var(--sub-color);
+  border-bottom: 1px solid var(--sub-color);
+  border-top: 0px;
+  border-right: 0px;
 }
 
 .form-control:focus {
-   border: none;
-   box-shadow: 0 0 0 0.05rem var(--main-color);
+  border: none;
+  box-shadow: 0 0 0 0.05rem var(--main-color);
 }
 
 /** scroll bars **/
 
 /* firefox scrollbar */
 body {
-   scrollbar-color: var(--main-color) var(--bg-color);
+  scrollbar-color: var(--main-color) var(--bg-color);
 }
 
 /* scrollbars for jira entries */
 textarea::-webkit-scrollbar {
-   width: 10px;
+  width: 10px;
 }
 
 textarea::-webkit-scrollbar-track {
-   background-color: var(--sub-alt-color);
-   border-radius: 5rem;
+  background-color: var(--sub-alt-color);
+  border-radius: 5rem;
 }
 
 textarea::-webkit-scrollbar-thumb {
-   background-color: var(--main-color);
-   border-radius: 5rem;
+  background-color: var(--main-color);
+  border-radius: 5rem;
 }
 
 textarea::-webkit-scrollbar-corner,
 textarea::-webkit-resizer {
-   display: none;
+  display: none;
 }
 
 /* Scrollbar for modals */
 .modal-body::-webkit-scrollbar-thumb {
-   background-color: var(--sub-alt-color);
-   border-radius: 5rem;
+  background-color: var(--sub-alt-color);
+  border-radius: 5rem;
 }
 .modal-body .card::-webkit-scrollbar-thumb {
-   background-color: var(--main-color);
-   border-radius: 5rem;
+  background-color: var(--main-color);
+  border-radius: 5rem;
 }
 
 /* scrollbar for body */
 ::-webkit-scrollbar {
-   width: 10px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-   background-color: var(--sub-alt-color);
-   border-radius: 5rem;
+  background-color: var(--sub-alt-color);
+  border-radius: 5rem;
 }
 
 ::-webkit-scrollbar-thumb {
-   background-color: var(--sub-color);
-   border-radius: 5rem;
+  background-color: var(--sub-color);
+  border-radius: 5rem;
 }
 
 ::-webkit-scrollbar-corner,
 ::-webkit-resizer {
-   display: none;
+  display: none;
 }
 
 /** Buttons **/
 
 /* override bootstrap borders */
 .btn {
-   border: none;
-   color: var(--text-color);
-   background-color: var(--sub-alt-color);
+  border: none;
+  color: var(--text-color);
+  background-color: var(--sub-alt-color);
 }
 
 .btn:hover {
-   color: var(--bg-color);
-   background-color: var(--text-color);
+  color: var(--bg-color);
+  background-color: var(--text-color);
 }
 
 .btn:active {
-   /* doesn't override bs for some reason, needs !important */
-   color: var(--bg-color) !important;
-   background-color: var(--sub-color) !important;
+  /* doesn't override bs for some reason, needs !important */
+  color: var(--bg-color) !important;
+  background-color: var(--sub-color) !important;
 }
 
 /* Emphasis on important actions */
 .btn-important {
-   background-color: var(--main-color);
-   color: var(--bg-color);
+  background-color: var(--main-color);
+  color: var(--bg-color);
 }
 
 /* The action Tray Button (Caret) */
 .action-tray-button {
-   color: var(--main-color);
-   font-size: 3rem !important;
+  color: var(--main-color);
+  font-size: 3rem !important;
 }
 
 /* copy clipboard button */
 .btn-copy-to-clipboard {
-   background-color: transparent;
+  background-color: transparent;
 }
 .btn-copy-to-clipboard:hover,
 .btn-copy-to-clipboard:focus {
-   color: var(--main-color) !important;
-   background-color: transparent;
+  color: var(--main-color) !important;
+  background-color: transparent;
 }
 
 .btn-copy-to-clipboard:active {
-   box-shadow: none !important;
-   background-color: transparent !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
 }
 
 /**** Clock / Timer ****/
 .clock-back {
-   width: 100%;
-   height: 5rem;
-   justify-content: center;
-   align-items: center;
-   border-radius: 0.375rem;
-   box-shadow: inset 0px 0px 13px -4px;
+  width: 100%;
+  height: 5rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.375rem;
+  box-shadow: inset 0px 0px 13px -4px;
 }
 .clock-face-focus {
-   font-size: calc(1.425rem + 2.1vw);
-   color: var(--text-color);
+  font-size: calc(1.425rem + 2.1vw);
+  color: var(--text-color);
 }
 .clock-face-unfocus {
-   color: var(--sub-color) !important;
+  color: var(--sub-color) !important;
 }
 .timer-face-focus {
-   font-size: 2.5rem;
-   color: var(--main-color) !important;
+  font-size: 2.5rem;
+  color: var(--main-color) !important;
 }
 .timer-face-unfocus {
-   font-size: 2.5rem;
-   color: var(--sub-color);
+  font-size: 2.5rem;
+  color: var(--sub-color);
 }
 
 /**** Text ****/
 .credits {
-   color: var(--text-color);
+  color: var(--text-color);
 }
 
 select,
@@ -402,7 +414,7 @@ th,
 td,
 input,
 textarea {
-   color: var(--text-color) !important;
+  color: var(--text-color) !important;
 }
 
 /**** Floating Shelf ****/
@@ -410,168 +422,221 @@ textarea {
 /* add space below table so floating shelf  */
 /* doesn't overlap and cover the bottom row */
 .hr-space {
-   height: 15rem;
-   color: transparent;
+  height: 15rem;
+  color: transparent;
 }
 
 /* TODO Shelf should be partially transparent */
 /* without affecting the buttons and text     */
 .floating-shelf {
-   width: 100%;
-   --_viewport-margin: 2.5vmin;
-   position: fixed;
-   z-index: 10;
-   display: flex;
-   place-items: center;
-   gap: var(--_viewport-margin);
-   inset-block: auto -1.5rem;
-   margin-bottom: var(--_viewport-margin);
-   background-color: var(--bg-color);
+  width: 100%;
+  --_viewport-margin: 2.5vmin;
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  place-items: center;
+  gap: var(--_viewport-margin);
+  inset-block: auto -1.5rem;
+  margin-bottom: var(--_viewport-margin);
+  background-color: var(--bg-color);
 }
 .floating-shelf > .row {
-   width: 100%;
+  width: 100%;
 }
 .floating-shelf > .row > .row {
-   width: 75%;
+  width: 75%;
 }
 
 /**** FAB Buttons ****/
 /* TODO add smooth open animation to menu */
 /* Fabs DIV */
 .fabs {
-   --_viewport-margin: 2.5vmin;
+  --_viewport-margin: 2.5vmin;
 
-   position: fixed;
-   z-index: 11;
+  position: fixed;
+  z-index: 11;
 
-   inset-block: auto var(--_viewport-margin);
-   inset-inline: auto var(--_viewport-margin);
-   display: flex;
-   flex-direction: column-reverse;
-   place-items: center;
-   gap: var(--_viewport-margin);
+  inset-block: auto var(--_viewport-margin);
+  inset-inline: auto var(--_viewport-margin);
+  display: flex;
+  flex-direction: column-reverse;
+  place-items: center;
+  gap: var(--_viewport-margin);
 }
 
 /* Fab buttons */
 .fab {
-   --_size: 2rem;
+  --_size: 2rem;
 
-   padding: calc(var(--_size) / 2);
-   border: none;
-   border-radius: 50%;
-   aspect-ratio: 1;
-   -webkit-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
-   -moz-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
-   box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
+  padding: calc(var(--_size) / 2);
+  border: none;
+  border-radius: 50%;
+  aspect-ratio: 1;
+  -webkit-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 38px 0px rgba(0, 0, 0, 0.75);
 
-   /* use the adaptive properties on some styles */
-   background: var(--main-color);
-   color: var(--sub-alt-color) !important;
+  /* use the adaptive properties on some styles */
+  background: var(--main-color);
+  color: var(--sub-alt-color) !important;
 
-   -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* fab button icons */
 .fab > svg {
-   --_size: 2rem;
-   inline-size: var(--_size);
-   block-size: var(--_size);
-   stroke-width: 3px;
+  --_size: 2rem;
+  inline-size: var(--_size);
+  block-size: var(--_size);
+  stroke-width: 3px;
 }
 
 /* fab overrides for smaller fab buttons */
 .mini-fab {
-   --_size: 1.5rem;
-   padding: calc(var(--_size) / 2);
+  --_size: 1.5rem;
+  padding: calc(var(--_size) / 2);
 }
 
 .mini-fab > svg {
-   --_size: 1.5rem;
-   inline-size: var(--_size);
-   block-size: var(--_size);
+  --_size: 1.5rem;
+  inline-size: var(--_size);
+  block-size: var(--_size);
 }
 
-/**** Animations ****/
-@keyframes spin-up {
-   from {
-      transform: rotate(180deg);
-   }
-   to {
-      transform: rotate(360deg);
-   }
+/**** Notepad Page ****/
+.note {
+  width: 15rem;
+  border-radius: 46px;
+  background: var(--bg-color);
+  box-shadow: 5px -5px 13px 6px var(--sub-alt-color),
+    -1px 3px 14px 4px var(--sub-color);
+  animation-name: note-hover-off;
+  animation-duration: 0.5s;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
-.caret-spin-up {
-   animation-name: spin-up;
-   animation-duration: 0.5s;
-   animation-direction: normal;
-   animation-iteration-count: 1;
-   animation-fill-mode: forwards;
-   animation-play-state: running;
-}
-@keyframes spin-down {
-   from {
-      transform: rotate(0deg);
-   }
-   to {
-      transform: rotate(180deg);
-   }
-}
-.caret-spin-down {
-   animation-name: spin-down;
-   animation-duration: 0.5s;
-   animation-direction: normal;
-   animation-iteration-count: 1;
-   animation-fill-mode: forwards;
-   animation-play-state: running;
+
+.note .card-title {
+  color: var(--sub-color);
 }
 
 /**** Flex ****/
 .justify-content-start-md {
-   justify-content: "";
+  justify-content: "";
 }
 
 /**** lower menu for actions ****/
 .lower-menu-wrapper {
-   width: 100%;
-   margin: auto;   
+  width: 100%;
+  margin: auto;
 }
 
 .menu-btn {
-   width: 3rem;
-   background: transparent;
+  width: 3rem;
+  background: transparent;
 }
 
 .menu-btn:hover,
 .menu-btn:focus-visible {
-   color: var(--main-color);
-   background-color: var(--sub-color);
+  color: var(--main-color);
+  background-color: var(--sub-color);
 }
 
 .menu-btn i {
-   font-size: 1.3rem;
+  font-size: 1.3rem;
 }
 
 #action-row .col:first-child {
-   margin-left: 5rem;
+  margin-left: 5rem;
 }
 
 #action-row .col:last-child {
-   margin-right: 5rem;
+  margin-right: 5rem;
+}
+
+/**** Animations ****/
+@keyframes note-hover {
+  from {
+    transform: scale(1);
+    box-shadow: 5px -5px 13px 6px var(--sub-alt-color),
+      -1px 3px 14px 4px var(--sub-color);
+  }
+  to {
+    transform: scale(1.1);
+    box-shadow: 8px -8px 18px 11px var(--sub-alt-color),
+      -4px 7px 19px 9px var(--sub-color);
+  }
+}
+
+@keyframes note-hover-off {
+  from {
+    transform: scale(1.1);
+    box-shadow: 8px -8px 18px 11px var(--sub-alt-color),
+      -4px 7px 19px 9px var(--sub-color);
+  }
+  to {
+    transform: scale(1);
+    box-shadow: 5px -5px 13px 6px var(--sub-alt-color),
+      -1px 3px 14px 4px var(--sub-color);
+  }
+}
+
+.note:hover {
+  animation-name: note-hover;
+  animation-duration: 0.5s;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+@keyframes spin-up {
+  from {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.caret-spin-up {
+  animation-name: spin-up;
+  animation-duration: 0.5s;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+@keyframes spin-down {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+.caret-spin-down {
+  animation-name: spin-down;
+  animation-duration: 0.5s;
+  animation-direction: normal;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 /**** Media Queries ****/
 
 /*** Medium and up ***/
 @media screen and (min-width: 756px) {
+  /** Table **/
+  /* Override bootstrap's table responsive behaviour */
+  .table-responsive {
+    overflow-x: hidden !important;
+  }
 
-   /** Table **/
-   /* Override bootstrap's table responsive behaviour */
-   .table-responsive {
-      overflow-x: hidden !important;
-   }
-
-   /** Flex **/
-   .justify-content-start-md {
-      justify-content: flex-start !important;
-   }
+  /** Flex **/
+  .justify-content-start-md {
+    justify-content: flex-start !important;
+  }
 }
